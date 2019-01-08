@@ -1,14 +1,23 @@
 var handlers = {
- animateString: function()
+ submitYear: function()
   {    
-    var dateField = document.getElementById('pField');
-    var oldString = dateField.textContent.trim();
-    var newString = oldString[oldString.length - 1] + oldString.substring(0, oldString.length - 1)
-    dateField.textContent = newString;
+    var yearInput = document.getElementById('yearInput');    
+    var resultsArea = document.getElementById('resultsArea');
+  
+    if(window.isLeapYear(yearInput.valueAsNumber))
+    {
+      resultsArea.textContent = 'Leap Year';
+      resultsArea.style.color = 'green';
+    }
+    else
+    {
+      resultsArea.textContent = 'Not A Leap Year';
+      resultsArea.style.color = 'red';
+    }
+
+    yearInput.textContent = '';
   }
 };
-
-setInterval(handlers.animateString, 500);
 
 function isLeapYear(year)
 {
