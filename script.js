@@ -1,13 +1,9 @@
-
-String.prototype.repeatify = String.prototype.repeatify || function(times) {
-  
-  var str = "";
-  
-  for(var i = 0; i < times; i++)
+var handlers = {
+ getCurrentDate: function()
   {
-    str += this;
+    var date = new Date();
+    
+    
   }
   
-  return str;
-}
-
+};
