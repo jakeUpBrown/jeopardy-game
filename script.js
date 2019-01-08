@@ -2,4 +2,8 @@
     to your site with Javascript */
 
 // prints "hi" in the browser's dev tools console
-console.log('hi');
+var color = prompt("enter color", "red");
+var style = prompt("enter style property", "backgroundColor");
+
+var helloWorldElement = document.getElementById('p1');
+helloWorldElement.style[style] = color;
