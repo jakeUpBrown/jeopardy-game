@@ -95,32 +95,6 @@ var playerList=
   }
 };
 
-
-var boardGrid = 
-{
-  ROWS: 5,
-  COLUMNS: 6,
-  boardTiles: new BoardTile[6][5],
-  roundNum: 0,
-  fillBoardTiles: function()
-  {
-    for(var row = 0; row < this.ROWS; row++)
-    {
-      for(var col = 0; col < this.COLUMNS; col++)
-      {
-        this.boardTiles[row][col] = new BoardTile(row, col, this.getMoneyValue(row), '');
-      }
-    }
-  },
-  getMoneyValue: function(row)
-  {
-    var rowIncrement = this.roundNum == 0 ? 200 : 400;
-    
-    return (row + 1) * rowIncrement;
-  }
-  
-};
-
 class BoardTile
 {
   constructor(row, column, moneyValue, textContent)
@@ -155,6 +129,37 @@ class BoardTile
   }
 };
 
+
+var boardGrid = 
+{
+  ROWS: 5,
+  COLUMNS: 6,
+  boardTiles: [],
+  roundNum: 0,
+  fillBoardTiles: function()
+  {
+    for(var row = 0; row < this.ROWS; row++)
+    {
+      var rowObject = [];
+      for(var col = 0; col < this.COLUMNS; col++)
+      {
+        rowObject[col] = new BoardTile(row, col, this.getMoneyValue(row), '');
+      }
+      this.boardTiles[row] = rowObject;
+    }
+  },
+  getMoneyValue: function(row)
+  {
+    var rowIncrement = this.roundNum == 0 ? 200 : 400;
+    
+    return (row + 1) * rowIncrement;
+  },
+  nextRound: function()
+  {
+    this.roundNum++;
+  }
+  
+};
 
 var currentQuestion = 
 {  
@@ -373,7 +378,19 @@ var view =
   },
   displayBoardGrid: function()
   {
+    // get grid container
+    // add board tile elements to grid container
+    var gridContainer = document.getElementById('board-grid');
     
+    gridContainer.innerHTML = '';
+    
+    for(var row = 0; row < boardGrid.boardTiles.length; row++)
+    {
+     for(var col = 0; col < boardGrid.boardTiles[row].length; col++)
+     {
+       gridContainer.appendChild(boardGrid.boardTiles[row][col].createElement());
+     }
+    }
   }
   ,
   displayCountdown: function(content)
@@ -416,3 +433,6 @@ var testers =
 
 window.onkeydown = handlers.anyKeyDown;
 testers.fillPlayers();
+
+boardGrid.fillBoardTiles();
+view.displayBoardGrid();

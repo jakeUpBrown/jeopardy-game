@@ -101,7 +101,7 @@ h1 {
   right:10px;
 }
 
-.board-grid {
+#board-grid {
   display: grid;
   position:relative;
   grid-template-columns: auto auto auto auto auto;
