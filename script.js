@@ -96,6 +96,14 @@ var currentRound =
   started: false,
   winnerIndex: -1,
   // want to be able to start a game and display a countdown
+  startRound: function()
+  {
+    if(this.started === true)
+      return;
+    
+    this.started = true;
+    this.displayCountdown();
+  },
   displayCountdown: function()
   {
     // should go 3...2...1... go
@@ -185,7 +193,7 @@ var handlers = {
     window.playerList.togglePlayerSelected(playerIndex);
     view.displayPlayers();
   },
-  playerNameKeyUp: function(event)
+  playerNameKeyDown: function(event)
   {     
     event.stopPropagation();
 
@@ -194,7 +202,7 @@ var handlers = {
       document.getElementById('addPlayerButton').click();
     }
   },
-  anyKeyUp: function(event)
+  anyKeyDown: function(event)
   {
     console.log(event);
     
@@ -234,6 +242,10 @@ var handlers = {
     }
     
     // if here, no player was selected. will want to check if any key matched a player
+  },
+  startRound: function()
+  {
+    currentRound.startRound();
   }
 };
 
@@ -293,4 +305,4 @@ var util =
 };
 
 
-window.onkeyup = handlers.anyKeyUp;
+window.onkeydown = handlers.anyKeyDown;

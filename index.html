@@ -20,6 +20,12 @@
     </div>
     
     <div>
+      <button onclick="handlers.startRound()">
+        Start Round
+      </button>
+    </div>
+    
+    <div>
       <h1 id="countdownSpace">
       </h1>
     </div>
@@ -32,7 +38,7 @@
     
     <div class="player-insert-box">
       Player Name:
-      <input type="text" id="playerNameInput" onkeyup="handlers.playerNameKeyUp(event)" maxlength="10">
+      <input type="text" id="playerNameInput" onkeydown="handlers.playerNameKeyDown(event)" maxlength="10">
       <button onclick="handlers.addNewPlayer()" id="addPlayerButton">
       Add Player
       </button>
