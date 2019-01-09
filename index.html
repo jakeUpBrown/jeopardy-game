@@ -19,9 +19,9 @@
       <img id="jeopardyLogo" src="https://vignette.wikia.nocookie.net/logopedia/images/4/40/Current_Jeopardy_Logo.jpg/revision/latest?cb=20120814144115">
     </div>
     
-    <div>
+    <div class="player-insert-box">
       Player Name:
-      <input type="text" id="playerNameInput" onkeyup="handlers.playerNameKeyUp(event)">
+      <input type="text" id="playerNameInput" onkeyup="handlers.playerNameKeyUp(event)" maxlength="10">
       <button onclick="handlers.addNewPlayer()" id="addPlayerButton">
       Add Player
       </button>
