@@ -3,7 +3,7 @@
 body {
   font-family: "Swiss 911";
   width:700px;
-  height:750px;
+  height:850px;
   border: thick solid black;
 }
 
@@ -77,13 +77,13 @@ h1 {
 #countdownSpace {
   display: block;
   position: absolute;
-  height:400px;
+  height:470px;
   line-height:400px;
   width:612px;
   left:50%;
   top:50%;
   margin-left: -308px;
-  margin-top: -208px;
+  margin-top: -320px;
   z-index:0;
   text-align:center;
   font-size:200px;

@@ -125,6 +125,9 @@ class BoardTile
     var element = document.createElement('div');
     element.className = 'board-grid-item';
     element.textContent = this.moneyValue !== undefined ? ('$' + this.moneyValue) : '';
+    element.row = this.row;
+    element.col = this.col;
+    element.addEventListener('click', handlers.boardTileClicked(event));
     return element;
   }
 };
@@ -326,6 +329,10 @@ var handlers = {
   startRound: function()
   {
     currentQuestion.startRound();
+  },
+  boardTileClicked: function(event)
+  {
+    
   }
 };
 
