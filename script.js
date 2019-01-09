@@ -305,4 +305,18 @@ var util =
 };
 
 
+
+var testers = 
+{
+  fillPlayers : function()
+  {
+    playerList.addNewPlayer({playerName: 'player 1', selected: false, buzzedIn: false, keyBound: 'X'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 2', selected: false, buzzedIn: false, keyBound: 'C'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 3', selected: false, buzzedIn: false, keyBound: 'V'.charCodeAt(0)});
+    view.displayPlayers();
+  }
+
+};
+
 window.onkeydown = handlers.anyKeyDown;
+testers.fillPlayers();
