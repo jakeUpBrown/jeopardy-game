@@ -1,7 +1,7 @@
 /* CSS files add styling rules to your content */
 
 body {
-  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  font-family: "Swiss 911";
   width:700px;
   height:700px;
   padding:5px;
@@ -86,21 +86,30 @@ h1 {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   margin:30px;
+  background-color:"060CE9";
+  border: 10px solid black;
 }
 
 .board-grid-item {
-  border: 1px solid black;
+  border: 4px solid black;
+  height:60px;
+  line-height: 60px;  
   padding: 0px;
   text-align:center;
-  margin: 1px;
-  font-size:20px;
+  font-size:35px;
+  font-weight: bold;
+  color: yellow;
+  text-shadow: 1px 1px black;
 }
 
 .board-category-item {
-  border: 1px solid black;
-  min-height:60px;
+  border: 4px solid black;
+  border-bottom: 8px solid black;
   padding: 0px;
   text-align: center;
-  margin:1px;
-  margin-bottom:5px;
+  color: white;
+  font-weight: bold;
+  font-size:15px;
+  height:60px;
+  line-height: 60px;
 }
