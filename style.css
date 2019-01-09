@@ -8,7 +8,6 @@ body {
 }
 
 h1 {
-  font: 400 100px/1.2 'Merienda One', Helvetica, sans-serif;
   font-style: italic;
   color: #373fff;
 }
@@ -46,9 +45,9 @@ h1 {
   vertical-align: middle;
   white-space: nowrap;
   font-size:20px;
-  font-weight:bolder;
-  font-family:"Comic Sans";
+  font-weight:lighter;
   color:white;
+  font-family:'Merienda One', Helvetica, cursive;
 }
 
 .player-insert-box
@@ -78,13 +77,13 @@ h1 {
 #countdownSpace {
   display: block;
   position: absolute;
-  height:250px;
-  line-height:250px;
-  width:250px;
+  height:400px;
+  line-height:400px;
+  width:400px;
   left:50%;
   top:50%;
-  margin-left: -125px;
-  margin-top: -125px;
+  margin-left: -200px;
+  margin-top: -200px;
   z-index:0;
   text-align:center;
   font-size:100px;

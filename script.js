@@ -86,6 +86,12 @@ var playerList=
   {
     playerList.players[index].buzzedIn = false;
     view.displayPlayers();
+  },
+  unbuzzAllPlayers: function()
+  {
+    this.players.forEach(function(player, index) {
+      playerList.unbuzzPlayer(index);
+    });
   }
 };
 
@@ -107,8 +113,7 @@ var currentQuestion =
   },
   displayCountdown: function()
   {
-    // should go 3...2...1... go
-    // get the countdownSpace element
+    playerList.unbuzzAllPlayers();
     this.decrementCountdown(3);
   },
   decrementCountdown: function(value)
@@ -153,6 +158,7 @@ var currentQuestion =
     currentQuestion.started = false;
     currentQuestion.answerWindowOpen = false;
     view.hideCountdown();
+    playerList.unbuzzAllPlayers();
     view.displayPlayers();
   }
   
@@ -268,6 +274,11 @@ var view =
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';
       
+      var playerNameBox = document.createElement('label');
+      playerNameBox.className = 'player-name-box';
+      playerNameBox.textContent = playerList.getPlayerBoxString(index);
+      
+      // figure out what the color should be based on the details
       if(currentQuestion.isWinner(player))
       {
          flexChildElement.style.backgroundColor = 'green';
@@ -279,15 +290,13 @@ var view =
       else
       {
         flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
+        playerNameBox.style.color = player.selected ? 'black' : 'white';
       }
       
       flexChildElement.id = "playerbox-" + index;
       
       flexChildElement.addEventListener('click', handlers.playerBoxSelected);
-      
-      var playerNameBox = document.createElement('label');
-      playerNameBox.className = 'player-name-box';
-      playerNameBox.textContent = playerList.getPlayerBoxString(index);
+    
       
       playerNameBox.id = "playernamebox-" + index;
       
