@@ -98,21 +98,42 @@ var playerList=
 
 var boardGrid = 
 {
-  
-  
-  
+  ROWS: 5,
+  COLUMNS: 6,
+  boardTiles: new BoardTile[6][5],
+  roundNum: 0,
+  fillBoardTiles: function()
+  {
+    for(var row = 0; row < this.ROWS; row++)
+    {
+      for(var col = 0; col < this.COLUMNS; col++)
+      {
+        this.boardTiles[row][col] = new BoardTile(row, col, this.getMoneyValue(row), '');
+      }
+    }
+  },
+  getMoneyValue: function(row)
+  {
+    var rowIncrement = this.roundNum == 0 ? 200 : 400;
+    
+    return (row + 1) * rowIncrement;
+  }
   
 };
 
-var boardTile = 
+class BoardTile
 {
-  available: true,
-  moneyValue: undefined,
-  column: undefined,
-  row: undefined,
-  textContent: undefined,
+  constructor(row, column, moneyValue, textContent)
+  {
+    this.row = row;
+    this.column = column;
+    this.moneyValue = moneyValue;
+    this.textContent = textContent;
+    
+    this.available = true;
+  }
   
-  isClicked: function()
+  isClicked()
   {
     // prompt the current question to start
     if(this.available === false)
@@ -123,8 +144,9 @@ var boardTile =
     // set the question to unavailable if the startFromTile returned affirmative
     if(questionStarted === true)
       this.available = false;
-  },
-  createElement: function()
+  }
+  
+  createElement()
   {
     var element = document.createElement('div');
     element.className = 'board-grid-item';
@@ -349,6 +371,11 @@ var view =
       playerBoxContainer.appendChild(flexChildElement);
     });
   },
+  displayBoardGrid: function()
+  {
+    
+  }
+  ,
   displayCountdown: function(content)
   {
     var countdownSpace = document.getElementById('countdownSpace');
