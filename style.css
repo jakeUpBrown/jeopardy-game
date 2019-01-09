@@ -22,15 +22,17 @@ h1 {
 }
 
 .flex-child {
-  width:100px;
-  height: 100px;
   margin: auto;
   border: 2px solid black;
-  vertical-align: middle;
-  padding-top: 50px;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 50px;
+  vertical-align: top;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
 }
 
-.player-name-box
+.player-name-box {
+  margin: auto;
+  vertical-align: middle;
+  white-space: nowrap;
+}
