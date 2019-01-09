@@ -71,7 +71,7 @@ var playerList=
   },
   playerBuzzed: function(player)
   {
-    if(player.buzzedIn === true)
+    if(player.buzzedIn === true || currentQuestion.isWinner(player))
       return;
     
     currentQuestion.playerBuzzed(player);
@@ -80,7 +80,7 @@ var playerList=
     view.displayPlayers();
     setTimeout(function() {
       window.playerList.unbuzzPlayer(player.index)
-    }, 500);
+    }, 2000);
   },
   unbuzzPlayer: function(index)
   {
@@ -112,18 +112,16 @@ var currentQuestion =
     this.decrementCountdown(3);
   },
   decrementCountdown: function(value)
-  {
-    var countdownSpace = document.getElementById('countdownSpace');
-    
+  {    
     if(value <= 0)
     {
-      countdownSpace.innerHTML = 'GO!';
+      view.displayCountdown('GO!');
       this.openAnswerWindow();
       return;
     }
     else
     {
-      countdownSpace.innerHTML = value;
+      view.displayCountdown(value);
       
       setTimeout(function() {
         currentQuestion.decrementCountdown(--value);
@@ -151,10 +149,10 @@ var currentQuestion =
   {
     var countdownSpace = document.getElementById('countdownSpace');
     
-    countdownSpace.innerHTML = '';
     currentQuestion.winnerIndex = -1;
     currentQuestion.started = false;
-    
+    currentQuestion.answerWindowOpen = false;
+    view.hideCountdown();
     view.displayPlayers();
   }
   
@@ -297,6 +295,20 @@ var view =
       
       playerBoxContainer.appendChild(flexChildElement);
     });
+  },
+  displayCountdown: function(content)
+  {
+    var countdownSpace = document.getElementById('countdownSpace');
+    
+    countdownSpace.innerHTML = content;
+    countdownSpace.style.zIndex=10;
+  },
+  hideCountdown: function()
+  {
+    var countdownSpace = document.getElementById('countdownSpace');
+    
+    countdownSpace.innerHTML = '';
+    countdownSpace.style.zIndex=0;
   }
 };
 
