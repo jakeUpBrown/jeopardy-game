@@ -2,12 +2,19 @@
 
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
-  margin: 2em;
 }
 
 h1 {
   font-style: italic;
   color: #373fff;
+}
+
+.body-div {
+  width:700px;
+  height:700px;
+  margin: 0 auto;
+  border:thick solid black;
+  padding: 1em; 
 }
 
 .flex-container {
