@@ -46,7 +46,15 @@ var handlers = {
   playerBoxSelected: function(event)
   {
     console.log(event);
-    event.target.style
+  },
+  playerNameKeyUp: function(event)
+  {
+    event.preventDefault();
+    
+    if(event.keyUp === 13)
+    {
+      document.getElementById('addPlayerButton').click();
+    }
   }
 };
 

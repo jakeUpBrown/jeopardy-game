@@ -16,8 +16,8 @@
   <body>
 
     Player Name :
-    <input type="text" id="playerNameInput">
-    <button onclick="handlers.addNewPlayer()">
+    <input type="text" id="playerNameInput" onKeyUp="handlers.playerNameInputKeyUp()">
+    <button onclick="handlers.addNewPlayer()" id="addPlayerButton">
     Add Player
     </button>
     
