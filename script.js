@@ -24,7 +24,9 @@ var playerList=
   {
     this.players.forEach(function(player, loopIndex) {
       player.selected = loopIndex === index ? !player.selected : false;
-    }
+    });
+    
+    view.displayPlayers();
   }
 };
 
@@ -44,7 +46,7 @@ var handlers = {
       return;
     }
     
-    var newPlayer = {playerName: playerNameInput.value; selected: false};
+    var newPlayer = {playerName: playerNameInput.value, selected: false};
     playerNameInput.value = '';
     window.playerList.addNewPlayer(newPlayer);
     view.displayPlayers();
@@ -78,6 +80,8 @@ var view =
           
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';
+      
+      flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : 'white';
       
       flexChildElement.addEventListener('click', handlers.playerBoxSelected);
       
