@@ -9,10 +9,12 @@ var playerList=
   {
     var player = this.players[index];
     var playerName = player.playerName;
-    var keyBound = player.keyBound;
+    var keyBound;
     
-    if(keyBound === undefined)
+    if(player.keyBound === undefined)
       keyBound = 'no key bound';
+    else
+      keyBound = String.fromCharCode(player.keyBound);
       
     return playerName + " (" + keyBound + ")";
   },
@@ -28,10 +30,13 @@ var playerList=
   },
   getSelectedPlayer: function()
   {
-    return this.players.forEach(function(player) {
+    var playerRet = {};
+    this.players.forEach(function(player) {
       if(player.selected)
-        return player;
+        playerRet = player;
     });
+    
+    return playerRet;
   },
   isKeyCodeValid: function(keyCode)
   {
@@ -103,23 +108,28 @@ var handlers = {
     
     if(selectedPlayer !== undefined)
     {
-      if(event.keyCode === 27)
+      // if the key code is the same as the current player's, just skip the logic of trying to assign it.
+      debugger;
+      if(event.keyCode !== selectedPlayer.keyCode)
       {
-        // it's escape. wil want to toggle all players to unselected
-        window.playerList.togglePlayerSelected(undefined);
-        return;
+        if(event.keyCode === 27)
+        {
+          // it's escape. wil want to toggle all players to unselected
+          window.playerList.togglePlayerSelected(undefined);
+          return;
+        }
+
+        // there was a player selected. try to assign the key to the player
+        // check to see if any other player has claimed this keyCode
+        if(window.playerList.isKeyCodeValid(event.keyCode))
+          selectedPlayer.keyBound = event.keyCode;
+        else
+          window.alert('Key was already bound to another player');
       }
       
-      // there was a player selected. try to assign the key to the player
-      // check to see if any other player has claimed this keyCode
-      if(window.playerList.isKeyCodeValid(event.keyCode))
-      {
-        selectedPlayer.keyBound = event.keyCode;
-      }
-      else
-      {
-        window.alert('Key was already bound to another player');
-      }
+      // always set the selected player to false and refresh the players displayed
+      selectedPlayer.selected = false;
+      view.displayPlayers();
       return;
     }
     
