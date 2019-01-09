@@ -1,21 +1,20 @@
+var playersObject = 
+{
+  players: [],
+  addNewPlayer: function(player)
+  {
+    this.players.push(player);
+  }
+};
 
 
 
 var handlers = {
-  displayFileExtension: function()
+  addNewPlayer: function()
   {
-    var fileNameInput = document.getElementById('fileNameInput');
-    
-    var resultsArea = document.getElementById('resultsArea');
-    resultsArea.textContent = stringOperations.getFileExtension(fileNameInput.value);
-    
-    fileNameInput.value = '';
+    var playerNameInput = document.getElementById('playerNameInput');
+    var newPlayer = {playerName: this.newPlayerName.value};
+    playerNameInput.value = '';
   }
 }
 
-var stringOperations = {
-  getFileExtension: function(fileName)
-  {
-    return fileName.substring(fileName.lastIndexOf('.'));
-  }
-}
