@@ -94,7 +94,7 @@ var playerList=
 var currentRound = 
 {  
   started: false,
-  winnerIndex: undefined,
+  winnerIndex: -1,
   // want to be able to start a game and display a countdown
   displayCountdown: function()
   {
@@ -124,10 +124,11 @@ var currentRound =
   startGame: function()
   {
     this.started = true;
+    setTimeout(this.endRound, 5000);
   },
   playerBuzzed: function(player)
   {
-    if(this.started === true && this.winnerIndex === undefined)
+    if(this.started === true && this.winnerIndex === -1)
     {
       // found the winner.
       this.winnerIndex = player.index;
@@ -135,14 +136,17 @@ var currentRound =
   },
   isWinner: function(player)
   {
-    return player.index === winnerIndex;
+    return player.index == this.winnerIndex;
   },
   endRound: function()
   {
     var countdownSpace = document.getElementById('countdownSpace');
     
     countdownSpace.innerHTML = '';
+    currentRound.winnerIndex = -1;
+    currentRound.started = false;
     
+    view.displayPlayers();
   }
   
   // once the game is started, the first player to buzz in should be declared the winner
