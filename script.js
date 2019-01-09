@@ -28,12 +28,27 @@ var playerList=
   },
   getSelectedPlayer: function()
   {
-    this.players.forEach(function(player) {
+    return this.players.forEach(function(player) {
       if(player.selected)
         return player;
     });
+  },
+  isKeyCodeValid: function(keyCode)
+  {
+    // check if keycode is alphanumeric
+    if(!util.isKeyAlphaNumeric(keyCode))
+      return false;
     
-    return {};
+    var boolRet = true;
+    
+    // check that no other player has claimed the keycode
+    this.players.forEach(function(player) {
+      if(player.keyBound === keyCode)
+        boolRet = false;
+    });
+    
+    // if here, the key should be alphaNumeric and free. return true;
+    return boolRet;
   }
 };
 
@@ -71,7 +86,6 @@ var handlers = {
   },
   playerNameKeyUp: function(event)
   {     
-    console.log('playerNameKeyUp');
     event.stopPropagation();
 
     if(event.keyCode === 13)
@@ -81,6 +95,7 @@ var handlers = {
   },
   anyKeyUp: function(event)
   {
+    debugger;
     console.log(event);
     
     // get selected player
@@ -97,7 +112,7 @@ var handlers = {
       
       // there was a player selected. try to assign the key to the player
       // check to see if any other player has claimed this keyCode
-      if(window.playerList.isKeyCodeFree(event.keyCode))
+      if(window.playerList.isKeyCodeValid(event.keyCode))
       {
         selectedPlayer.keyBound = event.keyCode;
       }
@@ -148,7 +163,7 @@ var view =
   }
 };
 
-var utilities = 
+var util = 
 {
   isKeyAlphaNumeric: function(keyCode)
   {
