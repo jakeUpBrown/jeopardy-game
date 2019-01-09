@@ -1,25 +1,15 @@
 var handlers = {
- submitYear: function()
+ multiply: function()
   {    
-    var yearInput = document.getElementById('yearInput');    
-    var resultsArea = document.getElementById('resultsArea');
-  
-    if(window.isLeapYear(yearInput.valueAsNumber))
-    {
-      resultsArea.textContent = 'Leap Year';
-      resultsArea.style.color = 'green';
-    }
-    else
-    {
-      resultsArea.textContent = 'Not A Leap Year';
-      resultsArea.style.color = 'red';
-    }
-
-    yearInput.textContent = '';
+    var firstNumberInput = document.getElementById('firstNumberInput');    
+    var secondNumberInput = document.getElementById('secondNumberInput');
+  },
+  divide: function()
+  {
+    
+  },
+  buttonClicked: function(event)
+  {
+    console.log(event);
   }
 };
-
-function isLeapYear(year)
-{
-  return year % 4 == 0 && year % 2000 != 0;
-}

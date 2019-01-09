@@ -16,13 +16,24 @@
   <body>
 
     <div>
-      Enter Year:
-      <input id="yearInput" type="number">
-      <button onclick="handlers.submitYear()">
-        Submit
-      </button>
+      1st Number :
+      <input id="firstNumberInput" type="number">
     </div>
-  
+      
+    <div>
+      2nd Number :
+      <input id="secondNumberInput" type="number">
+    </div>
+    
+    <div onclick="handlers.buttonClicked(event)">
+      <button id="multiplyButton">Multiply</button>
+      <button id="divideButton">Divide</button>
+    </div>
+
+    <div>
+      The Result Is :
+    </div>
+    
     <div id="resultsArea">
     </div>
     
