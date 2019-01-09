@@ -70,7 +70,10 @@ var handlers = {
     view.displayPlayers();
   },
   playerNameKeyUp: function(event)
-  {        
+  {     
+    console.log('playerNameKeyUp');
+    event.stopPropagation();
+
     if(event.keyCode === 13)
     {
       document.getElementById('addPlayerButton').click();
@@ -78,6 +81,8 @@ var handlers = {
   },
   anyKeyUp: function(event)
   {
+    console.log(event);
+    
     // get selected player
     var selectedPlayer = window.playerList.getSelectedPlayer();
     
@@ -143,4 +148,13 @@ var view =
   }
 };
 
-window.onkeyup = 
+var utilities = 
+{
+  isKeyAlphaNumeric: function(keyCode)
+  {
+    return (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90);
+  }
+};
+
+
+window.onkeyup = handlers.anyKeyUp;
