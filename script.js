@@ -54,6 +54,30 @@ var playerList=
     
     // if here, the key should be alphaNumeric and free. return true;
     return boolRet;
+  },
+  keyBuzzed: function(keyCode)
+  {
+    var playerBuzzed = false;
+    this.players.forEach(function(player) {
+      if(player.keyCode === keyCode)
+      {
+        this.buzzPlayer(player);
+        playerBuzzed = true;
+      }
+    }, this);
+  },
+  playerBuzzed: function(player)
+  {
+    player.buzzedIn = true;
+    view.displayPlayers();
+    setTimeout(this.unbuzzPlayers, 500);
+  },
+  unbuzzPlayer: function(player)
+  {
+    this.players.forEach(function(player) {
+      player.buzzedIn = 
+      
+    });
   }
 };
 
@@ -73,7 +97,7 @@ var handlers = {
       return;
     }
     
-    var newPlayer = {playerName: playerNameInput.value, selected: false};
+    var newPlayer = {playerName: playerNameInput.value, selected: false, buzzedIn: false};
     playerNameInput.value = '';
     window.playerList.addNewPlayer(newPlayer);
     view.displayPlayers();
@@ -100,7 +124,6 @@ var handlers = {
   },
   anyKeyUp: function(event)
   {
-    debugger;
     console.log(event);
     
     // get selected player
@@ -109,8 +132,7 @@ var handlers = {
     if(selectedPlayer !== undefined)
     {
       // if the key code is the same as the current player's, just skip the logic of trying to assign it.
-      debugger;
-      if(event.keyCode !== selectedPlayer.keyCode)
+      if(event.keyCode !== selectedPlayer.keyBound)
       {
         if(event.keyCode === 27)
         {
@@ -124,13 +146,19 @@ var handlers = {
         if(window.playerList.isKeyCodeValid(event.keyCode))
           selectedPlayer.keyBound = event.keyCode;
         else
-          window.alert('Key was already bound to another player');
+          window.alert('Invalid Key');
       }
       
       // always set the selected player to false and refresh the players displayed
       selectedPlayer.selected = false;
       view.displayPlayers();
       return;
+    }
+    
+    if(util.isKeyAlphaNumeric(event.keyCode))
+    {
+      // found alphanumeric key. will want to buzz the player in if it's assigned to anyone
+      var playerBuzzed = window.playerList.keyBuzzed(event.keyCode);
     }
     
     // if here, no player was selected. will want to check if any key matched a player
