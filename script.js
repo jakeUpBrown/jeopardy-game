@@ -79,11 +79,31 @@ var handlers = {
   anyKeyUp: function(event)
   {
     // get selected player
-    var selectedPlayer = playerList.getSelectedPlayer();
+    var selectedPlayer = window.playerList.getSelectedPlayer();
     
     if(selectedPlayer !== undefined)
     {
-      // there was a player selected. try to assign 
+      if(event.keyCode === 27)
+      {
+        // it's escape. wil want to toggle all players to unselected
+        window.playerList.togglePlayerSelected(undefined);
+        return;
+      }
+      
+      // there was a player selected. try to assign the key to the player
+      // check to see if any other player has claimed this keyCode
+      if(window.playerList.isKeyCodeFree(event.keyCode))
+      {
+        selectedPlayer.keyBound = event.keyCode;
+      }
+      else
+      {
+        window.alert('Key was already bound to another player');
+      }
+      return;
+    }
+    
+    // if here, no player was selected. will want to check if any key matched a player
   }
 };
 
