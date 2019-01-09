@@ -20,13 +20,11 @@ var playerList=
   {
     return this.players.length >= 3;
   },
-  setPlayerSelected: function(index)
+  togglePlayerSelected: function(index)
   {
     this.players.forEach(function(player, loopIndex) {
       player.selected = loopIndex === index ? !player.selected : false;
     });
-    
-    view.displayPlayers();
   }
 };
 
@@ -54,9 +52,15 @@ var handlers = {
   playerBoxSelected: function(event)
   {
     console.log(event);
+    var playerIndex;
+    
+    // find player index to toggle.
+    
+    window.playerList.togglePlayerSelected(playerIndex);
+    view.displayPlayers();
   },
   playerNameKeyUp: function(event)
-  {    
+  {        
     if(event.keyCode === 13)
     {
       document.getElementById('addPlayerButton').click();

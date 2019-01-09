@@ -15,17 +15,25 @@
   </head>  
   <body>
 
-    Player Name :
-    <input type="text" id="playerNameInput" onkeyup="handlers.playerNameKeyUp(event)">
-    <button onclick="handlers.addNewPlayer()" id="addPlayerButton">
-    Add Player
-    </button>
-    
-    <p id="resultsArea">
-    </p>
-
-    <div class="flex-container" id="playerBoxContainer">
+    <div>
+      <h1>
+        JEOPARDY
+      </h1>
     </div>
     
+    <div>
+      Player Name:
+      <input type="text" id="playerNameInput" onkeyup="handlers.playerNameKeyUp(event)">
+      <button onclick="handlers.addNewPlayer()" id="addPlayerButton">
+      Add Player
+      </button>
+
+      <p id="resultsArea">
+      </p>
+
+      <div class="flex-container" id="playerBoxContainer">
+      </div>
+    </div>
+
   </body>
 </html>
