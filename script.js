@@ -52,7 +52,9 @@ var handlers = {
   playerBoxSelected: function(event)
   {
     console.log(event);
-    var playerIndex;
+    var id = event.target.id;
+    
+    var playerIndex = parseInt(id.substring(id.lastIndexOf('-')));
     
     // find player index to toggle.
     
@@ -87,11 +89,15 @@ var view =
       
       flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : 'white';
       
+      flexChildElement.id = "playerbox-" + index;
+      
       flexChildElement.addEventListener('click', handlers.playerBoxSelected);
       
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
       playerNameBox.textContent = playerList.getPlayerBoxString(index);
+      
+      playerNameBox.id = "playernamebox-" + index;
       
       flexChildElement.appendChild(playerNameBox);
       
