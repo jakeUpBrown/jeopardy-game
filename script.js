@@ -15,6 +15,10 @@ var playerList=
       keyBound = 'no key bound';
       
     return playerName + " (" + keyBound + ")";
+  },
+  isMaxCapacity: function()
+  {
+    return this.players.length >= 3;
   }
 };
 
@@ -23,6 +27,17 @@ var handlers = {
   addNewPlayer: function()
   {
     var playerNameInput = document.getElementById('playerNameInput');
+    
+    if(playerNameInput === undefined || playerNameInput.value === undefined || playerNameInput.value === '')
+      // don't add a new player
+      return;
+    
+    if(window.playerList.isMaxCapacity())
+    {
+      window.alert('too many dicks on the dancefloor');
+      return;
+    }
+    
     var newPlayer = {playerName: playerNameInput.value};
     playerNameInput.value = '';
     window.playerList.addNewPlayer(newPlayer);
@@ -43,11 +58,10 @@ var view =
    
     var playerBoxContainer = document.getElementById('playerBoxContainer');
     
-    debugger;
     // clear player box container
     playerBoxContainer.innerHTML = '';
     
-    this.playerList.players.forEach(function(player, index){
+    window.playerList.players.forEach(function(player, index){
           
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';

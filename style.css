@@ -22,7 +22,9 @@ h1 {
 }
 
 .flex-child {
-  margin: auto;
+  margin-left: auto;
+    margin-left: auto;
+
   border: 2px solid black;
   vertical-align: top;
   padding-top: 20px;
