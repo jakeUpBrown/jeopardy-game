@@ -276,7 +276,7 @@ var view =
       }
       else
       {
-        flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : 'white';
+        flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
       }
       
       flexChildElement.id = "playerbox-" + index;
