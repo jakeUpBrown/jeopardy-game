@@ -30,7 +30,7 @@ var playerList=
   },
   getSelectedPlayer: function()
   {
-    var playerRet = {};
+    var playerRet = undefined;
     this.players.forEach(function(player) {
       if(player.selected)
         playerRet = player;
@@ -59,9 +59,9 @@ var playerList=
   {
     var playerBuzzed = false;
     this.players.forEach(function(player) {
-      if(player.keyCode === keyCode)
+      if(player.keyBound === keyCode)
       {
-        this.buzzPlayer(player);
+        this.playerBuzzed(player);
         playerBuzzed = true;
       }
     }, this);
@@ -72,12 +72,13 @@ var playerList=
     view.displayPlayers();
     setTimeout(this.unbuzzPlayers, 500);
   },
-  unbuzzPlayer: function(player)
+  unbuzzPlayers: function()
   {
-    this.players.forEach(function(player) {
-      player.buzzedIn = 
-      
+    playerList.players.forEach(function(player) {
+      player.buzzedIn = false;
     });
+    
+    view.displayPlayers();
   }
 };
 
@@ -182,7 +183,14 @@ var view =
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';
       
-      flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : 'white';
+      if(player.buzzedIn)
+      {
+        flexChildElement.style.backgroundColor = "red";
+      }
+      else
+      {
+        flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : 'white';
+      }
       
       flexChildElement.id = "playerbox-" + index;
       
