@@ -46,6 +46,7 @@ var handlers = {
   playerBoxSelected: function(event)
   {
     console.log(event);
+    event.target.style
   }
 };
 
@@ -65,7 +66,9 @@ var view =
           
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';
-
+      
+      flexChildElement.addEventListener('click', handlers.playerBoxSelected);
+      
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
       playerNameBox.textContent = playerList.getPlayerBoxString(index);
