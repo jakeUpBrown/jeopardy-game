@@ -3,6 +3,7 @@ var playerList=
   players: [],
   addNewPlayer: function(player)
   {
+    player.index = this.players.length;
     this.players.push(player);
   },
   getPlayerBoxString: function(index)
@@ -65,23 +66,43 @@ var playerList=
         playerBuzzed = true;
       }
     }, this);
+    
+    return playerBuzzed;
   },
   playerBuzzed: function(player)
   {
+    if(player.buzzedIn === true)
+      return;
+    
     player.buzzedIn = true;
     view.displayPlayers();
-    setTimeout(this.unbuzzPlayers, 500);
+    setTimeout(function() {
+      window.playerList.unbuzzPlayer(player.index)
+    }, 500);
   },
-  unbuzzPlayers: function()
+  unbuzzPlayer: function(index)
   {
-    playerList.players.forEach(function(player) {
-      player.buzzedIn = false;
-    });
-    
+    playerList.players[index].buzzedIn = false;
     view.displayPlayers();
   }
 };
 
+
+
+var game = 
+{  
+  // want to be able to start a game and display a countdown
+  displayCountdown: function()
+  {
+    // should go 3...2...1... go
+    
+  }
+  
+  
+  // once the game is started, the first player to buzz in should be declared the winner
+  
+  
+};
 
 var handlers = {
   addNewPlayer: function()
