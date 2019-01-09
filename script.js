@@ -94,6 +94,7 @@ var playerList=
 var currentQuestion = 
 {  
   started: false,
+  answerWindowOpen: false,
   winnerIndex: -1,
   // want to be able to start a game and display a countdown
   startRound: function()
@@ -117,7 +118,7 @@ var currentQuestion =
     if(value <= 0)
     {
       countdownSpace.innerHTML = 'GO!';
-      this.startGame();
+      this.openAnswerWindow();
       return;
     }
     else
@@ -129,14 +130,14 @@ var currentQuestion =
       }, 1000);
     }
   },
-  startGame: function()
+  openAnswerWindow: function()
   {
-    this.started = true;
+    this.answerWindowOpen = true;
     setTimeout(this.endRound, 5000);
   },
   playerBuzzed: function(player)
   {
-    if(this.started === true && this.winnerIndex === -1)
+    if(this.answerWindowOpen === true && this.winnerIndex === -1)
     {
       // found the winner.
       this.winnerIndex = player.index;
