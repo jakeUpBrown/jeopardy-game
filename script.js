@@ -25,6 +25,15 @@ var playerList=
     this.players.forEach(function(player, loopIndex) {
       player.selected = loopIndex === index ? !player.selected : false;
     });
+  },
+  getSelectedPlayer: function()
+  {
+    this.players.forEach(function(player) {
+      if(player.selected)
+        return player;
+    });
+    
+    return {};
   }
 };
 
@@ -51,10 +60,9 @@ var handlers = {
   },
   playerBoxSelected: function(event)
   {
-    console.log(event);
     var id = event.target.id;
     
-    var playerIndex = parseInt(id.substring(id.lastIndexOf('-')));
+    var playerIndex = parseInt(id.substring(id.lastIndexOf('-') + 1));
     
     // find player index to toggle.
     
@@ -67,6 +75,15 @@ var handlers = {
     {
       document.getElementById('addPlayerButton').click();
     }
+  },
+  anyKeyUp: function(event)
+  {
+    // get selected player
+    var selectedPlayer = playerList.getSelectedPlayer();
+    
+    if(selectedPlayer !== undefined)
+    {
+      // there was a player selected. try to assign 
   }
 };
 
@@ -105,3 +122,5 @@ var view =
     });
   }
 };
+
+window.onkeyup = 
