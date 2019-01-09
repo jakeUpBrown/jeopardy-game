@@ -95,7 +95,24 @@ var game =
   displayCountdown: function()
   {
     // should go 3...2...1... go
+    // get the countdownSpace element
+    this.decrementCountdown(3);
+  },
+  decrementCountdown: function(value)
+  {
+    var countdownSpace = document.getElementById('countdownSpace');
     
+    if(value <= 0)
+    {
+      countdownSpace.innerHTML = 'GO!';
+      return;
+    }
+    else
+    {
+      countdownSpace.innerHTML = value;
+    }
+    
+    this.decrementCountdown(--value);
   }
   
   
