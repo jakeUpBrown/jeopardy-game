@@ -74,6 +74,8 @@ var playerList=
     if(player.buzzedIn === true)
       return;
     
+    currentRound.playerBuzzed(player);
+    
     player.buzzedIn = true;
     view.displayPlayers();
     setTimeout(function() {
@@ -89,8 +91,10 @@ var playerList=
 
 
 
-var game = 
+var currentRound = 
 {  
+  started: false,
+  winnerIndex: undefined,
   // want to be able to start a game and display a countdown
   displayCountdown: function()
   {
@@ -105,16 +109,41 @@ var game =
     if(value <= 0)
     {
       countdownSpace.innerHTML = 'GO!';
+      this.startGame();
       return;
     }
     else
     {
       countdownSpace.innerHTML = value;
+      
+      setTimeout(function() {
+        currentRound.decrementCountdown(--value);
+      }, 1000);
     }
+  },
+  startGame: function()
+  {
+    this.started = true;
+  },
+  playerBuzzed: function(player)
+  {
+    if(this.started === true && this.winnerIndex === undefined)
+    {
+      // found the winner.
+      this.winnerIndex = player.index;
+    }
+  },
+  isWinner: function(player)
+  {
+    return player.index === winnerIndex;
+  },
+  endRound: function()
+  {
+    var countdownSpace = document.getElementById('countdownSpace');
     
-    this.decrementCountdown(--value);
+    countdownSpace.innerHTML = '';
+    
   }
-  
   
   // once the game is started, the first player to buzz in should be declared the winner
   
@@ -221,7 +250,11 @@ var view =
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';
       
-      if(player.buzzedIn)
+      if(currentRound.isWinner(player))
+      {
+         flexChildElement.style.backgroundColor = 'green';
+      }
+      else if(player.buzzedIn)
       {
         flexChildElement.style.backgroundColor = "red";
       }
