@@ -74,7 +74,7 @@ var playerList=
     if(player.buzzedIn === true)
       return;
     
-    currentRound.playerBuzzed(player);
+    currentQuestion.playerBuzzed(player);
     
     player.buzzedIn = true;
     view.displayPlayers();
@@ -91,7 +91,7 @@ var playerList=
 
 
 
-var currentRound = 
+var currentQuestion = 
 {  
   started: false,
   winnerIndex: -1,
@@ -125,7 +125,7 @@ var currentRound =
       countdownSpace.innerHTML = value;
       
       setTimeout(function() {
-        currentRound.decrementCountdown(--value);
+        currentQuestion.decrementCountdown(--value);
       }, 1000);
     }
   },
@@ -151,8 +151,8 @@ var currentRound =
     var countdownSpace = document.getElementById('countdownSpace');
     
     countdownSpace.innerHTML = '';
-    currentRound.winnerIndex = -1;
-    currentRound.started = false;
+    currentQuestion.winnerIndex = -1;
+    currentQuestion.started = false;
     
     view.displayPlayers();
   }
@@ -177,7 +177,10 @@ var handlers = {
       return;
     }
     
-    var newPlayer = {playerName: playerNameInput.value, selected: false, buzzedIn: false};
+    var newPlayer = {playerName: playerNameInput.value,
+                     selected: false,
+                     buzzedIn: false,
+                     money: 0};
     playerNameInput.value = '';
     window.playerList.addNewPlayer(newPlayer);
     view.displayPlayers();
@@ -245,7 +248,7 @@ var handlers = {
   },
   startRound: function()
   {
-    currentRound.startRound();
+    currentQuestion.startRound();
   }
 };
 
@@ -266,7 +269,7 @@ var view =
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';
       
-      if(currentRound.isWinner(player))
+      if(currentQuestion.isWinner(player))
       {
          flexChildElement.style.backgroundColor = 'green';
       }
