@@ -25,5 +25,9 @@ var view =
   {
     // for each player in window.playerList, create an element and display it
   },
-  
+  createPlayerElement: function(player)
+  {
+    // for this player, create an element for the DOM
+    
+  }
 };

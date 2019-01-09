@@ -9,3 +9,7 @@ h1 {
   font-style: italic;
   color: #373fff;
 }
+
+.boxed {
+  border: 1px solid green ; height: 200px; width: 100px; vertical-align: middle; vertical-padding: 50px;
+}
