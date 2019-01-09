@@ -2,6 +2,10 @@
 
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  width:700px;
+  height:700px;
+  padding:5px;
+  border: thick solid black;
 }
 
 h1 {
@@ -10,11 +14,11 @@ h1 {
 }
 
 .body-div {
-  width:700px;
-  height:700px;
+  position:relative;
+  height:100%;
+  width:100%;
   margin: 0 auto;
-  border:thick solid black;
-  padding: 1em; 
+  padding: 0px; 
 }
 
 .flex-container {
@@ -22,7 +26,7 @@ h1 {
   flex-direction: row;
   justify-content: center;
   position:absolute;
-  bottom:150px;
+  bottom:100px;
   width: 100%;
 }
 
@@ -46,8 +50,8 @@ h1 {
 {
   margin:auto;
   position: absolute;
-  bottom: 30px;
-  left: 20px;
+  bottom: 20px;
+  left: 10px;
   border: 1px solid black;
   padding:10px;
 }
@@ -57,7 +61,7 @@ h1 {
   margin-left:auto;
   margin-right:auto;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #countdownSpace {
