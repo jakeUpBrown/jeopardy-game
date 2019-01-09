@@ -2,18 +2,20 @@
 
 
 var handlers = {
-  addNewUserVariable: function()
+  displayFileExtension: function()
   {
-    var variableName = document.getElementById('fileNameInput').value;
+    var fileNameInput = document.getElementById('fileNameInput');
     
-    fileExtension variableName.lastIndexOf('.');
+    var resultsArea = document.getElementById('resultsArea');
+    resultsArea.textContent = stringOperations.getFileExtension(fileNameInput.value);
     
+    fileNameInput.value = '';
   }
 }
 
 var stringOperations = {
   getFileExtension: function(fileName)
   {
-    return variableName.substring(0,
+    return fileName.substring(fileName.lastIndexOf('.'));
   }
 }
