@@ -19,6 +19,12 @@ var playerList=
   isMaxCapacity: function()
   {
     return this.players.length >= 3;
+  },
+  setPlayerSelected: function(index)
+  {
+    this.players.forEach(function(player, loopIndex) {
+      player.selected = loopIndex === index ? !player.selected : false;
+    }
   }
 };
 
@@ -34,11 +40,11 @@ var handlers = {
     
     if(window.playerList.isMaxCapacity())
     {
-      window.alert('too many dicks on the dancefloor');
+      window.alert('Too many dicks on the dancefloor.');
       return;
     }
     
-    var newPlayer = {playerName: playerNameInput.value};
+    var newPlayer = {playerName: playerNameInput.value; selected: false};
     playerNameInput.value = '';
     window.playerList.addNewPlayer(newPlayer);
     view.displayPlayers();
@@ -48,10 +54,8 @@ var handlers = {
     console.log(event);
   },
   playerNameKeyUp: function(event)
-  {
-    event.preventDefault();
-    
-    if(event.keyUp === 13)
+  {    
+    if(event.keyCode === 13)
     {
       document.getElementById('addPlayerButton').click();
     }
