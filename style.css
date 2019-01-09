@@ -11,19 +11,23 @@ h1 {
 }
 
 .boxed {
-  border: 2px solid black;
-  height: 200px;
-  width: 100px;
-  vertical-align: middle;
-  padding-top: 50px;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 50px;
+
 }
 
 .flex-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex-basis: 80px;
+}
+
+.flex-child {
+  width:100px;
+  height: 100px;
+  margin: auto;
+  border: 2px solid black;
+  vertical-align: middle;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
 }
