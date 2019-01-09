@@ -96,20 +96,64 @@ var playerList=
 };
 
 
+var boardGrid = 
+{
+  
+  
+  
+  
+};
+
+var boardTile = 
+{
+  available: true,
+  moneyValue: undefined,
+  column: undefined,
+  row: undefined,
+  textContent: undefined,
+  
+  isClicked: function()
+  {
+    // prompt the current question to start
+    if(this.available === false)
+      return;
+    
+    var questionStarted = currentQuestion.startFromTile(this);
+    
+    // set the question to unavailable if the startFromTile returned affirmative
+    if(questionStarted === true)
+      this.available = false;
+  },
+  createElement: function()
+  {
+    var element = document.createElement('div');
+    element.className = 'board-grid-item';
+    element.textContent = this.moneyValue !== undefined ? ('$' + this.moneyValue) : '';
+    return element;
+  }
+};
+
 
 var currentQuestion = 
 {  
   started: false,
   answerWindowOpen: false,
   winnerIndex: -1,
+  tile: undefined,
+  startFromTile: function(tile)
+  {
+    this.tile = tile;
+    return this.startRound();
+  },
   // want to be able to start a game and display a countdown
   startRound: function()
   {
     if(this.started === true)
-      return;
+      return false;
     
     this.started = true;
     this.displayCountdown();
+    return true;
   },
   displayCountdown: function()
   {
