@@ -17,7 +17,7 @@ var playerList=
     else
       keyBound = String.fromCharCode(player.keyBound);
       
-    return playerName + " (" + keyBound + ")";
+    return playerName + ' $' + player.money + ' (' + keyBound + ')';
   },
   isMaxCapacity: function()
   {
@@ -124,10 +124,10 @@ class BoardTile
   {
     var element = document.createElement('div');
     element.className = 'board-grid-item';
-    element.textContent = this.moneyValue !== undefined ? ('$' + this.moneyValue) : '';
+    element.textContent = this.available ? ('$' + this.moneyValue) : '';
     element.row = this.row;
-    element.col = this.col;
-    element.addEventListener('click', handlers.boardTileClicked(event));
+    element.col = this.column;
+    element.addEventListener('click', handlers.boardTileClicked);
     return element;
   }
 };
@@ -221,6 +221,11 @@ var currentQuestion =
       this.winnerIndex = player.index;
     }
   },
+  playerWon: function(player)
+  {
+    this.winnerIndex = player.index;
+    player.moneyValue = player.moneyValue + this.tile.moneyValue;
+  },
   isWinner: function(player)
   {
     return player.index == this.winnerIndex;
@@ -235,6 +240,7 @@ var currentQuestion =
     view.hideCountdown();
     playerList.unbuzzAllPlayers();
     view.displayPlayers();
+    view.displayBoardGrid();
   }
   
   // once the game is started, the first player to buzz in should be declared the winner
@@ -332,7 +338,9 @@ var handlers = {
   },
   boardTileClicked: function(event)
   {
+    var targetDiv = event.target;
     
+    boardGrid.boardTiles[targetDiv.row][targetDiv.col].isClicked();
   }
 };
 
@@ -386,7 +394,6 @@ var view =
   },
   displayBoardGrid: function()
   {
-    debugger;
     // get grid container
     // add board tile elements to grid container
     var gridContainer = document.getElementById('board-grid');
