@@ -134,10 +134,11 @@ var boardGrid =
 {
   ROWS: 5,
   COLUMNS: 6,
-  boardTiles: [],
+  boardTiles: undefined,
   roundNum: 0,
   fillBoardTiles: function()
   {
+    this.boardTiles = [];
     for(var row = 0; row < this.ROWS; row++)
     {
       var rowObject = [];
@@ -378,12 +379,17 @@ var view =
   },
   displayBoardGrid: function()
   {
+    debugger;
     // get grid container
     // add board tile elements to grid container
     var gridContainer = document.getElementById('board-grid');
     
-    gridContainer.innerHTML = '';
-    
+    var elements = gridContainer.getElementsByClassName("board-grid-item");
+
+    while (elements[0]) {
+        elements[0].parentNode.removeChild(elements[0]);
+    }
+        
     for(var row = 0; row < boardGrid.boardTiles.length; row++)
     {
      for(var col = 0; col < boardGrid.boardTiles[row].length; col++)
