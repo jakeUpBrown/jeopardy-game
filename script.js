@@ -368,9 +368,10 @@ var triviaApiGetter =
   difficulties: ['easy', 'medium', 'hard'],
   difficultyAmounts: [2,2,1],
   categories: [],
+  questions: [],
   getQuestionUrl: function(amount, difficulty, category)
   {
-    var url = 'https://opentdb.com/api.php?'
+    let url = 'https://opentdb.com/api.php?'
 
     url = this.appendQualifier(url, 'amount', amount);
     url = this.appendQualifier(url, 'difficulty', difficulty);
@@ -385,7 +386,7 @@ var triviaApiGetter =
   {
     if(qualValue !== undefined && qualName !== undefined)
     {
-      var lastUrlChar = url.charAt(url.length - 1);
+      let lastUrlChar = url.charAt(url.length - 1);
 
       if(lastUrlChar !== '?' && lastUrlChar !== '&')
         url += '&';
@@ -400,25 +401,28 @@ var triviaApiGetter =
     if(this.sessionToken == undefined)
       this.generateToken();
     
-    var category = boardGrid.getCategoryFromColNum(colNum);
+    let category = boardGrid.getCategoryFromColNum(colNum);
     
-    var questions = [];
+    this.questions = [];
     
     for(var i = 0; i < this.difficulties.length; i++)
     {      
-      this.questions = [];
-      
       let request = new XMLHttpRequest();
 
       request.open('GET', this.getQuestionUrl(this.difficultyAmounts[i], this.difficulties[i], category), true);
 
-      request.onload = function(colNum)
+      request.onload = function(rows, colNum)
       {
-        var data = JSON.parse(this.response);
+        let data = JSON.parse(this.response);
 
         if(request.status >= 200 && request.status < 400)
         {
-          window.triviaApiGetter.questions.push(data);
+          console.log(data);
+          data.results.forEach(function(dataNode)
+          {
+            window.triviaApiGetter.questions.push(dataNode);
+          });
+          
           console.log('success');
         }
         else
@@ -430,7 +434,6 @@ var triviaApiGetter =
       request.send();
     }
     
-    console.log(questions);
   },
   generateToken: function()
   {
@@ -559,6 +562,46 @@ var view =
     countdownSpace.style.zIndex=0;
   }
 };
+
+
+var rowColumnInfo = 
+{
+  rowMoneyValues: [],
+  colCategoryValues: [],
+  init: function(roundNum)
+  {
+    for(let i = 0; i < 5; i++)
+    {
+      this.rowMoneyValues[i] = 100 * (i + 1) * (roundNum + 1);
+    }
+    
+    
+  },
+  getCategoryOptions: function()
+  {
+    
+    var request = new XMLHttpRequest();
+
+    request.open('GET', 'https://opentdb.com/api_category.php', true);
+
+    request.onload = function()
+    {
+      var data = JSON.parse(this.response);
+
+      if(request.status >= 200 && request.status < 400)
+      {
+        console.log(data);
+      }
+      else
+      {
+        console.log('error');
+      }
+    }
+
+    request.send();
+  }
+};
+
 
 var util = 
 {
