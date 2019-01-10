@@ -605,7 +605,7 @@ var rowColumnInfo =
   {
     for(let i = 0; i < boardGrid.COLUMNS; i++)
     {
-      let randIndex = Math.floor(Math.random() * (options.length + 1));
+      let randIndex = Math.floor(Math.random() * (options.length));
       
       // extract element at that index from the options array
       this.colCategoryValues[i] = options.splice(randIndex,1)[0];
