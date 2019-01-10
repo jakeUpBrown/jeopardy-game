@@ -480,9 +480,7 @@ var view =
       var moneyTotalBox = document.createElement('div');
       moneyTotalBox.className = 'money-total-box';
       moneyTotalBox.textContent = playerList.getPlayerMoneyTotalString(index);
-      
-      var separator = document.createElement('div');
-      separator.className = 'line-separator';
+    
       
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
@@ -518,7 +516,6 @@ var view =
       
       flexChildElement.appendChild(buzzer);
       flexChildElement.appendChild(moneyTotalBox);
-      flexChildElement.appendChild(separator);
       flexChildElement.appendChild(playerNameBox);
       
 
