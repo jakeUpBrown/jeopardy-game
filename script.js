@@ -359,57 +359,59 @@ var handlers = {
 
 
 var triviaApiGetter = 
+{
+  seesionToken: undefined,
+  categories: [],
+  getQuestionUrl: function(amount, difficulty, category)
+  {
+    var url = 'https://opentdb.com/api.php?'
+
+    url = this.appendQualifier(url, 'amount', amount);
+    url = this.appendQualifier(url, 'difficulty', difficulty);
+    url = this.appendQualifier(url, 'category', category);
+    url = this.appendQualifier(url, 'type', 'multiple');
+
+    return url;
+  },
+  appendQualifier: function(url, qualName, qualValue)
+  {
+    if(qualValue !== undefined && qualName !== undefined)
     {
-      categories: [],
-      getQuestionUrl: function(amount, difficulty, category)
+      var lastUrlChar = url.charAt(url.length - 1);
+
+      if(lastUrlChar !== '?' && lastUrlChar !== '&')
+        url += '&';
+
+      url += qualName + '=' + qualValue;
+
+      return url;
+    }
+  },
+  executeRequest: function()
+  {
+    var request = new XMLHttpRequest();
+
+    request.open('GET', this.getQuestionUrl(2, 'easy', 9), true);
+
+    request.onload = function()
+    {
+      debugger;
+      var data = JSON.parse(this.response);
+
+      if(request.status >= 200 && request.status < 400)
       {
-        var url = 'https://opentdb.com/api.php?'
-        
-        url = this.appendQualifier(url, 'amount', amount);
-        url = this.appendQualifier(url, 'difficulty', difficulty);
-        url = this.appendQualifier(url, 'category', category);
-        url = this.appendQualifier(url, 'type', 'multiple');
-        
-        return url;
-      },
-      appendQualifier: function(url, qualName, qualValue)
+        console.log('success');
+      }
+      else
       {
-        if(qualValue !== undefined && qualName !== undefined)
-        {
-          var lastUrlChar = url.charAt(url.length - 1);
-          
-          if(lastUrlChar !== '?' && lastUrlChar !== '&')
-            url += '&';
-                  
-          url += qualName + '=' + qualValue;
-          
-          return url;
-        }
-      },
-      executeRequest: function()
-      {
-        var request = new XMLHttpRequest();
-        
-        request.open('GET', this.getQuestionUrl(2, 'easy', 9), true);
-        
-        request.onload = function()
-        {
-          debugger;
-          var data = JSON.parse(this.response);
-          
-          if(request.status >= 200 && request.status < 400)
-          {
-            console.log('success');
-          }
-          else
-          {
-            console.log('error');
-          }
-        }
-        
-        request.send();
+        console.log('error');
       }
     }
+
+    request.send();
+  },
+  generate
+}
 
 
 var view = 
