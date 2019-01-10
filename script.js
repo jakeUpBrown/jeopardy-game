@@ -21,6 +21,9 @@ var playerList=
   },
   getPlayerMoneyTotalString: function(index)
   {
+    if(this.players[index].money == undefined)
+      return '';
+    
     return '$' + this.players[index].money.toLocaleString();
   },
   isMaxCapacity: function()
@@ -101,11 +104,10 @@ var playerList=
 
 class BoardTile
 {
-  constructor(row, column, money, question, answer, wrongOptions)
+  constructor(row, column, question, answer, wrongOptions)
   {
     this.row = row;
     this.column = column;
-    this.money = money;
     this.question = question;
     this.answer = answer;
     this.wrongOptions = wrongOptions;
@@ -636,6 +638,10 @@ var rowColumnInfo =
     
     view.displayCategoryHeaders();
   },
+  getRowMoneyValue: function(rowNum)
+  {
+    
+  },
   getCategoryId: function(colNum)
   {
     return this.colCategoryValues[colNum].id;
@@ -668,6 +674,8 @@ var testers =
   }
 
 };
+
+rowColumnInfo.init(0);
 
 window.onkeydown = handlers.anyKeyDown;
 testers.fillPlayers();
