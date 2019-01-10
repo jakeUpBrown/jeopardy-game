@@ -75,12 +75,12 @@ var playerList=
   },
   playerBuzzed: function(player)
   {
-    if(player.buzzedIn === true || currentQuestion.isWinner(player))
+    if(player.buzzerTimeout === true || currentQuestion.isAnswerer(player))
       return;
     
     currentQuestion.playerBuzzed(player);
     
-    player.buzzedIn = true;
+    player.buzzerTimeout = true;
     view.displayPlayers();
     setTimeout(function() {
       window.playerList.unbuzzPlayer(player.index)
@@ -88,7 +88,7 @@ var playerList=
   },
   unbuzzPlayer: function(index)
   {
-    playerList.players[index].buzzedIn = false;
+    playerList.players[index].buzzerTimeout = false;
     view.displayPlayers();
   },
   unbuzzAllPlayers: function()
@@ -179,7 +179,7 @@ var currentQuestion =
 {  
   started: false,
   answerWindowOpen: false,
-  winnerIndex: -1,
+  answererIndex: -1,
   tile: undefined,
   startFromTile: function(tile)
   {
@@ -228,7 +228,7 @@ var currentQuestion =
   },
   playerBuzzed: function(player)
   {
-    if(this.answerWindowOpen === true && this.winnerIndex === -1)
+    if(this.answerWindowOpen === true && this.answererIndex === -1)
     {
       // found the winner.
       this.playerWon(player);
@@ -236,19 +236,19 @@ var currentQuestion =
   },
   playerWon: function(player)
   {
-    this.winnerIndex = player.index;
+    this.answererIndex = player.index;
     player.money = player.money + this.tile.money;
     
   },
-  isWinner: function(player)
+  isAnswerer: function(player)
   {
-    return player.index == this.winnerIndex;
+    return player.index == this.answererIndex;
   },
   endRound: function()
   {
     var countdownSpace = document.getElementById('countdownSpace');
     
-    currentQuestion.winnerIndex = -1;
+    currentQuestion.answererIndex = -1;
     currentQuestion.started = false;
     currentQuestion.answerWindowOpen = false;
     view.hideCountdown();
@@ -279,7 +279,7 @@ var handlers = {
     
     var newPlayer = {playerName: playerNameInput.value,
                      selected: false,
-                     buzzedIn: false,
+                     buzzerTimeout: false,
                      money: 0};
     playerNameInput.value = '';
     window.playerList.addNewPlayer(newPlayer);
@@ -490,11 +490,11 @@ var view =
       buzzer.className = 'buzzer';
       
       // figure out what the color should be based on the details
-      if(currentQuestion.isWinner(player))
+      if(currentQuestion.isAnswerer(player))
       {
          buzzer.style.backgroundColor = 'green';
       }
-      else if(player.buzzedIn)
+      else if(player.buzzerTimeout)
       {
         buzzer.style.backgroundColor = "red";
       }
@@ -502,6 +502,8 @@ var view =
       {
         buzzer.style.backgroundColor = 'white';
       }
+      
+      flexChildElement.style.backgroundColor = currentQuestion.isAnswerer(player) ? 'white' : 'blue';
       
       playerNameBox.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
       playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
@@ -641,16 +643,16 @@ var testers =
 {
   fillPlayers : function()
   {
-    playerList.addNewPlayer({playerName: 'player 1', money: 0, selected: false, buzzedIn: false, keyBound: 'X'.charCodeAt(0)});
-    playerList.addNewPlayer({playerName: 'player 2', money: 0, selected: false, buzzedIn: false, keyBound: 'C'.charCodeAt(0)});
-    playerList.addNewPlayer({playerName: 'player 3', money: 0, selected: false, buzzedIn: false, keyBound: 'V'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 1', money: 0, selected: false, buzzerTimeout: false, keyBound: 'X'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 2', money: 0, selected: false, buzzerTimeout: false, keyBound: 'C'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 3', money: 0, selected: false, buzzerTimeout: false, keyBound: 'V'.charCodeAt(0)});
     view.displayPlayers();
   }
 
 };
 
 window.onkeydown = handlers.anyKeyDown;
-testers.fillPlayers();
+//testers.fillPlayers();
 
 boardGrid.fillBoardTiles();
 view.displayBoardGrid();
