@@ -2,7 +2,7 @@
 
 body {
   font-family: "Swiss 911";
-  width:700px;
+  width:750px;
   height:900px;
   border: thick solid black;
 }
@@ -108,7 +108,7 @@ h1 {
   position: absolute;
   height:470px;
   line-height:400px;
-  width:612px;
+  width:662px;
   left:50%;
   top:50%;
   margin-left: -308px;
@@ -133,7 +133,7 @@ h1 {
 #board-grid {
   display: grid;
   position:relative;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto;
   margin:30px;
   margin-top:20px;
   padding: 0px;

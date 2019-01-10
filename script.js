@@ -358,32 +358,16 @@ var handlers = {
 
 var triviaApiGetter = 
     {
-      getQuestions: function(amount, difficulty, category)
+      getQuestionUrl: function(amount, difficulty, category)
       {
         var url = 'https://opentdb.com/api.php?'
         
-        if(difficulty !== undefined)
-        {
-          var lastUrlChar = url.charAt(url.length - 1);
-          
-          if(lastUrlChar !== '?' && lastUrlChar !== '&')
-            url.append('&');
-          
-          url += 'difficulty=' + difficulty;
-        }
+        url = this.appendQualifier(url, 'amount', amount);
+        url = this.appendQualifier(url, 'difficulty', difficulty);
+        url = this.appendQualifier(url, 'category', category);
+        url = this.appendQualifier(url, 'type', 'multiple');
         
-        if(amount !== undefined)
-        {
-          if(lastUrlChar !== '?' && lastUrlChar !== '&')
-            url.append('&');
-                  
-          url += 'amount=' + amount;
-        }
-        
-
-        
-        
-        
+        return url;
       },
       appendQualifier: function(url, qualName, qualValue)
       {
@@ -392,11 +376,35 @@ var triviaApiGetter =
           var lastUrlChar = url.charAt(url.length - 1);
           
           if(lastUrlChar !== '?' && lastUrlChar !== '&')
-            url.append('&');
+            url += '&';
                   
-          url += 'amount=' + amount;
+          url += qualName + '=' + qualValue;
+          
+          return url;
         }
-      
+      },
+      executeRequest: function()
+      {
+        var request = new XMLHttpRequest();
+        
+        request.open('GET', this.getQuestionUrl(2, 'easy', 9), true);
+        
+        request.onload = function()
+        {
+          debugger;
+          var data = JSON.parse(this.response);
+          
+          if(request.status >= 200 && request.status < 400)
+          {
+            console.log('success');
+          }
+          else
+          {
+            console.log('error');
+          }
+        }
+        
+        request.send();
       }
       
       
