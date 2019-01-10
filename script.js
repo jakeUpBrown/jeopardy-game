@@ -509,7 +509,7 @@ var view =
       playerNameBox.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
       playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
       
-      if(moneyTotalBox.textContent.includes('-
+      moneyTotalBox.className += moneyTotalBox.textContent.includes('-') ? ' money-negative' : ' money-positive';
       
       flexChildElement.id = "playerbox-" + index;
       
@@ -562,6 +562,17 @@ var view =
     
     countdownSpace.innerHTML = '';
     countdownSpace.style.zIndex=0;
+  },
+  displayCategoryHeaders: function()
+  {
+    for(let i = 0; i < gridBoard.COLUMNS; i++)
+    {
+      // get category header element from DOM
+      let categoryHeader = document.getElementById('category-header' + i);
+      
+      categoryHeader.textContent
+    }
+    
   }
 };
 
@@ -620,6 +631,8 @@ var rowColumnInfo =
         console.log('changed name to ' + this.colCategoryValues[i].name);
       }
     }
+    
+    view.displayCategoryHeaders();
   },
   getCategoryId: function(colNum)
   {
