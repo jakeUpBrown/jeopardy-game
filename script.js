@@ -21,7 +21,7 @@ var playerList=
   },
   getPlayerMoneyTotalString: function(index)
   {
-    return '$' + this.players[index].money;
+    return '$' + this.players[index].money.toLocaleString();
   },
   isMaxCapacity: function()
   {
@@ -653,7 +653,7 @@ var testers =
 };
 
 window.onkeydown = handlers.anyKeyDown;
-//testers.fillPlayers();
+testers.fillPlayers();
 
 boardGrid.fillBoardTiles();
 view.displayBoardGrid();

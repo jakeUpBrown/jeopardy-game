@@ -59,10 +59,12 @@ h1 {
   vertical-align: top;
   padding:0px;
   z-index: 1;
+  min-width:150px;
+  min-height:150px;
 }
 
 .money-total-box {
-  margin: 6px;
+  margin: 0px;
   text-align:center;
   justify-content:center;
   vertical-align: middle;
@@ -71,27 +73,32 @@ h1 {
   font-weight:100;
   color:white;
   z-index:1;
+  height:30px;
+  width:100%;
+  background-color:green;
 }
 
 .line-separator {
-   width: 100%;
-  height: 4px;
+  width: 100%;
+  height: 5px;
   background-color:black;
   margin:0px;
-  margin-top:5px;
-  margin-bottom:5px;
 }
 
 .player-name-box {
   display:block;
   white-space: nowrap;
   font-size:20px;
+  text-align:center;
   font-weight:lighter;
   color:white;
   font-family:'Merienda One', Helvetica, cursive;
-  margin:20px;
-  min-height:60px;
+  margin:0px;
+  width:100%;
+  height:115px;
+  line-height:115px;
   z-index: 1;
+  background-color:red;
 }
 
 .player-insert-box
