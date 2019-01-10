@@ -608,10 +608,25 @@ var rowColumnInfo =
       let randIndex = Math.floor(Math.random() * (options.length + 1));
       
       // extract element at that index from the options array
-      this.colCategoryValues[i] = options.splice(randIndex,1);
+      this.colCategoryValues[i] = options.splice(randIndex,1)[0];
+            
+      let name = this.colCategoryValues[i].name;
+      
+      if(name.includes(':'))
+      {
+        this.colCategoryValues[i].name = name.substring(name.lastIndexOf(':'));
+        console.log('changed name to ' + this.colCategoryValues[i].name);
+      }
     }
   },
-  getCategoryId: function(
+  getCategoryId: function(colNum)
+  {
+    return this.colCategoryValues[colNum].id;
+  },
+  getCategoryName: function(colNum)
+  {
+    return this.colCategoryValues[colNum].name;
+  }
 };
 
 
