@@ -572,7 +572,7 @@ var rowColumnInfo =
   {
     for(let i = 0; i < 5; i++)
     {
-      this.rowMoneyValues[i] = 100 * (i + 1) * (roundNum + 1);
+      this.rowMoneyValues[i] = 200 * (i + 1) * (roundNum + 1);
     }
     
     this.getCategoryOptions();
@@ -614,7 +614,7 @@ var rowColumnInfo =
       
       if(name.includes(':'))
       {
-        this.colCategoryValues[i].name = name.substring(name.lastIndexOf(':'));
+        this.colCategoryValues[i].name = name.substring(name.lastIndexOf(':') + 1).trim();
         console.log('changed name to ' + this.colCategoryValues[i].name);
       }
     }
