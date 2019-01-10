@@ -358,6 +358,7 @@ var handlers = {
 
 var triviaApiGetter = 
     {
+      categories
       getQuestionUrl: function(amount, difficulty, category)
       {
         var url = 'https://opentdb.com/api.php?'
@@ -406,8 +407,6 @@ var triviaApiGetter =
         
         request.send();
       }
-      
-      
     }
 
 

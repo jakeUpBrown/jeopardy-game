@@ -1,7 +1,7 @@
 /* CSS files add styling rules to your content */
 
 @import url(//db.onlinewebfonts.com/c/7eabf1a72c107aff532500b38879c5da?family=ITC+Korinna+Std);
-@import url(//db.onlinewebfonts.com/c/6a891befed317fa85014538362250762?family=Swiss+911);
+@import url(//db.onlinewebfonts.com/c/402ed36d3e0154087e62c28f7f18c15b?family=Swiss+911);
 
 @font-face {font-family: "ITC Korinna Std";
     src: url("//db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.eot");
@@ -13,12 +13,12 @@
 }
 
 @font-face {font-family: "Swiss 911";
-    src: url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.eot");
-    src: url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.eot?#iefix") format("embedded-opentype"),
-    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.woff2") format("woff2"),
-    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.woff") format("woff"),
-    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.ttf") format("truetype"),
-    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.svg#Swiss 911") format("svg");
+    src: url("//db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.eot");
+    src: url("//db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.svg#Swiss 911") format("svg");
 }
 
 body {
@@ -68,7 +68,7 @@ h1 {
   vertical-align: middle;
   white-space: nowrap;
   font-size:25px;
-  font-weight:bold;
+  font-weight:100;
   color:white;
   z-index:1;
 }
@@ -121,7 +121,6 @@ h1 {
 #addPlayerButton {
   background-color: white;
   font-family: "Swiss 911";
-  font-weight: bold;
 }
 
 #countdownSpace {
@@ -169,9 +168,8 @@ h1 {
   padding: 0px;
   text-align:center;
   font-size:40px;
-  font-weight: 100;
   color: #FFCC00;
-  text-shadow: 3px 3px black;
+  text-shadow: 2px 2px black;
   background-color:#060CE9;
   z-index:1;
 }
@@ -183,7 +181,6 @@ h1 {
   text-align: center;
   color: white;
   text-shadow: 2px 2px black;
-  font-weight: 100;
   font-size:20px;
   height:60px;
   z-index:1;
