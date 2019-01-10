@@ -1,9 +1,30 @@
 /* CSS files add styling rules to your content */
 
+@import url(//db.onlinewebfonts.com/c/7eabf1a72c107aff532500b38879c5da?family=ITC+Korinna+Std);
+@import url(//db.onlinewebfonts.com/c/6a891befed317fa85014538362250762?family=Swiss+911);
+
+@font-face {font-family: "ITC Korinna Std";
+    src: url("//db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.eot");
+    src: url("//db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.svg#ITC Korinna Std") format("svg");
+}
+
+@font-face {font-family: "Swiss 911";
+    src: url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.eot");
+    src: url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/6a891befed317fa85014538362250762.svg#Swiss 911") format("svg");
+}
+
 body {
   font-family: "Swiss 911";
   width:750px;
-  height:900px;
+  height:850px;
   border: thick solid black;
 }
 
@@ -106,18 +127,19 @@ h1 {
 #countdownSpace {
   display: block;
   position: absolute;
-  height:470px;
-  line-height:400px;
+  height:410px;
+  line-height:410px;
   width:662px;
   left:50%;
   top:50%;
-  margin-left: -308px;
-  margin-top: -340px;
+  margin-left: -337px;
+  margin-top: -320px;
   z-index:0;
   text-align:center;
   font-size:200px;
   color: white;
   text-shadow: 2px 2px black;
+  font-family: "ITC Korinna Std";
   font-weight: bold;
   background-color:#060CE9;
   border:5px solid black;
@@ -147,9 +169,9 @@ h1 {
   padding: 0px;
   text-align:center;
   font-size:40px;
-  font-weight: 900;
+  font-weight: 100;
   color: #FFCC00;
-  text-shadow: 2px 2px black;
+  text-shadow: 3px 3px black;
   background-color:#060CE9;
   z-index:1;
 }
@@ -161,8 +183,8 @@ h1 {
   text-align: center;
   color: white;
   text-shadow: 2px 2px black;
-  font-weight: bold;
-  font-size:15px;
+  font-weight: 100;
+  font-size:20px;
   height:60px;
   z-index:1;
   background-color:#060CE9;
