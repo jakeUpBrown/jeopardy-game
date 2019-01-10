@@ -505,12 +505,12 @@ var view =
         buzzer.style.backgroundColor = 'white';
       }
       
-      flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
-      moneyTotalBox.style.color = playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
+      playerNameBox.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
+      playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
       
       flexChildElement.id = "playerbox-" + index;
       
-      flexChildElement.addEventListener('click', handlers.playerBoxSelected);
+      playerNameBox.addEventListener('click', handlers.playerBoxSelected);
     
       moneyTotalBox.id = "moneytotalbox-" + index;
       playerNameBox.id = "playernamebox-" + index;
