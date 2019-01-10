@@ -21,7 +21,7 @@ var playerList=
   },
   getPlayerMoneyTotalString: function(index)
   {
-    if(this.players[index].money == undefined)
+    if(this.players[index].money === undefined)
       return '';
     
     return '$' + this.players[index].money.toLocaleString();
@@ -112,6 +112,15 @@ class BoardTile
     this.answer = answer;
     this.wrongOptions = wrongOptions;
 
+    if(rowColumnInfo.rowMoneyValues !== undefined)
+    {
+      this.money = rowColumnInfo.getRowMoneyValue(row);
+    }
+    else
+    {
+      this.money = 0;
+    }
+    
     this.available = true;
   }
   
@@ -150,21 +159,34 @@ var boardGrid =
   fillBoardTiles: function()
   {
     this.boardTiles = [];
-    for(var row = 0; row < this.ROWS; row++)
+    for(let row = 0; row < this.ROWS; row++)
     {
-      var rowObject = [];
-      for(var col = 0; col < this.COLUMNS; col++)
+      let rowObject = [];
+      for(let col = 0; col < this.COLUMNS; col++)
       {
-        rowObject[col] = new BoardTile(row, col, this.getMoneyValue(row), '');
+        rowObject[col] = new BoardTile(row, col, '', '', '');
       }
       this.boardTiles[row] = rowObject;
     }
   },
+  populateMoneyValues: function()
+  {
+    if(this.boardTiles === undefined)
+      return;
+    
+    for(let row = 0; row < this.ROWS; row++)
+    {
+      for(let col = 0; col < this.COLUMNS; col++)
+      {
+        debugger;
+        console.log(this.boardTiles[col]);
+        this.boardTiles[col][row].money = rowColumnInfo.getRowMoneyValue(row);
+      }
+    }
+  },
   getMoneyValue: function(row)
   {
-    var rowIncrement = this.roundNum == 0 ? 200 : 400;
-    
-    return (row + 1) * rowIncrement;
+    return rowColumnInfo.getRowMoneyValue(row);
   },
   nextRound: function()
   {
@@ -591,6 +613,8 @@ var rowColumnInfo =
     {
       this.rowMoneyValues[i] = 200 * (i + 1) * (roundNum + 1);
     }
+    
+    boardGrid.populateMoneyValues();
     
     this.getCategoryOptions();
   },
