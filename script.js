@@ -493,6 +493,7 @@ var view =
       if(currentQuestion.isAnswerer(player))
       {
          buzzer.style.backgroundColor = 'green';
+         flexChildElement.style.backgroundColor = 'white';
       }
       else if(player.buzzerTimeout)
       {
@@ -503,7 +504,6 @@ var view =
         buzzer.style.backgroundColor = 'white';
       }
       
-      flexChildElement.style.backgroundColor = currentQuestion.isAnswerer(player) ? 'white' : 'blue';
       
       playerNameBox.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
       playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
@@ -652,7 +652,7 @@ var testers =
 };
 
 window.onkeydown = handlers.anyKeyDown;
-//testers.fillPlayers();
+testers.fillPlayers();
 
 boardGrid.fillBoardTiles();
 view.displayBoardGrid();

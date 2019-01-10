@@ -61,6 +61,8 @@ h1 {
   z-index: 1;
   min-width:150px;
   min-height:200px;
+  background-origin: padding-box;
+  background: linear-gradient(to bottom right, blue, cyan), linear-gradient(to bottom right, red, black);
 }
 
 .money-total-box {
