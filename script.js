@@ -360,7 +360,7 @@ var handlers = {
 
 var triviaApiGetter = 
 {
-  seesionToken: undefined,
+  sessionToken: undefined,
   categories: [],
   getQuestionUrl: function(amount, difficulty, category)
   {
@@ -388,16 +388,22 @@ var triviaApiGetter =
       return url;
     }
   },
-  executeRequest: function( difficulty, category)
+  executeRequest: function(category)
   {
+    debugger;
+    if(this.sessionToken == undefined)
+      this.generateToken();
+    
     var questions = [];
       
     var difficulties = ['easy', 'medium', 'hard'];
+    var difficultyAmount = [2,2,1];
     
     for(var i = 0; i < difficulties.length; i++)
-    {      var request = new XMLHttpRequest();
+    {      
+      var request = new XMLHttpRequest();
 
-      request.open('GET', this.getQuestionUrl(difficulty, category), true);
+      request.open('GET', this.getQuestionUrl(difficultyAmount[i], difficulties[i], category), true);
 
       request.onload = function()
       {
@@ -406,6 +412,7 @@ var triviaApiGetter =
 
         if(request.status >= 200 && request.status < 400)
         {
+          this.questions.push(data);
           console.log('success');
         }
         else
@@ -415,13 +422,34 @@ var triviaApiGetter =
       }
 
       request.send();
-    
-
     }
+    
+    console.log(questions);
   },
   generateToken: function()
   {
-    this.sessionToken = Math.random().toString(36).slice(2);
+    debugger;
+      var request = new XMLHttpRequest();
+
+      request.open('GET', 'https://opentdb.com/api_token.php?command=request', true);
+
+      request.onload = function()
+      {
+        debugger;
+        var data = JSON.parse(this.response);
+
+        if(request.status >= 200 && request.status < 400)
+        {
+          triviaApiGetter.token = data.token;
+          console.log('successfully retrieved token');
+        }
+        else
+        {
+          console.log('error');
+        }
+      }
+      
+      request.send();
   }
 }
 
