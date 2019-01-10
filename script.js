@@ -356,6 +356,53 @@ var handlers = {
 };
 
 
+var triviaApiGetter = 
+    {
+      getQuestions: function(amount, difficulty, category)
+      {
+        var url = 'https://opentdb.com/api.php?'
+        
+        if(difficulty !== undefined)
+        {
+          var lastUrlChar = url.charAt(url.length - 1);
+          
+          if(lastUrlChar !== '?' && lastUrlChar !== '&')
+            url.append('&');
+          
+          url += 'difficulty=' + difficulty;
+        }
+        
+        if(amount !== undefined)
+        {
+          if(lastUrlChar !== '?' && lastUrlChar !== '&')
+            url.append('&');
+                  
+          url += 'amount=' + amount;
+        }
+        
+
+        
+        
+        
+      },
+      appendQualifier: function(url, qualName, qualValue)
+      {
+        if(qualValue !== undefined && qualName !== undefined)
+        {
+          var lastUrlChar = url.charAt(url.length - 1);
+          
+          if(lastUrlChar !== '?' && lastUrlChar !== '&')
+            url.append('&');
+                  
+          url += 'amount=' + amount;
+        }
+      
+      }
+      
+      
+    }
+
+
 var view = 
 {
   displayPlayers: function()
