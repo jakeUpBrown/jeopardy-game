@@ -97,11 +97,11 @@ var playerList=
 
 class BoardTile
 {
-  constructor(row, column, moneyValue, textContent)
+  constructor(row, column, money, textContent)
   {
     this.row = row;
     this.column = column;
-    this.moneyValue = moneyValue;
+    this.money = money;
     this.textContent = textContent;
     
     this.available = true;
@@ -124,7 +124,7 @@ class BoardTile
   {
     var element = document.createElement('div');
     element.className = 'board-grid-item';
-    element.textContent = this.available ? ('$' + this.moneyValue) : '';
+    element.textContent = this.available ? ('$' + this.money) : '';
     element.row = this.row;
     element.col = this.column;
     element.addEventListener('click', handlers.boardTileClicked);
@@ -218,13 +218,13 @@ var currentQuestion =
     if(this.answerWindowOpen === true && this.winnerIndex === -1)
     {
       // found the winner.
-      this.winnerIndex = player.index;
+      this.playerWon(player);
     }
   },
   playerWon: function(player)
   {
     this.winnerIndex = player.index;
-    player.moneyValue = player.moneyValue + this.tile.moneyValue;
+    player.money = player.money + this.tile.money;
   },
   isWinner: function(player)
   {
@@ -361,6 +361,9 @@ var view =
       var flexChildElement = document.createElement('div');
       flexChildElement.className = 'flex-child';
       
+      var moneyTotalBox = document.createElement('div');
+      moneyTotal
+      
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
       playerNameBox.textContent = playerList.getPlayerBoxString(index);
@@ -443,9 +446,9 @@ var testers =
 {
   fillPlayers : function()
   {
-    playerList.addNewPlayer({playerName: 'player 1', selected: false, buzzedIn: false, keyBound: 'X'.charCodeAt(0)});
-    playerList.addNewPlayer({playerName: 'player 2', selected: false, buzzedIn: false, keyBound: 'C'.charCodeAt(0)});
-    playerList.addNewPlayer({playerName: 'player 3', selected: false, buzzedIn: false, keyBound: 'V'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 1', money: 0, selected: false, buzzedIn: false, keyBound: 'X'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 2', money: 0, selected: false, buzzedIn: false, keyBound: 'C'.charCodeAt(0)});
+    playerList.addNewPlayer({playerName: 'player 3', money: 0, selected: false, buzzedIn: false, keyBound: 'V'.charCodeAt(0)});
     view.displayPlayers();
   }
 
