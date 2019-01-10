@@ -17,7 +17,7 @@ var playerList=
     else
       keyBound = String.fromCharCode(player.keyBound);
       
-    return playerName + ' (' + keyBound + ')';
+    return playerName + '\ (' + keyBound + ')';
   },
   getPlayerMoneyTotalString: function(index)
   {
@@ -369,6 +369,9 @@ var view =
       moneyTotalBox.className = 'money-total-box';
       moneyTotalBox.textContent = playerList.getPlayerMoneyTotalString(index);
       
+      var separator = document.createElement('div');
+      separator.className = 'line-separator';
+      
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
       playerNameBox.textContent = playerList.getPlayerBoxString(index);
@@ -395,7 +398,8 @@ var view =
       moneyTotalBox.id = "moneytotalbox-" + index;
       playerNameBox.id = "playernamebox-" + index;
       
-      flexChildElement.append(moneyTotalBox);
+      flexChildElement.appendChild(moneyTotalBox);
+      flexChildElement.appendChild(separator);
       flexChildElement.appendChild(playerNameBox);
       
       playerBoxContainer.appendChild(flexChildElement);
@@ -461,7 +465,7 @@ var testers =
 };
 
 window.onkeydown = handlers.anyKeyDown;
-//testers.fillPlayers();
+testers.fillPlayers();
 
 boardGrid.fillBoardTiles();
 view.displayBoardGrid();
