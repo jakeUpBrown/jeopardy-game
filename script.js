@@ -167,6 +167,10 @@ var boardGrid =
   nextRound: function()
   {
     this.roundNum++;
+  },
+  getCategoryFromColNum: function(colNum)
+  {
+    return 9;
   }
   
 };
@@ -361,6 +365,8 @@ var handlers = {
 var triviaApiGetter = 
 {
   sessionToken: undefined,
+  difficulties: ['easy', 'medium', 'hard'],
+  difficultyAmounts: [2,2,1],
   categories: [],
   getQuestionUrl: function(amount, difficulty, category)
   {
@@ -372,6 +378,7 @@ var triviaApiGetter =
     url = this.appendQualifier(url, 'type', 'multiple');
     url = this.appendQualifier(url, 'token', this.sessionToken);
     
+    console.log(url);
     return url;
   },
   appendQualifier: function(url, qualName, qualValue)
@@ -388,25 +395,24 @@ var triviaApiGetter =
       return url;
     }
   },
-  executeRequest: function(category)
+  executeRequest: function(colNum)
   {
     if(this.sessionToken == undefined)
       this.generateToken();
     
-    var questions = [];
-      
-    var difficulties = ['easy', 'medium', 'hard'];
-    var difficultyAmount = [2,2,1];
+    var category = boardGrid.getCategoryFromColNum(colNum);
     
-    for(var i = 0; i < difficulties.length; i++)
+    var questions = [];
+    
+    for(var i = 0; i < this.difficulties.length; i++)
     {      
       this.questions = [];
       
-      var request = new XMLHttpRequest();
+      let request = new XMLHttpRequest();
 
-      request.open('GET', this.getQuestionUrl(difficultyAmount[i], difficulties[i], category), true);
+      request.open('GET', this.getQuestionUrl(this.difficultyAmounts[i], this.difficulties[i], category), true);
 
-      request.onload = function()
+      request.onload = function(colNum)
       {
         var data = JSON.parse(this.response);
 
@@ -434,7 +440,6 @@ var triviaApiGetter =
 
       request.onload = function()
       {
-        debugger;
         var data = JSON.parse(this.response);
 
         if(request.status >= 200 && request.status < 400)
