@@ -215,7 +215,7 @@ var currentQuestion =
   openAnswerWindow: function()
   {
     this.answerWindowOpen = true;
-    setTimeout(this.endRound, 5000);
+    setTimeout(this.endRound, 3000);
   },
   playerBuzzed: function(player)
   {
@@ -376,19 +376,23 @@ var view =
       playerNameBox.className = 'player-name-box';
       playerNameBox.textContent = playerList.getPlayerBoxString(index);
       
+      var buzzer = document.createElement('div');
+      buzzer.className = 'buzzer';
+      
       // figure out what the color should be based on the details
       if(currentQuestion.isWinner(player))
       {
-         flexChildElement.style.backgroundColor = 'green';
+         buzzer.style.backgroundColor = 'green';
       }
       else if(player.buzzedIn)
       {
-        flexChildElement.style.backgroundColor = "red";
+        buzzer.style.backgroundColor = "red";
       }
       else
       {
+        buzzer.style.backgroundColor = 'white';
         flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
-        playerNameBox.style.color = player.selected ? 'black' : 'white';
+        moneyTotalBox.style.color = playerNameBox.style.color = player.selected ? 'black' : 'white';
       }
       
       flexChildElement.id = "playerbox-" + index;
@@ -399,11 +403,7 @@ var view =
       playerNameBox.id = "playernamebox-" + index;
       
       
-      var buzzer = document.createElement('div');
-      buzzer.className = 'buzzer';
-      
       flexChildElement.appendChild(buzzer);
-      
       flexChildElement.appendChild(moneyTotalBox);
       flexChildElement.appendChild(separator);
       flexChildElement.appendChild(playerNameBox);
@@ -473,7 +473,7 @@ var testers =
 };
 
 window.onkeydown = handlers.anyKeyDown;
-testers.fillPlayers();
+//testers.fillPlayers();
 
 boardGrid.fillBoardTiles();
 view.displayBoardGrid();

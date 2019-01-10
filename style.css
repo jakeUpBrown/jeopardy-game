@@ -34,24 +34,22 @@ h1 {
 .flex-child {
   margin: auto;
   position:relative;
-  border: 4px solid black;
+  border: 6px solid black;
   vertical-align: top;
   padding:0px;
   z-index: 1;
 }
 
 .money-total-box {
-  margin: 10px;
+  margin: 6px;
   text-align:center;
   justify-content:center;
   vertical-align: middle;
   white-space: nowrap;
-  font-size:20px;
-  font-weight:normal;
+  font-size:25px;
+  font-weight:bold;
   color:white;
-  font-family:'Merienda One', Helvetica, cursive;
   z-index:1;
-  background-color:black;
 }
 
 .line-separator {
@@ -97,6 +95,12 @@ h1 {
 
 .spacer {
   height:10px;
+}
+
+#addPlayerButton {
+  background-color: white;
+  font-family: "Swiss 911";
+  font-weight: bold;
 }
 
 #countdownSpace {
@@ -167,15 +171,14 @@ h1 {
 
 .buzzer {
   display:block;
-  width: 60px;
-  height: 30px;
-  border-top-left-radius: 60px;
-  border-top-right-radius: 60px;
-  border-radius: 15px;
+  width: 30px;
+  height: 15px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
   position:absolute;
-  top:-11px;
-  left:50px;
-  margin-left:15px;
-  background: red;
+  border: 1px solid black;
+  top:-22px;
+  left:50%;
+  margin-left:-15px;
   z-index: -1;
 }
