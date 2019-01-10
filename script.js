@@ -565,12 +565,12 @@ var view =
   },
   displayCategoryHeaders: function()
   {
-    for(let i = 0; i < gridBoard.COLUMNS; i++)
+    for(let i = 0; i < boardGrid.COLUMNS; i++)
     {
       // get category header element from DOM
       let categoryHeader = document.getElementById('category-header' + i);
       
-      categoryHeader.textContent
+      categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
     }
     
   }

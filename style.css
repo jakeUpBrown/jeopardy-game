@@ -159,7 +159,7 @@ h1 {
   position: absolute;
   height:410px;
   line-height:410px;
-  width:662px;
+  width:652px;
   left:50%;
   top:50%;
   margin-left: -337px;
@@ -188,6 +188,7 @@ h1 {
   grid-template-columns: auto auto auto auto auto auto;
   margin:30px;
   margin-top:20px;
+  width:660px;
   padding: 0px;
   border: 10px solid black;
 }
@@ -195,6 +196,7 @@ h1 {
 .board-grid-item {
   border: 4px solid black;
   height:60px;
+  width:102px;
   line-height: 60px;  
   padding: 0px;
   text-align:center;
@@ -206,17 +208,19 @@ h1 {
 }
 
 .board-category-item {
+  display:block;
+  width:102px;
   border: 4px solid black;
   border-bottom: 8px solid black;
   padding: 0px;
   text-align: center;
+  word-wrap:break-word;
   color: white;
   text-shadow: 2px 2px black;
   font-size:20px;
   height:60px;
   z-index:1;
   background-color:#060CE9;
-  line-height: 60px;
 }
 
 .buzzer {
