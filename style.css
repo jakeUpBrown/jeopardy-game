@@ -28,6 +28,7 @@ h1 {
   position:absolute;
   bottom:100px;
   width: 100%;
+  z-index: 1;
 }
 
 .flex-child {
@@ -46,9 +47,11 @@ h1 {
   vertical-align: middle;
   white-space: nowrap;
   font-size:20px;
-  font-weight:lighter;
+  font-weight:normal;
   color:white;
   font-family:'Merienda One', Helvetica, cursive;
+  z-index:1;
+  background-color:black;
 }
 
 .line-separator {
@@ -69,6 +72,7 @@ h1 {
   font-family:'Merienda One', Helvetica, cursive;
   margin:20px;
   min-height:60px;
+  z-index: 1;
 }
 
 .player-insert-box
@@ -163,15 +167,15 @@ h1 {
 
 .buzzer {
   display:block;
-  width: 30px;
+  width: 60px;
   height: 30px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
   border-radius: 15px;
   position:absolute;
-  top:-8px;
+  top:-11px;
   left:50px;
-  margin-left:-15px;
+  margin-left:15px;
   background: red;
-  z-index: 3;
+  z-index: -1;
 }

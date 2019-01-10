@@ -398,14 +398,17 @@ var view =
       moneyTotalBox.id = "moneytotalbox-" + index;
       playerNameBox.id = "playernamebox-" + index;
       
-      flexChildElement.appendChild(moneyTotalBox);
-      flexChildElement.appendChild(separator);
-      flexChildElement.appendChild(playerNameBox);
       
       var buzzer = document.createElement('div');
       buzzer.className = 'buzzer';
       
       flexChildElement.appendChild(buzzer);
+      
+      flexChildElement.appendChild(moneyTotalBox);
+      flexChildElement.appendChild(separator);
+      flexChildElement.appendChild(playerNameBox);
+      
+
       
       playerBoxContainer.appendChild(flexChildElement);
     });
