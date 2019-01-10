@@ -186,6 +186,9 @@ var currentQuestion =
     if(this.started === true)
       return false;
     
+    // make sure no players are selected
+    playerList.togglePlayerSelected(undefined);
+    
     this.started = true;
     this.displayCountdown();
     return true;
@@ -229,6 +232,7 @@ var currentQuestion =
   {
     this.winnerIndex = player.index;
     player.money = player.money + this.tile.money;
+    
   },
   isWinner: function(player)
   {
@@ -277,6 +281,9 @@ var handlers = {
   },
   playerBoxSelected: function(event)
   {
+    if(currentQuestion.started)
+      return;
+    
     var id = event.target.id;
     
     var playerIndex = parseInt(id.substring(id.lastIndexOf('-') + 1));
@@ -391,9 +398,10 @@ var view =
       else
       {
         buzzer.style.backgroundColor = 'white';
-        flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
-        moneyTotalBox.style.color = playerNameBox.style.color = player.selected ? 'black' : 'white';
       }
+      
+      flexChildElement.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
+      moneyTotalBox.style.color = playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
       
       flexChildElement.id = "playerbox-" + index;
       
