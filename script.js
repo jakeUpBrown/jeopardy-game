@@ -575,7 +575,7 @@ var rowColumnInfo =
       this.rowMoneyValues[i] = 100 * (i + 1) * (roundNum + 1);
     }
     
-    
+    this.getCategoryOptions();
   },
   getCategoryOptions: function()
   {
@@ -591,15 +591,27 @@ var rowColumnInfo =
       if(request.status >= 200 && request.status < 400)
       {
         console.log(data);
+        rowColumnInfo.setColCategoryValues(data.trivia_categories);
       }
       else
       {
-        console.log('error');
+        console.log('error retrieving category options');
       }
     }
 
     request.send();
-  }
+  },
+  setColCategoryValues: function(options)
+  {
+    for(let i = 0; i < boardGrid.COLUMNS; i++)
+    {
+      let randIndex = Math.floor(Math.random() * (options.length + 1));
+      
+      // extract element at that index from the options array
+      this.colCategoryValues[i] = options.splice(randIndex,1);
+    }
+  },
+  getCategoryId: function(
 };
 
 
