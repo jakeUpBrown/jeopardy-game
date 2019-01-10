@@ -370,7 +370,8 @@ var triviaApiGetter =
     url = this.appendQualifier(url, 'difficulty', difficulty);
     url = this.appendQualifier(url, 'category', category);
     url = this.appendQualifier(url, 'type', 'multiple');
-
+    url = this.appendQualifier(url, 'token', this.sessionToken);
+    
     return url;
   },
   appendQualifier: function(url, qualName, qualValue)
@@ -387,30 +388,41 @@ var triviaApiGetter =
       return url;
     }
   },
-  executeRequest: function()
+  executeRequest: function( difficulty, category)
   {
-    var request = new XMLHttpRequest();
+    var questions = [];
+      
+    var difficulties = ['easy', 'medium', 'hard'];
+    
+    for(var i = 0; i < difficulties.length; i++)
+    {      var request = new XMLHttpRequest();
 
-    request.open('GET', this.getQuestionUrl(2, 'easy', 9), true);
+      request.open('GET', this.getQuestionUrl(difficulty, category), true);
 
-    request.onload = function()
-    {
-      debugger;
-      var data = JSON.parse(this.response);
-
-      if(request.status >= 200 && request.status < 400)
+      request.onload = function()
       {
-        console.log('success');
+        debugger;
+        var data = JSON.parse(this.response);
+
+        if(request.status >= 200 && request.status < 400)
+        {
+          console.log('success');
+        }
+        else
+        {
+          console.log('error');
+        }
       }
-      else
-      {
-        console.log('error');
-      }
+
+      request.send();
+    
+
     }
-
-    request.send();
   },
-  generate
+  generateToken: function()
+  {
+    this.sessionToken = Math.random().toString(36).slice(2);
+  }
 }
 
 
