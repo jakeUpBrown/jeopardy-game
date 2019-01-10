@@ -13,11 +13,15 @@ var playerList=
     var keyBound;
     
     if(player.keyBound === undefined)
-      keyBound = 'no key bound';
+      keyBound = 'n/a';
     else
       keyBound = String.fromCharCode(player.keyBound);
       
-    return playerName + ' $' + player.money + ' (' + keyBound + ')';
+    return playerName + ' (' + keyBound + ')';
+  },
+  getPlayerMoneyTotalString: function(index)
+  {
+    return '$' + this.players[index].money;
   },
   isMaxCapacity: function()
   {
@@ -362,7 +366,8 @@ var view =
       flexChildElement.className = 'flex-child';
       
       var moneyTotalBox = document.createElement('div');
-      moneyTotal
+      moneyTotalBox.className = 'money-total-box';
+      moneyTotalBox.textContent = playerList.getPlayerMoneyTotalString(index);
       
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
@@ -387,9 +392,10 @@ var view =
       
       flexChildElement.addEventListener('click', handlers.playerBoxSelected);
     
-      
+      moneyTotalBox.id = "moneytotalbox-" + index;
       playerNameBox.id = "playernamebox-" + index;
       
+      flexChildElement.append(moneyTotalBox);
       flexChildElement.appendChild(playerNameBox);
       
       playerBoxContainer.appendChild(flexChildElement);
@@ -455,7 +461,7 @@ var testers =
 };
 
 window.onkeydown = handlers.anyKeyDown;
-testers.fillPlayers();
+//testers.fillPlayers();
 
 boardGrid.fillBoardTiles();
 view.displayBoardGrid();
