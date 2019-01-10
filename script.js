@@ -17,7 +17,7 @@ var playerList=
     else
       keyBound = String.fromCharCode(player.keyBound);
       
-    return playerName + '\ (' + keyBound + ')';
+    return playerName + ' (' + keyBound + ')';
   },
   getPlayerMoneyTotalString: function(index)
   {
@@ -401,6 +401,11 @@ var view =
       flexChildElement.appendChild(moneyTotalBox);
       flexChildElement.appendChild(separator);
       flexChildElement.appendChild(playerNameBox);
+      
+      var buzzer = document.createElement('div');
+      buzzer.className = 'buzzer';
+      
+      flexChildElement.appendChild(buzzer);
       
       playerBoxContainer.appendChild(flexChildElement);
     });

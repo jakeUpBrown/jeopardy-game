@@ -32,9 +32,11 @@ h1 {
 
 .flex-child {
   margin: auto;
+  position:relative;
   border: 4px solid black;
   vertical-align: top;
   padding:0px;
+  z-index: 1;
 }
 
 .money-total-box {
@@ -157,4 +159,19 @@ h1 {
   z-index:1;
   background-color:#060CE9;
   line-height: 60px;
+}
+
+.buzzer {
+  display:block;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  position:absolute;
+  top:-8px;
+  left:50px;
+  margin-left:-15px;
+  background: red;
+  z-index: 3;
 }
