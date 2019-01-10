@@ -570,6 +570,8 @@ var view =
       // get category header element from DOM
       let categoryHeader = document.getElementById('category-header' + i);
       
+      console.log(categoryHeader);
+      
       categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
     }
     
