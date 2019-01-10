@@ -101,13 +101,15 @@ var playerList=
 
 class BoardTile
 {
-  constructor(row, column, money, textContent)
+  constructor(row, column, money, question, answer, wrongOptions)
   {
     this.row = row;
     this.column = column;
     this.money = money;
-    this.textContent = textContent;
-    
+    this.question = question;
+    this.answer = answer;
+    this.wrongOptions = wrongOptions;
+
     this.available = true;
   }
   
