@@ -56,13 +56,12 @@ h1 {
   margin: auto;
   position:relative;
   border: 6px solid black;
-  vertical-align: top;
+  border-radius: 4px;
+  vertical-align:top;
   padding:0px;
   z-index: 1;
   min-width:150px;
   min-height:200px;
-  background-origin: padding-box;
-  background: linear-gradient(-10deg, #000099, #000019, #000099, #000019, #000099, #000019, #000099, #000019, #000099, #000019, #000099, #000019, #000099, #000019, #000099, #000019, #000099, #000099, #000099, #000099, #000099, #000099);
 }
 
 .money-total-box {
@@ -79,7 +78,16 @@ h1 {
   line-height:35px;
   width:100%;
   background-color:#060CE9;
-  border-bottom: 4px solid black;
+  text-shadow: 2px 2px black;
+  border-bottom: 5px solid black;
+}
+
+.money-positive {
+  color: white;
+}
+
+.money-negative {
+  color: red;
 }
 
 .line-separator {
@@ -104,8 +112,8 @@ h1 {
   line-height:90px;
   z-index: 1;
   margin-top: 30px;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;  
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;  
 }
 
 .podium-lit-up {
@@ -113,7 +121,7 @@ h1 {
 }
 
 .podium-dim {
-  background-color: #060CE9;
+  background: linear-gradient(-10deg, #000099, #000049, #000099, #000049, #000099, #000049, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000019, #000099, #000049, #000099, #000049, #000099, #000049, #000099, #000049, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099, #000099);
 }
 
 .player-insert-box
@@ -214,8 +222,8 @@ h1 {
   display:block;
   width: 30px;
   height: 15px;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
   position:absolute;
   border: 1px solid black;
   top:-22px;

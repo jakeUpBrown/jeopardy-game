@@ -504,9 +504,12 @@ var view =
         buzzer.style.backgroundColor = 'white';
       }
       
+      flexChildElement.className += currentQuestion.isAnswerer(player) ? ' podium-lit-up' : ' podium-dim';
       
       playerNameBox.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
       playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
+      
+      if(moneyTotalBox.textContent.includes('-
       
       flexChildElement.id = "playerbox-" + index;
       
