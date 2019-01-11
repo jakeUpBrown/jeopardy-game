@@ -137,6 +137,12 @@ class BoardTile
     element.addEventListener('click', handlers.boardTileClicked);
     return element;
   }
+  
+  populateQAInfoFromData(data)
+  {
+    debugger;
+    console.log("populating data for node");
+  }
 };
 
 
@@ -419,11 +425,10 @@ var triviaApiGetter =
       this.generateToken();
     
     let category = boardGrid.getCategoryFromColNum(colNum);
-    
-    this.questions = [];
-    
+        
     rowColumnInfo.rowDifficulties.forEach(function (difficulty)
     {
+      debugger;
       let diffCount = rowColumnInfo.getDifficultyCount(difficulty);
       
       if(diffCount === 0)
@@ -431,7 +436,11 @@ var triviaApiGetter =
       
       let request = new XMLHttpRequest();
 
-      request.open('GET', this.getQuestionUrl(diffCount, difficulty, category), true);
+      let url = this.getQuestionUrl(diffCount, difficulty, category);
+      
+      console.log(url);
+      
+      request.open('GET', url, true);
 
       request.onload = function(rows, colNum)
       {
@@ -439,9 +448,9 @@ var triviaApiGetter =
 
         if(request.status >= 200 && request.status < 400)
         {
-          console.log(data);
           data.results.forEach(function(dataNode)
           {
+            debugger;
             window.boardGrid.populateQAInfo(colNum, dataNode);
           }, this);
           
@@ -458,26 +467,26 @@ var triviaApiGetter =
     
     
   },
-  generateToken: function()
+  generateToken: function(callbackFunction)
   {
       var request = new XMLHttpRequest();
 
       request.open('GET', 'https://opentdb.com/api_token.php?command=request', true);
 
-      request.onload = function()
+      request.onload = function(callbackFunction)
       {
         var data = JSON.parse(this.response);
 
         if(request.status >= 200 && request.status < 400)
         {
-          window.triviaApiGetter.sessionToken = data.token;
-          console.log('successfully retrieved token');
+          this.sessionToken = data.token;
+          callbackFunction
         }
         else
         {
           console.log('error');
         }
-      }
+      }.bind(this)
       
       request.send();
   }
@@ -672,6 +681,7 @@ var rowColumnInfo =
     view.displayCategoryHeaders();
     
     // load the questions and answers from the API
+    debugger;
     boardGrid.loadQuestionsAndAnswers();
   },
   setRowDifficulties: function(roundNum)
@@ -700,7 +710,6 @@ var rowColumnInfo =
   },
   getDifficultyCount: function(difficulty) 
   {
-    debugger;
     let count = 0;
     
     this.rowDifficulties.forEach(function (rowDiff)
