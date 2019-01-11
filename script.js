@@ -641,13 +641,20 @@ var view =
     // get the max width of the container.
     var maxWidth = parent.clientWidth - parentPadLeft - parentPadRight - elementPadLeft - elementPadRight;
     
+    let fakeElement = document.createElement('label');
+    fakeElement.className = 'fakeElement fakeInvisible';
+    fakeElement.textContent = element.textContent;
+    parent.appendChild(fakeElement);
+    
+    console.log(fakeElement);
+    
     // get the max height of the container.
     var maxHeight = parent.clientHeight - parentPadTop - parentPadBottom - elementPadTop - elementPadBottom;
     
-    while(element.clientWidth < (maxWidth - 5) && element.clientHeight < (maxHeight - 5))
+    while(fakeElement.clientWidth < (maxWidth - 5) && fakeElement.clientHeight < (maxHeight - 5))
     {
       // increase the font size
-      element.style.fontSize++;
+      fakeElement.style.fontSize++;
     }
   }
 };

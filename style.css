@@ -228,13 +228,18 @@ h1 {
   background-color:#060CE9;
 }
 
-.board-category-item p {
+.fakeElement, .board-category-item p {
   overflow:hidden;
-  height: auto;
-  width: auto;
   display:table-cell;
   vertical-align:middle;
   text-align:center;
+}
+
+.fakeInvisible
+{
+  display:block;
+  position: fixed;
+  opacity:0;
 }
 
 .buzzer {
