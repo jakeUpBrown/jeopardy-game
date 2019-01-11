@@ -681,8 +681,8 @@ var view =
     let grid = document.getElementById('board-grid');
     
     
-    let timesPerSecond = 30;
-    let seconds = 1;
+    let timesPerSecond = 45;
+    let seconds = .5;
     
     let totalFrames = timesPerSecond * seconds;
     let millisPerFrame = 1000 / timesPerSecond;
