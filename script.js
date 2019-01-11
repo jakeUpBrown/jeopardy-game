@@ -699,7 +699,19 @@ var view =
     let endWidth = (boxWidth * 6) / totalFrames;
     
     
-    for(
+    for(let frameNum = 0; frameNum < totalFrames; frameNum++)
+    {
+      element.style.marginLeft = (util.getElementPropertyValue(element, 'margin-left') + leftMarginDelta) + 'px';
+      element.style.marginRight = (util.getElementPropertyValue(element, 'margin-right') + rightMarginDelta) + 'px';
+      element.style.marginTop = (util.getElementPropertyValue(element, 'margin-top') + topMarginDelta) + 'px';
+      element.style.marginBottom = (util.getElementPropertyValue(element, 'margin-bottom') + bottomMarginDelta) + 'px';
+
+      element.style.fontSize = (util.getElementPropertyValue(element, 'font-size') + leftMarginDelta) + 'px';
+      element.style.padding = (util.getElementPropertyValue(element, 'padding') + leftMarginDelta) + 'px';
+
+      element.style.height = (util.getElementPropertyValue(element, 'height') + leftMarginDelta) + 'px';
+      element.style.width = (util.getElementPropertyValue(element, 'width') + leftMarginDelta) + 'px';
+    }
     
     
   }
@@ -978,6 +990,11 @@ var util =
     var txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;
+  },
+  getElementPropertyValue: function(element, property)
+  {
+    this.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue(property));
+    
   }
 };
 
