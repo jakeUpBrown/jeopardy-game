@@ -423,6 +423,7 @@ var triviaApiGetter =
   {
     if(this.sessionToken == undefined)
       this.generateToken();
+  
     
     let category = boardGrid.getCategoryFromColNum(colNum);
         
@@ -467,26 +468,26 @@ var triviaApiGetter =
     
     
   },
-  generateToken: function(callbackFunction)
+  generateToken: function()
   {
       var request = new XMLHttpRequest();
 
       request.open('GET', 'https://opentdb.com/api_token.php?command=request', true);
 
-      request.onload = function(callbackFunction)
+      request.onload = function()
       {
+        debugger;
         var data = JSON.parse(this.response);
 
         if(request.status >= 200 && request.status < 400)
         {
-          this.sessionToken = data.token;
-          callbackFunction
+          window.triviaApiGetter.sessionToken = data.token;
         }
         else
         {
           console.log('error');
         }
-      }.bind(this)
+      }
       
       request.send();
   }
@@ -746,6 +747,7 @@ var testers =
 };
 
 rowColumnInfo.init(0);
+triviaApiGetter.generateToken();
 
 window.onkeydown = handlers.anyKeyDown;
 testers.fillPlayers();
