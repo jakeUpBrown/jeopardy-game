@@ -230,6 +230,7 @@ h1 {
 
 .fakeElement, .board-category-item p {
   overflow:hidden;
+  max-width:75px;
   display:table-cell;
   vertical-align:middle;
   text-align:center;
@@ -239,6 +240,7 @@ h1 {
 {
   display:block;
   position: fixed;
+  word-wrap: break-word;
   opacity:0;
   font-size:10px;
 }

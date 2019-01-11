@@ -644,20 +644,19 @@ var view =
     // get the max height of the container.
     var maxHeight = parent.clientHeight;
     
+    var clearance = element.textContent.length < 6 ? 45 : 30;
+    
     let fakeElement = document.createElement('label');
     fakeElement.className = 'fakeElement fakeInvisible';
     fakeElement.textContent = element.textContent;
-    fakeElement.style.maxWidth = (maxWidth - 30) + 'px';
+    fakeElement.style.maxWidth = (maxWidth - clearance) + 'px';
     parent.appendChild(fakeElement);
     
     console.log(fakeElement);
-
-    if(fakeElement.textContent == 'Mathematics')
-      debugger;
     
     let fontSize = util.getNumberFromPixelString(window.getComputedStyle(fakeElement, null).getPropertyValue('font-size'));
     
-    while(fakeElement.clientWidth <= (maxWidth - 40) && fakeElement.clientHeight <= (maxHeight - 40))
+    while(fakeElement.clientWidth <= (maxWidth - clearance) && fakeElement.clientHeight <= (maxHeight - clearance))
     {
       fontSize++;
       // increase the font size
