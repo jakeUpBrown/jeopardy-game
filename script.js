@@ -167,6 +167,20 @@ var boardGrid =
       triviaApiGetter.loadColumnQAs(col);
     }
   },
+  populateQAInfo: function(colNum, dataNode)
+  {
+    // for each data node, get the difficulty, find the next unpopulated tile with that difficulty in row, popoff the data and assign it to the tile
+    
+    while(dataNode[0] !== undefined)
+    {
+      let rowNum = this.findNextRow(colNum, dataNode[0].difficulty);
+      
+      this.boardTiles[rowNum, colNum].populateQAInfoFromData(dataNode[0]);
+      dataNode.slice(0,1);
+    }
+    
+    view.displayBoardGrid();
+  },
   getMoneyValue: function(row)
   {
     return rowColumnInfo.getRowMoneyValue(row);
@@ -406,15 +420,18 @@ var triviaApiGetter =
     
     let category = boardGrid.getCategoryFromColNum(colNum);
     
-    
-    
     this.questions = [];
     
-    for(var i = 0; i < this.difficulties.length; i++)
-    {      
+    rowColumnInfo.rowDifficulties.forEach(function (difficulty)
+    {
+      let diffCount = rowColumnInfo.getDifficultyCount(difficulty);
+      
+      if(diffCount === 0)
+        return;
+      
       let request = new XMLHttpRequest();
 
-      request.open('GET', this.getQuestionUrl(this.difficultyAmounts[i], this.difficulties[i], category), true);
+      request.open('GET', this.getQuestionUrl(diffCount, difficulty, category), true);
 
       request.onload = function(rows, colNum)
       {
@@ -425,8 +442,8 @@ var triviaApiGetter =
           console.log(data);
           data.results.forEach(function(dataNode)
           {
-            window.triviaApiGetter.questions.push(dataNode);
-          });
+            window.boardGrid.populateQAInfo(colNum, dataNode);
+          }, this);
           
           console.log('success');
         }
@@ -437,7 +454,8 @@ var triviaApiGetter =
       }
 
       request.send();
-    }
+    }, this);
+    
     
   },
   generateToken: function()
