@@ -621,26 +621,28 @@ var view =
   },
   expandFontSizeToFill: function(element)
   {
-    var parentPadLeft = window.getComputedStyle(element.parent, null).getPropertyValue('padding-left');
-    var parentPadRight = window.getComputedStyle(element.parent, null).getPropertyValue('padding-right');
-    var parentPadTop = window.getComputedStyle(element.parent, null).getPropertyValue('padding-top');
-    var parentPadBottom = window.getComputedStyle(element.parent, null).getPropertyValue('padding-bottom');
+    debugger;
+    let parent = element.parentNode;
+    var parentPadLeft = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('min-padding-left'));
+    var parentPadRight = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-right'));
+    var parentPadTop = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-top'));
+    var parentPadBottom = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-bottom'));
 
-    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
-    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
-    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
-    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
+    var elementMarginLeft = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-left'));
+    var elementMarginRight = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-right'));
+    var elementMarginTop = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-top'));
+    var elementMarginBottom = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-bottom'));
 
-    var elementPadLeft = window.getComputedStyle(element.parent, null).getPropertyValue('padding-left');
-    var elementPadRight = window.getComputedStyle(element.parent, null).getPropertyValue('padding-right');
-    var elementPadTop = window.getComputedStyle(element.parent, null).getPropertyValue('padding-top');
-    var elementPadBottom = window.getComputedStyle(element.parent, null).getPropertyValue('padding-bottom');
+    var elementPadLeft = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-left'));
+    var elementPadRight = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-right'));
+    var elementPadTop = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-top'));
+    var elementPadBottom = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-bottom'));
 
     // get the max width of the container.
-    var maxWidth = element.parent.clientWidth - parentPadLeft - parentPadRight - elementMarginLeft - elementMarginRight;
+    var maxWidth = parent.clientWidth - parentPadLeft - parentPadRight - elementMarginLeft - elementMarginRight - elementPadLeft - elementPadRight;
     
     // get the max height of the container.
-    var maxHeight;
+    var maxHeight = element.parent.clientHeight - parentPadTop - parentPadBottom - elementMarginTop - elementMarginBottom - elementPadTop - elementPadBottom;
     
     while(element.clientWidth < (maxWidth - 5) && element.clientHeight < (maxHeight - 5))
     {
@@ -784,6 +786,10 @@ var util =
   isKeyAlphaNumeric: function(keyCode)
   {
     return (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 65 && event.keyCode <= 90);
+  },
+  getNumberFromPixelString: function(pixelString)
+  {
+    return parseInt(pixelString.substring(0,pixelString.length - 2));
   }
 };
 
