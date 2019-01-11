@@ -678,16 +678,28 @@ var view =
   },
   expandTileToFillBoard: function(element)
   {
-    let leftMargin = -1 * (row * boxWidth);
-    let rightMargin = -1 * (boardGrid.ROWS - 1 - row) * element.clientWidth;
-    let topMargin = -1 * (col * boxHeight);
-    let bottomMargin = -1 * *(boardGrid.COLUMNS - 1 - col) * boxHeight;
     
-    let fontSize = element.style.fontSize * 5; // constant?
-    let padding = element.style.padding * 5;
+    let timesPerSecond = 30;
+    let seconds = 1;
     
-    let endHeight = boardGrid.height;
-    let endWidth = boardGrid.width;
+    let totalFrames = timesPerSecond * seconds;
+    
+    let boxHeight = element.clientHeight;
+    let boxWidth = element.clientWidth;
+    
+    let leftMarginDelta = (-1 * (element.row * boxWidth)) / totalFrames;
+    let rightMargin = (-1 * (boardGrid.ROWS - 1 - element.row) * boxWidth) / totalFrames;
+    let topMargin = (-1 * (element.col * boxHeight)) / totalFrames;
+    let bottomMargin = (-1 * (boardGrid.COLUMNS - 1 - element.col) * boxHeight)  / totalFrames;
+    
+    let fontSize = (element.style.fontSize * 4) / totalFrames; // constant?
+    let padding = (element.style.padding * 5) / totalFrames;
+    
+    let endHeight = (boxHeight * 4) / totalFrames;
+    let endWidth = (boxWidth * 6) / totalFrames;
+    
+    
+    for(
     
     
   }
