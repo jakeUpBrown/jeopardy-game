@@ -678,6 +678,45 @@ var view =
 };
 
 
+
+var voiceAudio = 
+{
+  
+  voice : [],
+  msg: [],
+  valid: true;
+  init: function()
+  {
+    if ('speechSynthesis' in window) {
+      valid = false;
+    }
+    this.voice = window.speechSynthesis.getVoices()[4];
+  },
+  speak: function(text)
+  {
+    if(!valid)
+      return;
+        
+    let msg = new SpeechSynthesisUtterance();
+    let voices = window.speechSynthesis.getVoices();
+
+    console.log(voices);
+    
+    msg.text='hello god. its me, Jake';
+    msg.pitch=0;
+
+    window.speechSynthesis.speak(msg);    
+
+  },
+  stop: function()
+  {
+    if(!valid)
+      return;
+
+  }
+};
+
+
 var DifficultyEnum = {
   EASY: 'easy',
   MEDIUM: 'medium',
@@ -834,19 +873,7 @@ var testers =
   },
   audioTest: function()
   {
-    if ('speechSynthesis' in window) {
-      console.log('its in here');
-    }
-        
-    let msg = new SpeechSynthesisUtterance();
-    let voices = window.speechSynthesis.getVoices();
 
-    console.log(voices);
-    
-    msg.text='hello god. its me, Jake';
-    msg.pitch=0;
-
-    window.speechSynthesis.speak(msg);    
   }
 
 };
