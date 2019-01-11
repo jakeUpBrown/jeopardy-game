@@ -111,9 +111,10 @@ class BoardTile
     this.question = question;
     this.answer = answer;
     this.wrongOptions = wrongOptions;
-
+    
     if(rowColumnInfo.rowMoneyValues !== undefined)
     {
+      debugger;
       this.money = rowColumnInfo.getRowMoneyValue(row);
     }
     else
@@ -182,6 +183,14 @@ var boardGrid =
         console.log(this.boardTiles[col]);
         this.boardTiles[col][row].money = rowColumnInfo.getRowMoneyValue(row);
       }
+    }
+  },
+  loadQuestionsAndAnswers: function()
+  {
+    // go through each column and prompt triviaApiGetter to load questions and answers from the database
+    for(let col = 0; col < this.COLUMNS; col++)
+    {
+      triviaApiGetter.loadColumnQAs(col);
     }
   },
   getMoneyValue: function(row)
@@ -530,7 +539,7 @@ var view =
       
       flexChildElement.className += currentQuestion.isAnswerer(player) ? ' podium-lit-up' : ' podium-dim';
       
-      playerNameBox.style.backgroundColor = player.selected ? '#ecf8f2' : '#060CE9';
+      playerNameBox.className += player.selected ? ' name-selected' : ' name-unselected';
       playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
       
       moneyTotalBox.className += moneyTotalBox.textContent.includes('-') ? ' money-negative' : ' money-positive';
@@ -621,13 +630,13 @@ var rowColumnInfo =
   getCategoryOptions: function()
   {
     
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
 
     request.open('GET', 'https://opentdb.com/api_category.php', true);
 
     request.onload = function()
     {
-      var data = JSON.parse(this.response);
+      let data = JSON.parse(this.response);
 
       if(request.status >= 200 && request.status < 400)
       {
@@ -661,10 +670,13 @@ var rowColumnInfo =
     }
     
     view.displayCategoryHeaders();
+    
+    // load the questions and answers from the API
+    boardGrid.loadQuestionsAndAnswers();
   },
   getRowMoneyValue: function(rowNum)
   {
-    
+    return this.rowMoneyValues[rowNum];
   },
   getCategoryId: function(colNum)
   {
