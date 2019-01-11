@@ -683,39 +683,63 @@ var view =
     let seconds = 1;
     
     let totalFrames = timesPerSecond * seconds;
+    let millisPerFrame = 1000 / timesPerSecond;
     
     let boxHeight = element.clientHeight;
     let boxWidth = element.clientWidth;
     
     let leftMarginDelta = (-1 * (element.row * boxWidth)) / totalFrames;
-    let rightMargin = (-1 * (boardGrid.ROWS - 1 - element.row) * boxWidth) / totalFrames;
-    let topMargin = (-1 * (element.col * boxHeight)) / totalFrames;
-    let bottomMargin = (-1 * (boardGrid.COLUMNS - 1 - element.col) * boxHeight)  / totalFrames;
+    let rightMarginDelta = (-1 * (boardGrid.ROWS - 1 - element.row) * boxWidth) / totalFrames;
+    let topMarginDelta = (-1 * (element.col * boxHeight)) / totalFrames;
+    let bottomMarginDelta = (-1 * (boardGrid.COLUMNS - 1 - element.col) * boxHeight)  / totalFrames;
     
-    let fontSize = (element.style.fontSize * 4) / totalFrames; // constant?
-    let padding = (element.style.padding * 5) / totalFrames;
+    let fontSizeDelta = (element.style.fontSize * 4) / totalFrames; // constant?
+    let paddingDelta = (element.style.padding * 5) / totalFrames;
     
-    let endHeight = (boxHeight * 4) / totalFrames;
-    let endWidth = (boxWidth * 6) / totalFrames;
+    let heightDelta = (boxHeight * 4) / totalFrames;
+    let widthDelta = (boxWidth * 6) / totalFrames;
     
+    let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta);
     
-    for(let frameNum = 0; frameNum < totalFrames; frameNum++)
+    setIntervalX(function (element, tileAnimation)
     {
-      element.style.marginLeft = (util.getElementPropertyValue(element, 'margin-left') + leftMarginDelta) + 'px';
-      element.style.marginRight = (util.getElementPropertyValue(element, 'margin-right') + rightMarginDelta) + 'px';
-      element.style.marginTop = (util.getElementPropertyValue(element, 'margin-top') + topMarginDelta) + 'px';
-      element.style.marginBottom = (util.getElementPropertyValue(element, 'margin-bottom') + bottomMarginDelta) + 'px';
-
-      element.style.fontSize = (util.getElementPropertyValue(element, 'font-size') + leftMarginDelta) + 'px';
-      element.style.padding = (util.getElementPropertyValue(element, 'padding') + leftMarginDelta) + 'px';
-
-      element.style.height = (util.getElementPropertyValue(element, 'height') + leftMarginDelta) + 'px';
-      element.style.width = (util.getElementPropertyValue(element, 'width') + leftMarginDelta) + 'px';
-    }
+      window.resizeTile(element, tileAnimation);
+    }, millisPerFrame, totalFrames);
     
+  },
+  resizeTile: function(element, tileAnimation)
+  {
+    element.style.marginLeft = (util.getElementPropertyValue(element, 'margin-left') + tileAnimation.leftMarginDelta) + 'px';
+    element.style.marginRight = (util.getElementPropertyValue(element, 'margin-right') + tileAnimation.rightMarginDelta) + 'px';
+    element.style.marginTop = (util.getElementPropertyValue(element, 'margin-top') + tileAnimation.topMarginDelta) + 'px';
+    element.style.marginBottom = (util.getElementPropertyValue(element, 'margin-bottom') + tileAnimation.bottomMarginDelta) + 'px';
+
+    element.style.fontSize = (util.getElementPropertyValue(element, 'font-size') + tileAnimation.fontSizeDelta) + 'px';
+    element.style.padding = (util.getElementPropertyValue(element, 'padding') + tileAnimation.paddingDelta) + 'px';
+
+    element.style.height = (util.getElementPropertyValue(element, 'height') + tileAnimation.heightDelta) + 'px';
+    element.style.width = (util.getElementPropertyValue(element, 'width') + tileAnimation.widthDelta) + 'px';    
     
   }
 };
+
+
+class TileAnimation
+{
+  TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta)
+  {
+    this.leftMarginDelta = leftMarginDelta;
+    this.rightMarginDelta = rightMarginDelta;
+    this.topMarginDelta = topMarginDelta;
+    this.bottomMarginDelta = bottomMarginDelta;
+    this.fontSizeDelta = fontSizeDelta;
+    this.paddingDelta = paddingDelta;
+    this.heightDelta = heightDelta;
+    this.widthDelta = widthDelta;   
+  }
+  
+  
+}
 
 
 
@@ -998,6 +1022,18 @@ var util =
   }
 };
 
+
+function setIntervalX(callback, delay, repetitions) {
+    var x = 0;
+    var intervalID = window.setInterval(function () {
+
+       callback();
+
+       if (++x === repetitions) {
+           window.clearInterval(intervalID);
+       }
+    }, delay);
+}
 
 
 var testers = 
