@@ -621,7 +621,6 @@ var view =
   },
   expandFontSizeToFill: function(element)
   {
-    debugger;
     let parent = element.parentNode;
     var parentPadLeft = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('min-padding-left'));
     var parentPadRight = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-right'));
@@ -651,11 +650,20 @@ var view =
     // get the max height of the container.
     var maxHeight = parent.clientHeight - parentPadTop - parentPadBottom - elementPadTop - elementPadBottom;
     
+    debugger;
+    
+    let fontSize = util.getNumberFromPixelString(window.getComputedStyle(fakeElement, null).getPropertyValue('font-size'));
+    
     while(fakeElement.clientWidth < (maxWidth - 5) && fakeElement.clientHeight < (maxHeight - 5))
     {
+      fontSize++;
       // increase the font size
-      fakeElement.style.fontSize++;
+      fakeElement.style.fontSize = (fontSize) + 'px';
     }
+    
+    debugger;
+    
+    element.style.fontSize = fontSize;
   }
 };
 

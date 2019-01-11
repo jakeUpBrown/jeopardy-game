@@ -240,6 +240,7 @@ h1 {
   display:block;
   position: fixed;
   opacity:0;
+  font-size:10px;
 }
 
 .buzzer {
