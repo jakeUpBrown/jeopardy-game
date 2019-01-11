@@ -236,6 +236,10 @@ var currentQuestion =
     // make sure no players are selected
     playerList.togglePlayerSelected(undefined);
     
+    var msg = new SpeechSynthesisUtterance(this.tile.question);
+    
+    window.speechSynthesis.speak(msg);
+    
     this.started = true;
     this.displayCountdown();
     return true;
@@ -598,6 +602,7 @@ var view =
     
     countdownSpace.innerHTML = content;
     countdownSpace.style.zIndex=10;
+    
   },
   hideCountdown: function()
   {
@@ -644,7 +649,7 @@ var view =
     // get the max height of the container.
     var maxHeight = parent.clientHeight;
     
-    var clearance = element.textContent.length < 6 ? 45 : 30;
+    var clearance = element.textContent.length < 6 ? 45 : 35;
     
     let fakeElement = document.createElement('label');
     fakeElement.className = 'fakeElement fakeInvisible';
@@ -666,6 +671,9 @@ var view =
     element.style.fontSize = fontSize + 'px';
     
     parent.removeChild(fakeElement);
+  },
+  audioTest: function()
+  {
   }
 };
 
