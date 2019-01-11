@@ -700,22 +700,25 @@ var view =
     
     let fontSizeDelta = (element.style.fontSize * 6) / totalFrames; // constant?
     
-    let heightDelta = grid.clientHeight - (boxHeight) / totalFrames;
-    let widthDelta = grid.clientWidth - (boxWidth) / totalFrames;
+    let heightDelta = (grid.clientHeight - boxHeight) / totalFrames;
+    let widthDelta = (grid.clientWidth - boxWidth) / totalFrames;
     
-    let animatedElement = document.createElement('div');
+    let animatedElement = element.cloneNode(true);
     animatedElement.className = 'board-grid-item-font animated-grid-item';
-    animatedElement.textContent = element.textContent;
-    //animatedElement.
     
     grid.appendChild(animatedElement);
+    animatedElement.style.left = element.offsetLeft + borderWidth + 'px';
+    animatedElement.style.top = element.offsetTop + borderWidth + 'px';
+    animatedElement.style.height = element.clientHeight + 'px';
+    animatedElement.style.width = element.clientWidth + 'px';
+    animatedElement.style.zIndex = 20;
     
     debugger;
     let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, heightDelta, widthDelta);
     
     setIntervalX(function ()
     {
-      window.view.resizeTile(element, tileAnimation);
+      window.view.resizeTile(animatedElement, tileAnimation);
     }.bind(this), millisPerFrame, totalFrames);
     
   },
@@ -728,10 +731,10 @@ var view =
     element.style.marginBottom = (util.getElementPropertyValue(element, 'margin-bottom') + tileAnimation.bottomMarginDelta) + 'px';
 
     element.style.fontSize = (util.getElementPropertyValue(element, 'font-size') + tileAnimation.fontSizeDelta) + 'px';
-    element.style.padding = (util.getElementPropertyValue(element, 'padding') + tileAnimation.paddingDelta) + 'px';
 
     element.style.height = (util.getElementPropertyValue(element, 'height') + tileAnimation.heightDelta) + 'px';
     element.style.width = (util.getElementPropertyValue(element, 'width') + tileAnimation.widthDelta) + 'px';    
+    element.style.lineHeight = element.style.height;
     
   }
 };
@@ -1040,6 +1043,8 @@ function setIntervalX(callback, delay, repetitions) {
     var x = 0;
     var intervalID = window.setInterval(function () {
 
+      console.log(x);
+      console.log(repetitions);
        callback();
 
        if (++x === repetitions) {
