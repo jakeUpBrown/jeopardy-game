@@ -687,7 +687,7 @@ var voiceAudio =
   msg: [],
   valid: true,
   enabledIcon: '\uD83D\uDD0A',
-  disabledIcon: '\uD83D\uDD07',
+  disabledIcon: '\uD83D\uDD08',
   init: function()
   {
     if (!'speechSynthesis' in window) {
