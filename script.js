@@ -618,6 +618,35 @@ var view =
       categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
     }
     
+  },
+  expandFontSizeToFill: function(element)
+  {
+    var parentPadLeft = window.getComputedStyle(element.parent, null).getPropertyValue('padding-left');
+    var parentPadRight = window.getComputedStyle(element.parent, null).getPropertyValue('padding-right');
+    var parentPadTop = window.getComputedStyle(element.parent, null).getPropertyValue('padding-top');
+    var parentPadBottom = window.getComputedStyle(element.parent, null).getPropertyValue('padding-bottom');
+
+    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
+    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
+    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
+    var elementMarginLeft = window.getComputedStyle(element, null).getPropertyValue('margin-left');
+
+    var elementPadLeft = window.getComputedStyle(element.parent, null).getPropertyValue('padding-left');
+    var elementPadRight = window.getComputedStyle(element.parent, null).getPropertyValue('padding-right');
+    var elementPadTop = window.getComputedStyle(element.parent, null).getPropertyValue('padding-top');
+    var elementPadBottom = window.getComputedStyle(element.parent, null).getPropertyValue('padding-bottom');
+
+    // get the max width of the container.
+    var maxWidth = element.parent.clientWidth - parentPadLeft - parentPadRight - elementMarginLeft - elementMarginRight;
+    
+    // get the max height of the container.
+    var maxHeight;
+    
+    while(element.clientWidth < (maxWidth - 5) && element.clientHeight < (maxHeight - 5))
+    {
+      // increase the font size
+      element.style.fontSize++;
+    }
   }
 };
 
