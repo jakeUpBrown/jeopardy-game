@@ -686,8 +686,8 @@ var voiceAudio =
   voice : [],
   msg: [],
   valid: true,
-  enabledChar: '&#128266',
-  disabledChar: '&#128263',
+  enabledIcon: '\uD83D\uDD0A',
+  disabledIcon: '\uD83D\uDD07',
   init: function()
   {
     if (!'speechSynthesis' in window) {
@@ -721,9 +721,6 @@ var voiceAudio =
   },
   stop: function()
   {
-    if(!this.valid)
-      return;
-
     window.speechSynthesis.cancel();
   },
   splitUpMessageUnder100: function(text)
@@ -791,8 +788,10 @@ var voiceAudio =
   {
     this.valid = !this.valid;
 
+    if(!this.valid)
+      this.stop();
+    
     return this.valid ? this.enabledIcon : this.disabledIcon;
-      
   }
 };
 
