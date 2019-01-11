@@ -722,24 +722,46 @@ var voiceAudio =
   
     let rawSplitText = text.split('.');
     
+    // make sure that every component of raw split text is under 100 characters.
+    for(let rawIndex = 0; rawIndex < rawSplitText.length; rawIndex++)
+    {
+      let rawString = rawSplitText[rawIndex];
+      
+      let rawStrings = [];
+      
+      while(!rawString.length < 100)
+      {
+        // will need to split this text up anyway.
+                
+        // start at char index 98, move backwards and find the first space.
+        for(let i = 98; i >= 0; i--)
+        {
+          if(rawString.charAt(i) === ' ')
+          {
+            // extract every character before i index and add to rawStrings
+            rawStrings.push(rawString.substring(0,i + 1);
+          }
+        }
+          
+          
+        // repeat until text.length < 100.
+      }
+    }
+    
     let validSplitText = [''];
     
     let validIndex = 0;
     
-    for(let rawIndex = 0; rawIndex < rawSplitText; rawIndex++)
+    for(let rawIndex = 0; rawIndex < rawSplitText.length; rawIndex++)
     {
-      if(!rawSplitText[rawIndex].length < 100)
-      {
-        // will need to split this text up anyway.
+      let rawString = rawSplitText[rawIndex];
       
-        // start at char index 98, move backwards and find the first space.
-        // extract every character before corresponding space and add to 
-      }
+
       
       
     
       // check if adding the rawSplitText[rawIndex] will exceed the valid split text index.
-      if(validSplitText[validIndex].length + 
+      if(validSplitText[validIndex].length);
     }
   }
 };
