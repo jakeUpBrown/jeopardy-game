@@ -700,7 +700,7 @@ var voiceAudio =
         
     this.stop();
         
-    text = text.replace("&quot", "\"");
+    text = util.sanitizeText(text);
     
     let textQueue = this.splitUpMessageUnder100(text);
     
@@ -923,6 +923,21 @@ var util =
       return 0;
     
     return parseInt(pixelString.substring(0,pixelString.length - 2));
+  },
+  sanitizeTextToSpeech: function(text)
+  {
+    text = this.decodeHtml(text);
+    
+    // for the text-to-speech guy, replace any 3 or more underscores with "blank"
+    text = text.replace("[_]{3,}", "blank");
+    
+    return text;
+  },
+  decodeHtml: function(html)
+  {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
   }
 };
 
