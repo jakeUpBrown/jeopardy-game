@@ -237,7 +237,6 @@ var currentQuestion =
     playerList.togglePlayerSelected(undefined);
     
     var msg = new SpeechSynthesisUtterance(this.tile.question);
-    
     window.speechSynthesis.speak(msg);
     
     this.started = true;
@@ -570,8 +569,6 @@ var view =
       flexChildElement.appendChild(moneyTotalBox);
       flexChildElement.appendChild(playerNameBox);
       
-
-      
       playerBoxContainer.appendChild(flexChildElement);
     });
   },
@@ -831,6 +828,25 @@ var testers =
     playerList.addNewPlayer({playerName: 'player 2', money: 0, selected: false, buzzerTimeout: false, keyBound: 'C'.charCodeAt(0)});
     playerList.addNewPlayer({playerName: 'player 3', money: 0, selected: false, buzzerTimeout: false, keyBound: 'V'.charCodeAt(0)});
     view.displayPlayers();
+  },
+  audioTest: function()
+  {
+    if ('speechSynthesis' in window) {
+      console.log('its in here');
+    }
+    
+    let msg = new SpeechSynthesisUtterance();
+    let voices = window.speechSynthesis.getVoices();
+   
+    console.log(voices);
+    
+    for(let i = 0; i < voices.length; i++)
+    {
+      msg.text='hello';
+      msg.voice = voices[i];
+      msg.lang = 'en-US';
+      window.speechSynthesis.speak(msg);    
+    }
   }
 
 };
