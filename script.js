@@ -372,8 +372,6 @@ var handlers = {
 var triviaApiGetter = 
 {
   sessionToken: undefined,
-  categories: [],
-  questions: [],
   getQuestionUrl: function(amount, difficulty, category)
   {
     let url = 'https://opentdb.com/api.php?'
@@ -407,6 +405,8 @@ var triviaApiGetter =
       this.generateToken();
     
     let category = boardGrid.getCategoryFromColNum(colNum);
+    
+    
     
     this.questions = [];
     
@@ -587,7 +587,11 @@ var view =
 var DifficultyEnum = {
   EASY: 'easy',
   MEDIUM: 'medium',
-  HARD: 'hard'  
+  HARD: 'hard',
+  getValues: function()
+  {
+    return [this.EASY, this.MEDIUM, this.HARD];
+  }
 };
 
 var rowColumnInfo = 
@@ -602,7 +606,7 @@ var rowColumnInfo =
       this.rowMoneyValues[i] = 200 * (i + 1) * (roundNum + 1);
     }
     
-    this.setRowDifficulties();
+    this.setRowDifficulties(roundNum);
     this.getCategoryOptions();
   },
   getCategoryOptions: function()
@@ -661,7 +665,12 @@ var rowColumnInfo =
   },
   getRowMoneyValue: function(rowNum)
   {
-    return this.rowMoneyValues[rowNum];
+    let moneyVal = this.rowMoneyValues[rowNum];
+    
+    if(moneyVal === undefined)
+      return '???';
+    
+    return moneyVal;
   },
   getCategoryId: function(colNum)
   {
@@ -670,6 +679,19 @@ var rowColumnInfo =
   getCategoryName: function(colNum)
   {
     return this.colCategoryValues[colNum].name;
+  },
+  getDifficultyCount: function(difficulty) 
+  {
+    debugger;
+    let count = 0;
+    
+    this.rowDifficulties.forEach(function (rowDiff)
+    {
+      if(rowDiff === difficulty)
+        count++;
+    }, this);
+    
+    return count;
   }
 };
 
