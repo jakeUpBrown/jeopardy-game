@@ -112,16 +112,6 @@ class BoardTile
     this.answer = answer;
     this.wrongOptions = wrongOptions;
     
-    if(rowColumnInfo.rowMoneyValues !== undefined)
-    {
-      debugger;
-      this.money = rowColumnInfo.getRowMoneyValue(row);
-    }
-    else
-    {
-      this.money = 0;
-    }
-    
     this.available = true;
   }
   
@@ -137,12 +127,11 @@ class BoardTile
     if(questionStarted === true)
       this.available = false;
   }
-  
   createElement()
   {
     var element = document.createElement('div');
     element.className = 'board-grid-item';
-    element.textContent = this.available ? ('$' + this.money) : '';
+    element.textContent = this.available ? ('$' + rowColumnInfo.getRowMoneyValue(this.row)) : '';
     element.row = this.row;
     element.col = this.column;
     element.addEventListener('click', handlers.boardTileClicked);
@@ -168,21 +157,6 @@ var boardGrid =
         rowObject[col] = new BoardTile(row, col, '', '', '');
       }
       this.boardTiles[row] = rowObject;
-    }
-  },
-  populateMoneyValues: function()
-  {
-    if(this.boardTiles === undefined)
-      return;
-    
-    for(let row = 0; row < this.ROWS; row++)
-    {
-      for(let col = 0; col < this.COLUMNS; col++)
-      {
-        debugger;
-        console.log(this.boardTiles[col]);
-        this.boardTiles[col][row].money = rowColumnInfo.getRowMoneyValue(row);
-      }
     }
   },
   loadQuestionsAndAnswers: function()
@@ -270,7 +244,7 @@ var currentQuestion =
   playerWon: function(player)
   {
     this.answererIndex = player.index;
-    player.money = player.money + this.tile.money;
+    player.money = player.money + rowColumnInfo.getRowMoneyValue(this.tile.row);
     
   },
   isAnswerer: function(player)
@@ -398,8 +372,6 @@ var handlers = {
 var triviaApiGetter = 
 {
   sessionToken: undefined,
-  difficulties: ['easy', 'medium', 'hard'],
-  difficultyAmounts: [2,2,1],
   categories: [],
   questions: [],
   getQuestionUrl: function(amount, difficulty, category)
@@ -429,7 +401,7 @@ var triviaApiGetter =
       return url;
     }
   },
-  executeRequest: function(colNum)
+  loadColumnQAs: function(colNum)
   {
     if(this.sessionToken == undefined)
       this.generateToken();
@@ -612,10 +584,17 @@ var view =
 };
 
 
+var DifficultyEnum = {
+  EASY: 'easy',
+  MEDIUM: 'medium',
+  HARD: 'hard'  
+};
+
 var rowColumnInfo = 
 {
   rowMoneyValues: [],
   colCategoryValues: [],
+  rowDifficulties: [],
   init: function(roundNum)
   {
     for(let i = 0; i < 5; i++)
@@ -623,8 +602,7 @@ var rowColumnInfo =
       this.rowMoneyValues[i] = 200 * (i + 1) * (roundNum + 1);
     }
     
-    boardGrid.populateMoneyValues();
-    
+    this.setRowDifficulties();
     this.getCategoryOptions();
   },
   getCategoryOptions: function()
@@ -673,6 +651,13 @@ var rowColumnInfo =
     
     // load the questions and answers from the API
     boardGrid.loadQuestionsAndAnswers();
+  },
+  setRowDifficulties: function(roundNum)
+  {
+    if(roundNum == 0)
+      this.rowDifficulties = [DifficultyEnum.EASY, DifficultyEnum.EASY, DifficultyEnum.MEDIUM, DifficultyEnum.MEDIUM, DifficultyEnum.HARD];
+    else if(roundNum == 1)
+      this.rowDifficulties = [DifficultyEnum.EASY, DifficultyEnum.MEDIUM, DifficultyEnum.MEDIUM, DifficultyEnum.HARD, DifficultyEnum.HARD];
   },
   getRowMoneyValue: function(rowNum)
   {
