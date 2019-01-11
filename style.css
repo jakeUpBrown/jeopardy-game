@@ -206,7 +206,6 @@ h1 {
   width:102px;
   line-height: 60px;  
   padding: 0px;
-  font-size:38px;
   z-index:1;
 }
 
@@ -214,6 +213,7 @@ h1 {
   text-align:center;
   color: #e6b800;
   text-shadow: 2px 2px black;
+  font-size:38px;
   background-color:#060CE9;
 }
 

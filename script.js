@@ -705,7 +705,8 @@ var view =
     
     let animatedElement = document.createElement('div');
     animatedElement.className = 'board-grid-item-font animated-grid-item';
-        
+    animatedElement.textContent = element.textContent;
+    //animatedElement.
     
     grid.appendChild(animatedElement);
     
