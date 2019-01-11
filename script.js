@@ -612,16 +612,16 @@ var view =
     {
       // get category header element from DOM
       let categoryHeader = document.getElementById('category-header' + i);
-      
-      console.log(categoryHeader);
-      
+            
       categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
+      this.expandFontSizeToFill(categoryHeader);
     }
     
   },
   expandFontSizeToFill: function(element)
   {
     let parent = element.parentNode;
+    /*
     var parentPadLeft = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('min-padding-left'));
     var parentPadRight = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-right'));
     var parentPadTop = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-top'));
@@ -636,34 +636,37 @@ var view =
     var elementPadRight = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-right'));
     var elementPadTop = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-top'));
     var elementPadBottom = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-bottom'));
-
+    */
+    
     // get the max width of the container.
-    var maxWidth = parent.clientWidth - parentPadLeft - parentPadRight - elementPadLeft - elementPadRight;
+    var maxWidth = parent.clientWidth;
+    
+    // get the max height of the container.
+    var maxHeight = parent.clientHeight;
     
     let fakeElement = document.createElement('label');
     fakeElement.className = 'fakeElement fakeInvisible';
     fakeElement.textContent = element.textContent;
+    fakeElement.style.maxWidth = (maxWidth - 30) + 'px';
     parent.appendChild(fakeElement);
     
     console.log(fakeElement);
-    
-    // get the max height of the container.
-    var maxHeight = parent.clientHeight - parentPadTop - parentPadBottom - elementPadTop - elementPadBottom;
-    
-    debugger;
+
+    if(fakeElement.textContent == 'Mathematics')
+      debugger;
     
     let fontSize = util.getNumberFromPixelString(window.getComputedStyle(fakeElement, null).getPropertyValue('font-size'));
     
-    while(fakeElement.clientWidth < (maxWidth - 5) && fakeElement.clientHeight < (maxHeight - 5))
+    while(fakeElement.clientWidth <= (maxWidth - 40) && fakeElement.clientHeight <= (maxHeight - 40))
     {
       fontSize++;
       // increase the font size
       fakeElement.style.fontSize = (fontSize) + 'px';
     }
     
-    debugger;
+    element.style.fontSize = fontSize + 'px';
     
-    element.style.fontSize = fontSize;
+    parent.removeChild(fakeElement);
   }
 };
 
