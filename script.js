@@ -236,7 +236,10 @@ var currentQuestion =
     // make sure no players are selected
     playerList.togglePlayerSelected(undefined);
     
-    var msg = new SpeechSynthesisUtterance(this.tile.question);
+    let msg = new SpeechSynthesisUtterance(this.tile.question);
+    
+    msg.voice = window.speechSyntehsis.getVoices()[4];
+
     window.speechSynthesis.speak(msg);
     
     this.started = true;
@@ -834,19 +837,16 @@ var testers =
     if ('speechSynthesis' in window) {
       console.log('its in here');
     }
-    
+        
     let msg = new SpeechSynthesisUtterance();
     let voices = window.speechSynthesis.getVoices();
-   
+
     console.log(voices);
     
-    for(let i = 0; i < voices.length; i++)
-    {
-      msg.text='hello';
-      msg.voice = voices[i];
-      msg.lang = 'en-US';
-      window.speechSynthesis.speak(msg);    
-    }
+    msg.text='hello god. its me, Jake';
+    msg.pitch=0;
+
+    window.speechSynthesis.speak(msg);    
   }
 
 };
