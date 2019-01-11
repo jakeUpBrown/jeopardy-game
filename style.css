@@ -265,8 +265,30 @@ h1 {
 
 #speaker-icon
 {
+  cursor:default;
   position:absolute;
   bottom: 30px;
   right: 15px;
   font-size: 25px;
+}
+
+#help-icon
+{
+  cursor:default;
+  color:white;
+  background-color:#060CE9;
+  height:24px;
+  width:24px;  
+  display:inline-block;
+  border-radius:100%;
+  text-align:center;
+  border: 2px solid white;
+  text-decoration:none;
+  -webkit-box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,0.25);
+  box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,0.25);
+  position:absolute;
+  bottom: 30px;
+  right: 60px;
+  font-size: 20px;
 }
