@@ -161,7 +161,7 @@ h1 {
   font-family: "Swiss 911";
 }
 
-#countdownSpace {
+.question-space-countdown {
   display: block;
   position: absolute;
   height:420px;
@@ -181,6 +181,13 @@ h1 {
   background-color:#060CE9;
   border:5px solid black;
 }
+
+
+.question-space-question
+{
+  display:block;
+}
+
 
 #startRoundButton {
   display: block;

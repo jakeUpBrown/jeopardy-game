@@ -289,9 +289,7 @@ var currentQuestion =
     return player.index == this.answererIndex;
   },
   endRound: function()
-  {
-    var countdownSpace = document.getElementById('countdownSpace');
-    
+  {    
     currentQuestion.answererIndex = -1;
     currentQuestion.started = false;
     currentQuestion.answerWindowOpen = false;
@@ -602,18 +600,18 @@ var view =
   ,
   displayCountdown: function(content)
   {
-    var countdownSpace = document.getElementById('countdownSpace');
+    var questionSpace = document.getElementById('question-space');
     
-    countdownSpace.innerHTML = content;
-    countdownSpace.style.zIndex=10;
+    questionSpace.innerHTML = content;
+    questionSpace.style.zIndex=10;
     
   },
   hideCountdown: function()
   {
-    var countdownSpace = document.getElementById('countdownSpace');
+    var questionSpace = document.getElementById('question-space');
     
-    countdownSpace.innerHTML = '';
-    countdownSpace.style.zIndex=0;
+    questionSpace.innerHTML = '';
+    questionSpace.style.zIndex=0;
   },
   displayCategoryHeaders: function()
   {
@@ -730,10 +728,13 @@ var view =
     
     element.style.fontSize = currentFontSize + (Math.abs(endFontSize - currentFontSize) * percentageOfDelta) + 'px';
     
-          var two=new Date();
+    element.style.display = 'none';
+    element.style.display = 'block';
+    
+    var two=new Date();
 
-      //Calculate difference btw the two dates
-      alert(two.getMilliseconds()-one.getMilliseconds());
+     //Calculate difference btw the two dates
+     console.log('execution: ' + (two.getMilliseconds()-one.getMilliseconds()));
   }
 };
 
