@@ -236,11 +236,7 @@ var currentQuestion =
     // make sure no players are selected
     playerList.togglePlayerSelected(undefined);
     
-    let msg = new SpeechSynthesisUtterance(this.tile.question);
-    
-    msg.voice = window.speechSyntehsis.getVoices()[4];
-
-    window.speechSynthesis.speak(msg);
+    voiceAudio.speak(this.tile.question);
     
     this.started = true;
     this.displayCountdown();
@@ -687,23 +683,23 @@ var voiceAudio =
   valid: true,
   init: function()
   {
-    if ('speechSynthesis' in window) {
+    if (!'speechSynthesis' in window) {
       this.valid = false;
     }
     
     this.msg = new SpeechSynthesisUtterance();
     this.voice = window.speechSynthesis.getVoices()[4];
     this.msg.pitch = 0;
+    this.msg.rate = 1.5;
   },
   speak: function(text)
   {
+    
     if(!this.valid)
       return;
         
     this.stop();
-    
-    debugger;
-    
+        
     let textQueue = this.splitUpMessageUnder100(text);
     
     for(let i = 0; i < textQueue.length; i++)
@@ -725,6 +721,8 @@ var voiceAudio =
   {
     if(text.length <= 100)
       return [text];
+   
+    debugger;
     
     // need to break up the sentences into pieces that the translater
     let rawSplitTextBuffer = text.split('.');
@@ -748,6 +746,7 @@ var voiceAudio =
             // extract every character before i index and add to rawStrings
             rawSplitText.push(rawString.substring(0,i + 1));
             rawString = rawString.substring(i + 1);
+            break;
           }
         }
             
@@ -776,6 +775,8 @@ var voiceAudio =
         validSplitText.push(rawString);
       }
     }
+    
+    debugger;
     
     return validSplitText;
   }
@@ -942,6 +943,9 @@ var testers =
   }
 
 };
+
+voiceAudio.init();
+voiceAudio.init();
 
 triviaApiGetter.generateToken();
 boardGrid.fillBoardTiles();
