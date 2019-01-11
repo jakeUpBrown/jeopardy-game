@@ -115,13 +115,13 @@ class BoardTile
     this.available = true;
   }
   
-  isClicked()
+  isClicked(element)
   {
     // prompt the current question to start
     if(this.available === false)
       return;
     
-    var questionStarted = currentQuestion.startFromTile(this);
+    var questionStarted = currentQuestion.startFromTile(this, element);
     
     // set the question to unavailable if the startFromTile returned affirmative
     if(questionStarted === true)
@@ -222,9 +222,11 @@ var currentQuestion =
   answerWindowOpen: false,
   answererIndex: -1,
   tile: undefined,
-  startFromTile: function(tile)
+  element: undefined,
+  startFromTile: function(tile, element)
   {
     this.tile = tile;
+    this.element = element;
     return this.startRound();
   },
   // want to be able to start a game and display a countdown
@@ -235,11 +237,9 @@ var currentQuestion =
     
     // make sure no players are selected
     playerList.togglePlayerSelected(undefined);
-    
-    voiceAudio.speak(this.tile.question);
-    
+        
     this.started = true;
-    this.displayCountdown();
+    view.expandTileToFillBoard(this.element);
     return true;
   },
   displayCountdown: function()
@@ -266,6 +266,7 @@ var currentQuestion =
   },
   openAnswerWindow: function()
   {
+    voiceAudio.speak(this.tile.question);
     this.answerWindowOpen = true;
     setTimeout(this.endRound, 3000);
   },
@@ -399,7 +400,7 @@ var handlers = {
   {
     var targetDiv = event.target;
     
-    boardGrid.boardTiles[targetDiv.row][targetDiv.col].isClicked();
+    boardGrid.boardTiles[targetDiv.row][targetDiv.col].isClicked(event.target);
   },
   speakerClicked: function()
   {
@@ -701,7 +702,16 @@ var view =
     setIntervalXWithXParemeter(function (x)
     {
       window.view.resizeTile(animatedElement, 1 / (totalFrames - x), endFontSize);
-    }.bind(this), millisPerFrame, totalFrames);
+    }.bind(this), millisPerFrame, totalFrames,
+    function ()
+     {
+        // will want to set an interval for the animatedElement to disappear 
+      setTimeout(function()
+      {
+        grid.removeChild(animatedElement);
+        window.currentQuestion.startCountdown();
+      }.bind(this), 1000);
+     }.bind(this));
     
   },
   resizeTile: function(element, percentageOfDelta, endFontSize)
@@ -1002,7 +1012,7 @@ var util =
 };
 
 
-function setIntervalXWithXParemeter(callback, delay, repetitions) {
+function setIntervalXWithXParemeter(callback, delay, repetitions, endCallBack) {
     var x = 0;
     var intervalID = window.setInterval(function () {
 
@@ -1010,6 +1020,7 @@ function setIntervalXWithXParemeter(callback, delay, repetitions) {
 
        if (++x >= repetitions) {
            window.clearInterval(intervalID);
+         endCallBack();
        }
     }, delay);
 }
