@@ -147,7 +147,8 @@ class BoardTile
 
   hasQuestionPopulated()
   {
-    return !this.question === '';
+    console.log('question: ' + this.question);
+    return !(this.question === '' || this.question === undefined);
   }
 };
 
@@ -194,7 +195,6 @@ var boardGrid =
     // for each data node, get the difficulty, find the next unpopulated tile with that difficulty in row, popoff the data and assign it to the tile
     for(let i = 0; i < dataNodes.results.length; i++)
     {
-      debugger;
       let rowNum = this.findNextRow(col, dataNodes.results[i].difficulty);
       console.log(rowNum);
       this.boardTiles[rowNum][col].populateQAInfo(dataNodes.results[i]);
@@ -214,10 +214,9 @@ var boardGrid =
     for(let row = 0; row < this.ROWS; row++)
     {
       let b1 = rowColumnInfo.getRowDifficulty(row) === difficulty;
-      
-      let b2 = 
+      let b2 = this.boardTiles[row][col].hasQuestionPopulated() === false;
       // check if the difficulty matches and the question info hasn't been loaded
-      if(b1 && this.boardTiles[row][col].hasQuestionPopulated === false)
+      if(b1 && b2)
         return row;
     }
   }
