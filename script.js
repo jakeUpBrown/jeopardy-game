@@ -675,6 +675,21 @@ var view =
     element.style.fontSize = fontSize + 'px';
     
     parent.removeChild(fakeElement);
+  },
+  expandTileToFillBoard: function(element)
+  {
+    let leftMargin = -1 * (row * boxWidth);
+    let rightMargin = -1 * (boardGrid.ROWS - 1 - row) * element.clientWidth;
+    let topMargin = -1 * (col * boxHeight);
+    let bottomMargin = -1 * *(boardGrid.COLUMNS - 1 - col) * boxHeight;
+    
+    let fontSize = element.style.fontSize * 5; // constant?
+    let padding = element.style.padding * 5;
+    
+    let endHeight = boardGrid.height;
+    let endWidth = boardGrid.width;
+    
+    
   }
 };
 
