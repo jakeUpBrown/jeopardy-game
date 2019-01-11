@@ -709,7 +709,7 @@ var view =
     grid.appendChild(animatedElement);
     animatedElement.style.left = element.offsetLeft + borderWidth + 'px';
     animatedElement.style.top = element.offsetTop + borderWidth + 'px';
-    animatedElement.style.height = element.clientHeight + 'px';
+    animatedElement.style.lineHeight = animatedElement.style.height = element.clientHeight + 'px';
     animatedElement.style.width = element.clientWidth + 'px';
     animatedElement.style.zIndex = 20;
     
@@ -722,7 +722,7 @@ var view =
     }.bind(this), millisPerFrame, totalFrames);
     
   },
-  resizeTile: function(element, tileAnimation)
+  resizeTile: function(element, tileAnimation, percentageOfDelta)
   {
     debugger;
     element.style.marginLeft = (util.getElementPropertyValue(element, 'margin-left') + tileAnimation.leftMarginDelta) + 'px';
@@ -1047,7 +1047,7 @@ function setIntervalX(callback, delay, repetitions) {
       console.log(repetitions);
        callback();
 
-       if (++x === repetitions) {
+       if (++x >= repetitions) {
            window.clearInterval(intervalID);
        }
     }, delay);
