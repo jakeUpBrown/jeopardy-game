@@ -140,7 +140,6 @@ class BoardTile
   
   populateQAInfoFromData(data)
   {
-    debugger;
     console.log("populating data for node");
   }
 };
@@ -177,15 +176,10 @@ var boardGrid =
   {
     // for each data node, get the difficulty, find the next unpopulated tile with that difficulty in row, popoff the data and assign it to the tile
     
-    while(dataNode[0] !== undefined)
-    {
-      let rowNum = this.findNextRow(colNum, dataNode[0].difficulty);
-      
-      this.boardTiles[rowNum, colNum].populateQAInfoFromData(dataNode[0]);
-      dataNode.slice(0,1);
-    }
     
-    view.displayBoardGrid();
+    let rowNum = this.findNextRow(colNum, dataNode.difficulty);
+    this.boardTiles[rowNum, colNum].populateQAInfoFromData(dataNode);
+    
   },
   getMoneyValue: function(row)
   {
@@ -402,7 +396,6 @@ var triviaApiGetter =
     url = this.appendQualifier(url, 'type', 'multiple');
     url = this.appendQualifier(url, 'token', this.sessionToken);
     
-    console.log(url);
     return url;
   },
   appendQualifier: function(url, qualName, qualValue)
@@ -427,9 +420,10 @@ var triviaApiGetter =
     
     let category = boardGrid.getCategoryFromColNum(colNum);
         
-    rowColumnInfo.rowDifficulties.forEach(function (difficulty)
+    for(let i = 0; i < DifficultyEnum.getValues().length; i++)
     {
-      debugger;
+      let difficulty = DifficultyEnum.getValues()[i];
+      
       let diffCount = rowColumnInfo.getDifficultyCount(difficulty);
       
       if(diffCount === 0)
@@ -443,7 +437,7 @@ var triviaApiGetter =
       
       request.open('GET', url, true);
 
-      request.onload = function(rows, colNum)
+      request.onload = function()
       {
         let data = JSON.parse(this.response);
 
@@ -451,10 +445,9 @@ var triviaApiGetter =
         {
           data.results.forEach(function(dataNode)
           {
-            debugger;
-            window.boardGrid.populateQAInfo(colNum, dataNode);
-          }, this);
-          
+            window.boardGrid.populateQAInfo(dataNode);
+          });
+                  
           console.log('success');
         }
         else
@@ -464,20 +457,19 @@ var triviaApiGetter =
       }
 
       request.send();
-    }, this);
+    }
     
     
   },
   generateToken: function()
   {
-      var request = new XMLHttpRequest();
+      let request = new XMLHttpRequest();
 
       request.open('GET', 'https://opentdb.com/api_token.php?command=request', true);
 
       request.onload = function()
       {
-        debugger;
-        var data = JSON.parse(this.response);
+        let data = JSON.parse(this.response);
 
         if(request.status >= 200 && request.status < 400)
         {
@@ -682,7 +674,6 @@ var rowColumnInfo =
     view.displayCategoryHeaders();
     
     // load the questions and answers from the API
-    debugger;
     boardGrid.loadQuestionsAndAnswers();
   },
   setRowDifficulties: function(roundNum)
@@ -746,8 +737,8 @@ var testers =
 
 };
 
-rowColumnInfo.init(0);
 triviaApiGetter.generateToken();
+rowColumnInfo.init(0);
 
 window.onkeydown = handlers.anyKeyDown;
 testers.fillPlayers();
