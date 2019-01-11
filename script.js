@@ -970,7 +970,7 @@ rowColumnInfo.init(0);
 window.onkeydown = handlers.anyKeyDown;
 testers.fillPlayers();
 
-voiceAudio.speak("This... is... Jeopardy!");
+//voiceAudio.speak("THIS, IS, JEOPARDY!");
 
 view.displayBoardGrid();
 
