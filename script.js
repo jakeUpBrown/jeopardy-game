@@ -684,35 +684,63 @@ var voiceAudio =
   
   voice : [],
   msg: [],
-  valid: true;
+  valid: true,
   init: function()
   {
     if ('speechSynthesis' in window) {
-      valid = false;
+      this.valid = false;
     }
+    
+    this.msg = new SpeechSynthesisUtterance();
     this.voice = window.speechSynthesis.getVoices()[4];
+    this.msg.pitch = 0;
   },
   speak: function(text)
   {
-    if(!valid)
+    if(!this.valid)
       return;
         
-    let msg = new SpeechSynthesisUtterance();
-    let voices = window.speechSynthesis.getVoices();
-
-    console.log(voices);
+    this.stop();
     
-    msg.text='hello god. its me, Jake';
-    msg.pitch=0;
+    this.msg.text = text;
 
-    window.speechSynthesis.speak(msg);    
+    window.speechSynthesis.speak(this.msg);    
 
   },
   stop: function()
   {
-    if(!valid)
+    if(!this.valid)
       return;
 
+  },
+  splitUpMessageUnder100: function(text)
+  {
+    if(text.length <= 100)
+      return [text];
+    
+    // need to break up the sentences into pieces that the translater
+  
+    let rawSplitText = text.split('.');
+    
+    let validSplitText = [''];
+    
+    let validIndex = 0;
+    
+    for(let rawIndex = 0; rawIndex < rawSplitText; rawIndex++)
+    {
+      if(!rawSplitText[rawIndex].length < 100)
+      {
+        // will need to split this text up anyway.
+      
+        // start at char index 98, move backwards and find the first space.
+        // extract every character before corresponding space and add to 
+      }
+      
+      
+    
+      // check if adding the rawSplitText[rawIndex] will exceed the valid split text index.
+      if(validSplitText[validIndex].length + 
+    }
   }
 };
 
