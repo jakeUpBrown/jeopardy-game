@@ -353,7 +353,6 @@ var handlers = {
   },
   anyKeyDown: function(event)
   {
-    console.log(event);
     
     // get selected player
     var selectedPlayer = window.playerList.getSelectedPlayer();
@@ -660,9 +659,7 @@ var view =
     fakeElement.textContent = element.textContent;
     fakeElement.style.maxWidth = (maxWidth - clearance) + 'px';
     parent.appendChild(fakeElement);
-    
-    console.log(fakeElement);
-    
+        
     let fontSize = util.getNumberFromPixelString(window.getComputedStyle(fakeElement, null).getPropertyValue('font-size'));
     
     while(fakeElement.clientWidth <= (maxWidth - clearance) && fakeElement.clientHeight <= (maxHeight - clearance))
@@ -681,15 +678,15 @@ var view =
     let grid = document.getElementById('board-grid');
     
     
-    let timesPerSecond = 45;
-    let seconds = .5;
+    let timesPerSecond = 150;
+    let seconds = .25;
     
     let totalFrames = Math.ceil(timesPerSecond * seconds);
     let millisPerFrame = 1000 / timesPerSecond;
     
     let borderWidth = util.getElementPropertyValue(element, 'border-width');
     
-    let endFontSize = util.getElementPropertyValue(element, 'font-size') * 40; // constant?
+    let endFontSize = util.getElementPropertyValue(element, 'font-size') * 7; // constant?
     
     let animatedElement = element.cloneNode(true);
     animatedElement.className = 'board-grid-item-font animated-grid-item';
@@ -718,29 +715,11 @@ var view =
     element.style.lineHeight = element.style.height = (element.clientHeight + (Math.abs(parent.clientHeight - element.clientHeight) * percentageOfDelta)) + 'px';
     element.style.width = (element.clientWidth + (Math.abs(parent.clientWidth - element.clientWidth) * percentageOfDelta)) + 'px';
     
-    debugger;
-    element.style.fontSize = (Math.abs(endFontSize - util.getElementPropertyValue(element, 'font-size')) * percentageOfDelta) + 'px';
+    let currentFontSize = util.getElementPropertyValue(element, 'font-size');
+    
+    element.style.fontSize = currentFontSize + (Math.abs(endFontSize - currentFontSize) * percentageOfDelta) + 'px';
   }
 };
-
-
-class TileAnimation
-{
-  
-  constructor(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, heightDelta, widthDelta)
-  {
-    debugger;
-    this.leftMarginDelta = leftMarginDelta;
-    this.rightMarginDelta = rightMarginDelta;
-    this.topMarginDelta = topMarginDelta;
-    this.bottomMarginDelta = bottomMarginDelta;
-    this.fontSizeDelta = fontSizeDelta;
-    this.heightDelta = heightDelta;
-    this.widthDelta = widthDelta;   
-  }
-  
-  
-}
 
 
 
@@ -1027,8 +1006,6 @@ function setIntervalXWithXParemeter(callback, delay, repetitions) {
     var x = 0;
     var intervalID = window.setInterval(function () {
 
-      console.log(x);
-      console.log(repetitions);
        callback(x);
 
        if (++x >= repetitions) {
