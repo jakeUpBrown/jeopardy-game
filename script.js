@@ -721,9 +721,7 @@ var voiceAudio =
   {
     if(text.length <= 100)
       return [text];
-   
-    debugger;
-    
+       
     // need to break up the sentences into pieces that the translater
     let rawSplitTextBuffer = text.split('.');
     
@@ -734,7 +732,7 @@ var voiceAudio =
     {
       let rawString = rawSplitTextBuffer[rawIndex];
             
-      while(!rawString.length < 100)
+      while(!(rawString.length < 100))
       {
         // will need to split this text up anyway.
                 
