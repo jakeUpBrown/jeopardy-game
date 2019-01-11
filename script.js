@@ -700,6 +700,8 @@ var voiceAudio =
         
     this.stop();
         
+    text = text.replace("&quot", "\"");
+    
     let textQueue = this.splitUpMessageUnder100(text);
     
     for(let i = 0; i < textQueue.length; i++)
