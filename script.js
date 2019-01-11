@@ -688,16 +688,20 @@ var view =
     let boxHeight = element.clientHeight;
     let boxWidth = element.clientWidth;
     
-    let leftMarginDelta = (-1 * (element.row * boxWidth)) / totalFrames;
-    let rightMarginDelta = (-1 * (boardGrid.ROWS - 1 - element.row) * boxWidth) / totalFrames;
-    let topMarginDelta = (-1 * (element.col * boxHeight)) / totalFrames;
-    let bottomMarginDelta = (-1 * (boardGrid.COLUMNS - 1 - element.col) * boxHeight)  / totalFrames;
+    let leftMarginDelta = (-1 * (element.col * boxWidth)) / totalFrames;
+    let rightMarginDelta = (-1 * (boardGrid.COLUMNS - 1 - element.col) * boxWidth) / totalFrames;
+    let topMarginDelta = (-1 * (element.row * boxHeight)) / totalFrames;
+    let bottomMarginDelta = (-1 * (boardGrid.ROWS - 1 - element.row) * boxHeight)  / totalFrames;
     
     let fontSizeDelta = (element.style.fontSize * 4) / totalFrames; // constant?
     let paddingDelta = (element.style.padding * 5) / totalFrames;
     
     let heightDelta = (boxHeight * 4) / totalFrames;
     let widthDelta = (boxWidth * 6) / totalFrames;
+    
+    let anEl = document.createElement('div');
+    
+    anEl.style.
     
     debugger;
     let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta);
@@ -1021,8 +1025,7 @@ var util =
   },
   getElementPropertyValue: function(element, property)
   {
-    this.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue(property));
-    
+    return this.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue(property));
   }
 };
 
