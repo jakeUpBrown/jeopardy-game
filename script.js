@@ -130,7 +130,7 @@ class BoardTile
   createElement()
   {
     var element = document.createElement('div');
-    element.className = 'board-grid-item';
+    element.className = 'board-grid-item board-grid-item-font';
     element.textContent = this.available ? ('$' + rowColumnInfo.getRowMoneyValue(this.row)) : '';
     element.row = this.row;
     element.col = this.column;
@@ -689,7 +689,7 @@ var voiceAudio =
     
     this.msg = new SpeechSynthesisUtterance();
     this.voice = window.speechSynthesis.getVoices()[4];
-    this.msg.pitch = 0;
+    this.msg.pitch = 1;
     this.msg.rate = 1.5;
   },
   speak: function(text)
@@ -700,7 +700,7 @@ var voiceAudio =
         
     this.stop();
         
-    text = util.sanitizeText(text);
+    text = util.sanitizeTextForSpeech(text);
     
     let textQueue = this.splitUpMessageUnder100(text);
     
@@ -924,7 +924,7 @@ var util =
     
     return parseInt(pixelString.substring(0,pixelString.length - 2));
   },
-  sanitizeTextToSpeech: function(text)
+  sanitizeTextForSpeech: function(text)
   {
     text = this.decodeHtml(text);
     
@@ -970,4 +970,8 @@ rowColumnInfo.init(0);
 window.onkeydown = handlers.anyKeyDown;
 testers.fillPlayers();
 
+voiceAudio.speak("This... is... Jeopardy!");
+
 view.displayBoardGrid();
+
+

@@ -206,12 +206,16 @@ h1 {
   width:102px;
   line-height: 60px;  
   padding: 0px;
-  text-align:center;
   font-size:38px;
+  z-index:1;
+}
+
+.board-grid-item-font {
+  text-align:center;
   color: #e6b800;
   text-shadow: 2px 2px black;
   background-color:#060CE9;
-  z-index:1;
+  
 }
 
 .board-category-item {
