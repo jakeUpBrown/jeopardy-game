@@ -103,7 +103,7 @@ var playerList=
 };
 
 class BoardTile
-{
+{  
   constructor(row, column, question, answer, wrongOptions)
   {
     this.row = row;
@@ -144,6 +144,11 @@ class BoardTile
     console.log(this);
     console.log(data);
   }
+
+  hasQuestionPopulated()
+  {
+    return this.question === '';
+  }
 };
 
 
@@ -183,13 +188,15 @@ var boardGrid =
       console.log("found undefined dataNodes");
     }
       
-    let col = rowColumnInfo.getColIndexFromCategory(dataNodes[0].category);
+    let col = rowColumnInfo.getColIndexFromCategory(dataNodes.results[0].category);
+    
+    console.log(col);
     
     // for each data node, get the difficulty, find the next unpopulated tile with that difficulty in row, popoff the data and assign it to the tile
-    for(let i = 0; i < dataNodes.length; i++)
+    for(let i = 0; i < dataNodes.results.length; i++)
     {
-      let rowNum = this.findNextRow(col, dataNodes[i].difficulty);
-      this.boardTiles[rowNum, col].populateQAInfo(dataNodes[i]);
+      let rowNum = this.findNextRow(col, dataNodes.results[i].difficulty);
+      this.boardTiles[rowNum][col].populateQAInfo(dataNodes.results[i]);
     }
     
   },
@@ -204,6 +211,15 @@ var boardGrid =
   getCategoryFromColNum: function(colNum)
   {
     return 9;
+  },
+  findNextRow: function(col, difficulty)
+  {
+    for(let row = 0; row < this.ROWS; row++)
+    {
+      // check if the difficulty matches and the question info hasn't been loaded
+      if(rowColumnInfo.getRowDifficulty(row) === difficulty && this.boardTiles[row][col].hasQuestionPopulated === false)
+        return row;
+    }
   }
   
 };
@@ -702,6 +718,10 @@ var rowColumnInfo =
     
     return moneyVal;
   },
+  getRowDifficulty: function(rowNum)
+  {
+    return this.rowDifficulties[rowNum];
+  },
   getCategoryId: function(colNum)
   {
     return this.colCategoryValues[colNum].id;
@@ -761,10 +781,11 @@ var testers =
 };
 
 triviaApiGetter.generateToken();
+boardGrid.fillBoardTiles();
+
 rowColumnInfo.init(0);
 
 window.onkeydown = handlers.anyKeyDown;
 testers.fillPlayers();
 
-boardGrid.fillBoardTiles();
 view.displayBoardGrid();
