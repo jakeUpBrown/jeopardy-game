@@ -678,6 +678,8 @@ var view =
   },
   expandTileToFillBoard: function(element)
   {
+    let grid = document.getElementById('board-grid');
+    
     
     let timesPerSecond = 30;
     let seconds = 1;
@@ -685,26 +687,30 @@ var view =
     let totalFrames = timesPerSecond * seconds;
     let millisPerFrame = 1000 / timesPerSecond;
     
-    let boxHeight = element.clientHeight;
-    let boxWidth = element.clientWidth;
+    let borderWidth = util.getElementPropertyValue(element, 'border-width');
     
+    let boxHeight = element.clientHeight + (2 * borderWidth);
+    let boxWidth = element.clientWidth + (2 * borderWidth);
+        
     let leftMarginDelta = (-1 * (element.col * boxWidth)) / totalFrames;
     let rightMarginDelta = (-1 * (boardGrid.COLUMNS - 1 - element.col) * boxWidth) / totalFrames;
-    let topMarginDelta = (-1 * (element.row * boxHeight)) / totalFrames;
-    let bottomMarginDelta = (-1 * (boardGrid.ROWS - 1 - element.row) * boxHeight)  / totalFrames;
+    let topMarginDelta = (-1 * ((element.row + 1) * boxHeight)) / totalFrames;
+    // NOTE: don't need to subtract 1 from rows because there's the category row that should be included in these calculations.
+    let bottomMarginDelta = (-1 * (boardGrid.ROWS - element.row) * boxHeight)  / totalFrames;
     
-    let fontSizeDelta = (element.style.fontSize * 4) / totalFrames; // constant?
-    let paddingDelta = (element.style.padding * 5) / totalFrames;
+    let fontSizeDelta = (element.style.fontSize * 6) / totalFrames; // constant?
     
-    let heightDelta = (boxHeight * 4) / totalFrames;
-    let widthDelta = (boxWidth * 6) / totalFrames;
+    let heightDelta = grid.clientHeight - (boxHeight) / totalFrames;
+    let widthDelta = grid.clientWidth - (boxWidth) / totalFrames;
     
-    let anEl = document.createElement('div');
+    let animatedElement = document.createElement('div');
+    animatedElement.className = 'board-grid-item-font animated-grid-item';
+        
     
-    anEl.style.
+    grid.appendChild(animatedElement);
     
     debugger;
-    let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta);
+    let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, heightDelta, widthDelta);
     
     setIntervalX(function ()
     {
@@ -733,7 +739,7 @@ var view =
 class TileAnimation
 {
   
-  constructor(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta)
+  constructor(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, heightDelta, widthDelta)
   {
     debugger;
     this.leftMarginDelta = leftMarginDelta;
@@ -741,7 +747,6 @@ class TileAnimation
     this.topMarginDelta = topMarginDelta;
     this.bottomMarginDelta = bottomMarginDelta;
     this.fontSizeDelta = fontSizeDelta;
-    this.paddingDelta = paddingDelta;
     this.heightDelta = heightDelta;
     this.widthDelta = widthDelta;   
   }

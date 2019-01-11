@@ -217,6 +217,10 @@ h1 {
   background-color:#060CE9;
 }
 
+.animated-grid-item {
+  position: absolute;
+}
+
 .board-category-item {
   display:table;
   width:89px;
