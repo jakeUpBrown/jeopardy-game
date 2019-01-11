@@ -140,14 +140,13 @@ class BoardTile
   
   populateQAInfo(data)
   {
-    console.log("populating data for node");
-    console.log(this);
-    console.log(data);
+    this.question = data.question;
+    this.answer = data.correct_answer;
+    this.wrongOptions = data.incorrect_answers;
   }
 
   hasQuestionPopulated()
   {
-    console.log('question: ' + this.question);
     return !(this.question === '' || this.question === undefined);
   }
 };
@@ -182,21 +181,17 @@ var boardGrid =
   },
   populateQAInfoFromData: function(dataNodes)
   {
-    console.log(dataNodes);
     if(dataNodes == undefined || dataNodes.length === 0)
     {
       console.log("found undefined dataNodes");
     }
       
     let col = rowColumnInfo.getColIndexFromCategory(dataNodes.results[0].category);
-    
-    console.log(col);
-    
+        
     // for each data node, get the difficulty, find the next unpopulated tile with that difficulty in row, popoff the data and assign it to the tile
     for(let i = 0; i < dataNodes.results.length; i++)
     {
       let rowNum = this.findNextRow(col, dataNodes.results[i].difficulty);
-      console.log(rowNum);
       this.boardTiles[rowNum][col].populateQAInfo(dataNodes.results[i]);
     }
     
@@ -213,10 +208,8 @@ var boardGrid =
   {
     for(let row = 0; row < this.ROWS; row++)
     {
-      let b1 = rowColumnInfo.getRowDifficulty(row) === difficulty;
-      let b2 = this.boardTiles[row][col].hasQuestionPopulated() === false;
       // check if the difficulty matches and the question info hasn't been loaded
-      if(b1 && b2)
+      if(rowColumnInfo.getRowDifficulty(row) === difficulty && this.boardTiles[row][col].hasQuestionPopulated() === false)
         return row;
     }
   }
