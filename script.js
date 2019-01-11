@@ -679,8 +679,8 @@ var view =
     let grid = document.getElementById('board-grid');
     
     
-    let timesPerSecond = 150;
-    let seconds = .25;
+    let timesPerSecond = 60;
+    let seconds = .1;
     
     let totalFrames = Math.ceil(timesPerSecond * seconds);
     let millisPerFrame = 1000 / timesPerSecond;
@@ -698,24 +698,25 @@ var view =
     animatedElement.style.width = element.clientWidth + 'px';
     animatedElement.style.zIndex = 20;
     
-    
     setIntervalXWithXParemeter(function (x)
     {
       window.view.resizeTile(animatedElement, 1 / (totalFrames - x), endFontSize);
     }.bind(this), millisPerFrame, totalFrames,
     function ()
      {
-        // will want to set an interval for the animatedElement to disappear 
+      // will want to set an interval for the animatedElement to disappear 
       setTimeout(function()
       {
+        console.log(animatedElement);
         grid.removeChild(animatedElement);
-        window.currentQuestion.startCountdown();
+        window.currentQuestion.displayCountdown();
       }.bind(this), 1000);
      }.bind(this));
     
   },
   resizeTile: function(element, percentageOfDelta, endFontSize)
   {
+    var one=new Date();
     let parent = element.parentNode;
     // find distance that needs to be covered. percentageOfDelta will tell how much of the remaining needs to be added
     // add the delta * percentageOfDelta
@@ -728,6 +729,11 @@ var view =
     let currentFontSize = util.getElementPropertyValue(element, 'font-size');
     
     element.style.fontSize = currentFontSize + (Math.abs(endFontSize - currentFontSize) * percentageOfDelta) + 'px';
+    
+          var two=new Date();
+
+      //Calculate difference btw the two dates
+      alert(two.getMilliseconds()-one.getMilliseconds());
   }
 };
 
