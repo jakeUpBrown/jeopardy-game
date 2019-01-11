@@ -138,9 +138,11 @@ class BoardTile
     return element;
   }
   
-  populateQAInfoFromData(data)
+  populateQAInfo(data)
   {
     console.log("populating data for node");
+    console.log(this);
+    console.log(data);
   }
 };
 
@@ -172,13 +174,23 @@ var boardGrid =
       triviaApiGetter.loadColumnQAs(col);
     }
   },
-  populateQAInfo: function(colNum, dataNode)
+  populateQAInfoFromData: function(dataNodes)
   {
+    console.log(dataNodes);
+    if(dataNodes === undefined || dataNodes.length === 0)
+    {
+      debugger;
+      console.log("found undefined dataNodes");
+    }
+      
+    let col = rowColumnInfo.getColIndexFromCategory(dataNodes[0].category);
+    
     // for each data node, get the difficulty, find the next unpopulated tile with that difficulty in row, popoff the data and assign it to the tile
-    
-    
-    let rowNum = this.findNextRow(colNum, dataNode.difficulty);
-    this.boardTiles[rowNum, colNum].populateQAInfoFromData(dataNode);
+    for(let i = 0; i < dataNodes.length; i++)
+    {
+      let rowNum = this.findNextRow(col, dataNodes[i].difficulty);
+      this.boardTiles[rowNum, col].populateQAInfo(dataNodes[i]);
+    }
     
   },
   getMoneyValue: function(row)
@@ -409,8 +421,9 @@ var triviaApiGetter =
 
       url += qualName + '=' + qualValue;
 
-      return url;
     }
+    
+    return url;
   },
   loadColumnQAs: function(colNum)
   {
@@ -443,10 +456,7 @@ var triviaApiGetter =
 
         if(request.status >= 200 && request.status < 400)
         {
-          data.results.forEach(function(dataNode)
-          {
-            window.boardGrid.populateQAInfo(dataNode);
-          });
+          window.boardGrid.populateQAInfoFromData(data);
                   
           console.log('success');
         }
@@ -699,6 +709,19 @@ var rowColumnInfo =
   getCategoryName: function(colNum)
   {
     return this.colCategoryValues[colNum].name;
+  },
+  getColIndexFromCategory: function(category)
+  {
+    if(category.includes(':'))
+    {
+      category = category.substring(category.lastIndexOf(':') + 1).trim();
+    }
+    
+    for(let i = 0; i < this.colCategoryValues.length; i++)
+    {
+      if(category === this.colCategoryValues[i].name)
+        return i;
+    }
   },
   getDifficultyCount: function(difficulty) 
   {
