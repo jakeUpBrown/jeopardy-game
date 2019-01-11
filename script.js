@@ -702,16 +702,24 @@ var voiceAudio =
         
     this.stop();
     
-    this.msg.text = text;
-
-    window.speechSynthesis.speak(this.msg);    
-
+    debugger;
+    
+    let textQueue = this.splitUpMessageUnder100(text);
+    
+    for(let i = 0; i < textQueue.length; i++)
+    {
+    
+      this.msg.text = textQueue[i];
+      
+      window.speechSynthesis.speak(this.msg);    
+    }
   },
   stop: function()
   {
     if(!this.valid)
       return;
 
+    window.speechSynthesis.cancel();
   },
   splitUpMessageUnder100: function(text)
   {
@@ -719,16 +727,15 @@ var voiceAudio =
       return [text];
     
     // need to break up the sentences into pieces that the translater
-  
-    let rawSplitText = text.split('.');
+    let rawSplitTextBuffer = text.split('.');
+    
+    let rawSplitText = [];
     
     // make sure that every component of raw split text is under 100 characters.
-    for(let rawIndex = 0; rawIndex < rawSplitText.length; rawIndex++)
+    for(let rawIndex = 0; rawIndex < rawSplitTextBuffer.length; rawIndex++)
     {
-      let rawString = rawSplitText[rawIndex];
-      
-      let rawStrings = [];
-      
+      let rawString = rawSplitTextBuffer[rawIndex];
+            
       while(!rawString.length < 100)
       {
         // will need to split this text up anyway.
@@ -739,30 +746,38 @@ var voiceAudio =
           if(rawString.charAt(i) === ' ')
           {
             // extract every character before i index and add to rawStrings
-            rawStrings.push(rawString.substring(0,i + 1);
+            rawSplitText.push(rawString.substring(0,i + 1));
+            rawString = rawString.substring(i + 1);
           }
         }
-          
-          
+            
         // repeat until text.length < 100.
       }
+      
+      // rawString should contain string with < 100 characters.
+      // add back the period to the end.
+      rawSplitText.push(rawString + '.');
     }
     
     let validSplitText = [''];
-    
-    let validIndex = 0;
-    
+        
     for(let rawIndex = 0; rawIndex < rawSplitText.length; rawIndex++)
     {
       let rawString = rawSplitText[rawIndex];
-      
-
-      
-      
     
       // check if adding the rawSplitText[rawIndex] will exceed the valid split text index.
-      if(validSplitText[validIndex].length);
+      if(validSplitText[validSplitText.length - 1].length + rawString.length <= 100)
+      {
+        validSplitText[validSplitText.length - 1] += rawString;
+      }
+      else
+      {
+        // need to push to validSplitText
+        validSplitText.push(rawString);
+      }
     }
+    
+    return validSplitText;
   }
 };
 
