@@ -401,6 +401,14 @@ var handlers = {
     var targetDiv = event.target;
     
     boardGrid.boardTiles[targetDiv.row][targetDiv.col].isClicked();
+  },
+  speakerClicked: function()
+  {
+    console.log('speaker clicked');
+    let newChar = voiceAudio.toggleValid();
+    
+    let speakerElement = document.getElementById('speaker-icon');
+    speakerElement.textContent = newChar;
   }
 };
 
@@ -667,9 +675,6 @@ var view =
     element.style.fontSize = fontSize + 'px';
     
     parent.removeChild(fakeElement);
-  },
-  audioTest: function()
-  {
   }
 };
 
@@ -681,6 +686,8 @@ var voiceAudio =
   voice : [],
   msg: [],
   valid: true,
+  enabledChar: '&#128266',
+  disabledChar: '&#128263',
   init: function()
   {
     if (!'speechSynthesis' in window) {
@@ -779,6 +786,13 @@ var voiceAudio =
     debugger;
     
     return validSplitText;
+  },
+  toggleValid: function()
+  {
+    this.valid = !this.valid;
+
+    return this.valid ? this.enabledIcon : this.disabledIcon;
+      
   }
 };
 
