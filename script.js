@@ -716,25 +716,24 @@ var view =
     debugger;
     let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, heightDelta, widthDelta);
     
+    
+    
     setIntervalX(function ()
     {
-      window.view.resizeTile(animatedElement, tileAnimation);
+      window.view.resizeTile(animatedElement, percentageOfDelta);
     }.bind(this), millisPerFrame, totalFrames);
     
   },
-  resizeTile: function(element, tileAnimation, percentageOfDelta)
+  resizeTile: function(element, percentageOfDelta)
   {
-    debugger;
-    element.style.marginLeft = (util.getElementPropertyValue(element, 'margin-left') + tileAnimation.leftMarginDelta) + 'px';
-    element.style.marginRight = (util.getElementPropertyValue(element, 'margin-right') + tileAnimation.rightMarginDelta) + 'px';
-    element.style.marginTop = (util.getElementPropertyValue(element, 'margin-top') + tileAnimation.topMarginDelta) + 'px';
-    element.style.marginBottom = (util.getElementPropertyValue(element, 'margin-bottom') + tileAnimation.bottomMarginDelta) + 'px';
-
-    element.style.fontSize = (util.getElementPropertyValue(element, 'font-size') + tileAnimation.fontSizeDelta) + 'px';
-
-    element.style.height = (util.getElementPropertyValue(element, 'height') + tileAnimation.heightDelta) + 'px';
-    element.style.width = (util.getElementPropertyValue(element, 'width') + tileAnimation.widthDelta) + 'px';    
-    element.style.lineHeight = element.style.height;
+    let parent = element.parentNode;
+    // find distance that needs to be covered. percentageOfDelta will tell how much of the remaining needs to be added
+    // add the delta * percentageOfDelta
+    element.style.top = (element.offsetTop - ((element.offsetTop) * percentageOfDelta)) + 'px';
+    element.style.left = (element.offsetLeft - ((element.offsetLeft) * percentageOfDelta)) + 'px';
+    
+    element.style.lineHeight = element.style.height = (element.clientHeight + (Math.abs(parent.clientHeight - element.clientHeight) * percentageOfDelta)) + 'px';
+    element.style.width = (element.clientWidth + (Math.abs(parent.clientWidth - element.clientWidth) * percentageOfDelta)) + 'px';
     
   }
 };
