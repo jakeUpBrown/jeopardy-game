@@ -639,10 +639,10 @@ var view =
     var elementPadBottom = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-bottom'));
 
     // get the max width of the container.
-    var maxWidth = parent.clientWidth - parentPadLeft - parentPadRight - elementMarginLeft - elementMarginRight - elementPadLeft - elementPadRight;
+    var maxWidth = parent.clientWidth - parentPadLeft - parentPadRight - elementPadLeft - elementPadRight;
     
     // get the max height of the container.
-    var maxHeight = element.parent.clientHeight - parentPadTop - parentPadBottom - elementMarginTop - elementMarginBottom - elementPadTop - elementPadBottom;
+    var maxHeight = parent.clientHeight - parentPadTop - parentPadBottom - elementPadTop - elementPadBottom;
     
     while(element.clientWidth < (maxWidth - 5) && element.clientHeight < (maxHeight - 5))
     {
@@ -789,6 +789,9 @@ var util =
   },
   getNumberFromPixelString: function(pixelString)
   {
+    if(pixelString.length < 3)
+      return 0;
+    
     return parseInt(pixelString.substring(0,pixelString.length - 2));
   }
 };

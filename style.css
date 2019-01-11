@@ -229,9 +229,9 @@ h1 {
 }
 
 .board-category-item p {
-  height:60px;
-  width:89px;
   overflow:hidden;
+  height: auto;
+  width: auto;
   display:table-cell;
   vertical-align:middle;
   text-align:center;
