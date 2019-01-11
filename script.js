@@ -684,28 +684,15 @@ var view =
     let timesPerSecond = 45;
     let seconds = .5;
     
-    let totalFrames = timesPerSecond * seconds;
+    let totalFrames = Math.ceil(timesPerSecond * seconds);
     let millisPerFrame = 1000 / timesPerSecond;
     
     let borderWidth = util.getElementPropertyValue(element, 'border-width');
     
-    let boxHeight = element.clientHeight + (2 * borderWidth);
-    let boxWidth = element.clientWidth + (2 * borderWidth);
-        
-    let leftMarginDelta = (-1 * (element.col * boxWidth)) / totalFrames;
-    let rightMarginDelta = (-1 * (boardGrid.COLUMNS - 1 - element.col) * boxWidth) / totalFrames;
-    let topMarginDelta = (-1 * ((element.row + 1) * boxHeight)) / totalFrames;
-    // NOTE: don't need to subtract 1 from rows because there's the category row that should be included in these calculations.
-    let bottomMarginDelta = (-1 * (boardGrid.ROWS - element.row) * boxHeight)  / totalFrames;
-    
-    let fontSizeDelta = (element.style.fontSize * 6) / totalFrames; // constant?
-    
-    let heightDelta = (grid.clientHeight - boxHeight) / totalFrames;
-    let widthDelta = (grid.clientWidth - boxWidth) / totalFrames;
+    let endFontSize = util.getElementPropertyValue(element, 'font-size') * 40; // constant?
     
     let animatedElement = element.cloneNode(true);
     animatedElement.className = 'board-grid-item-font animated-grid-item';
-    
     grid.appendChild(animatedElement);
     animatedElement.style.left = element.offsetLeft + borderWidth + 'px';
     animatedElement.style.top = element.offsetTop + borderWidth + 'px';
@@ -713,18 +700,14 @@ var view =
     animatedElement.style.width = element.clientWidth + 'px';
     animatedElement.style.zIndex = 20;
     
-    debugger;
-    let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, heightDelta, widthDelta);
     
-    
-    
-    setIntervalX(function ()
+    setIntervalXWithXParemeter(function (x)
     {
-      window.view.resizeTile(animatedElement, percentageOfDelta);
+      window.view.resizeTile(animatedElement, 1 / (totalFrames - x), endFontSize);
     }.bind(this), millisPerFrame, totalFrames);
     
   },
-  resizeTile: function(element, percentageOfDelta)
+  resizeTile: function(element, percentageOfDelta, endFontSize)
   {
     let parent = element.parentNode;
     // find distance that needs to be covered. percentageOfDelta will tell how much of the remaining needs to be added
@@ -735,6 +718,8 @@ var view =
     element.style.lineHeight = element.style.height = (element.clientHeight + (Math.abs(parent.clientHeight - element.clientHeight) * percentageOfDelta)) + 'px';
     element.style.width = (element.clientWidth + (Math.abs(parent.clientWidth - element.clientWidth) * percentageOfDelta)) + 'px';
     
+    debugger;
+    element.style.fontSize = (Math.abs(endFontSize - util.getElementPropertyValue(element, 'font-size')) * percentageOfDelta) + 'px';
   }
 };
 
@@ -1038,13 +1023,13 @@ var util =
 };
 
 
-function setIntervalX(callback, delay, repetitions) {
+function setIntervalXWithXParemeter(callback, delay, repetitions) {
     var x = 0;
     var intervalID = window.setInterval(function () {
 
       console.log(x);
       console.log(repetitions);
-       callback();
+       callback(x);
 
        if (++x >= repetitions) {
            window.clearInterval(intervalID);
