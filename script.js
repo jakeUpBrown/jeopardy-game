@@ -699,16 +699,18 @@ var view =
     let heightDelta = (boxHeight * 4) / totalFrames;
     let widthDelta = (boxWidth * 6) / totalFrames;
     
+    debugger;
     let tileAnimation = new TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta);
     
-    setIntervalX(function (element, tileAnimation)
+    setIntervalX(function ()
     {
-      window.resizeTile(element, tileAnimation);
-    }, millisPerFrame, totalFrames);
+      window.view.resizeTile(element, tileAnimation);
+    }.bind(this), millisPerFrame, totalFrames);
     
   },
   resizeTile: function(element, tileAnimation)
   {
+    debugger;
     element.style.marginLeft = (util.getElementPropertyValue(element, 'margin-left') + tileAnimation.leftMarginDelta) + 'px';
     element.style.marginRight = (util.getElementPropertyValue(element, 'margin-right') + tileAnimation.rightMarginDelta) + 'px';
     element.style.marginTop = (util.getElementPropertyValue(element, 'margin-top') + tileAnimation.topMarginDelta) + 'px';
@@ -726,8 +728,10 @@ var view =
 
 class TileAnimation
 {
-  TileAnimation(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta)
+  
+  constructor(leftMarginDelta, rightMarginDelta, topMarginDelta, bottomMarginDelta, fontSizeDelta, paddingDelta, heightDelta, widthDelta)
   {
+    debugger;
     this.leftMarginDelta = leftMarginDelta;
     this.rightMarginDelta = rightMarginDelta;
     this.topMarginDelta = topMarginDelta;
