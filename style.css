@@ -21,6 +21,10 @@
     url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.svg#Swiss 911") format("svg");
 }
 
+:root
+{
+  --varia: #2f2f2f;
+}
 
 body {
   font-family: "Swiss 911";
