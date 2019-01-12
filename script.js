@@ -397,7 +397,16 @@ var handlers = {
   anyKeyUp: function(event)
   {
     // check if the player is the current answerer
-    var 
+    var answeringPlayer = window.currentQuestion.getAnswerer();
+    
+    if(answeringPlayer === undefined)
+      return;
+    
+    if(event.keyCode === answeringPlayer.keyBound)
+    {
+      currentQuestion.rotateAnswerSelected();
+      return;
+    }
     
   },
   startRound: function()
@@ -691,7 +700,7 @@ var view =
     let grid = document.getElementById('board-grid');
     
     
-    let timesPerSecond = 60;
+    let timesPerSecond = 100;
     let seconds = .1;
     
     let totalFrames = Math.ceil(timesPerSecond * seconds);
@@ -1077,5 +1086,10 @@ testers.fillPlayers();
 //voiceAudio.speak("This. is. Jeopardy!");
 
 view.displayBoardGrid();
+
+
+
+
+voiceAudio.valid = false;
 
 
