@@ -282,15 +282,15 @@ h1 {
 
 .buzzer {
   display:block;
-  width: 30px;
-  height: 15px;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
+  width: 25px;
+  height: 10px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
   position:absolute;
   border: 2px solid #111111;
-  top:-41px;
+  top:-36px;
   left:50%;
-  margin-left:-17px;
+  margin-left:-13px;
   z-index: -1;
 }
 
@@ -308,11 +308,20 @@ h1 {
   border: 2px solid #AAAAAA;
   margin-left:-6px;
   border-radius:3px;
+  -webkit-box-shadow: 0px 0px 0px 2px #111111;
+  -moz-box-shadow: 0px 0px 0px 2px #111111;
+  box-shadow: 0px 0px 0px 2px #111111;
 }
 
 .light-up-cell
 {
-  border: 2px solid #AAAAAA;
+  -webkit-box-shadow: 0px 0px 0px 2px #AAAAAA;
+  -moz-box-shadow: 0px 0px 0px 2px #AAAAAA;
+  box-shadow: 0px 0px 0px 2px #AAAAAA;
+  border: 1px solid #111111;
+  border-radius:2px;
+  margin-left:1px;
+  margin-right:1px;
 }
 
 
