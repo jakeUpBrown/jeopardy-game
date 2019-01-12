@@ -21,16 +21,11 @@
     url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.svg#Swiss 911") format("svg");
 }
 
-:root
-{
-  --varia: #2f2f2f;
-}
-
 body {
   font-family: "Swiss 911";
   width:750px;
   height:900px;
-  border: thick solid black;
+  border: thick solid #111111;
 }
 
 h1 {
@@ -61,7 +56,7 @@ h1 {
 .flex-child {
   margin: auto;
   position:relative;
-  border: 6px solid black;
+  border: 6px solid #111111;
   border-radius: 4px;
   vertical-align:top;
   padding:0px;
@@ -78,18 +73,18 @@ h1 {
   white-space: nowrap;
   font-size:25px;
   font-weight:100;
-  color:white;
+  color:#fdfdfd;
   z-index:1;
   height:35px;
   line-height:35px;
   width:100%;
   background-color:#0033cc;
-  text-shadow: 2px 2px black;
-  border-bottom: 5px solid black;
+  text-shadow: 2px 2px #111111;
+  border-bottom: 5px solid #111111;
 }
 
 .money-positive {
-  color: white;
+  color: #fdfdfd;
 }
 
 .money-negative {
@@ -99,7 +94,7 @@ h1 {
 .line-separator {
   width: 100%;
   height: 5px;
-  background-color:black;
+  background-color:#111111;
   margin:0px;
 }
 
@@ -109,7 +104,7 @@ h1 {
   font-size:20px;
   text-align:center;
   font-weight:lighter;
-  color:white;
+  color:#fdfdfd;
   font-family:'Merienda One', Helvetica, cursive;
   margin:0px;
   width:100%;
@@ -117,12 +112,12 @@ h1 {
   line-height:90px;
   z-index: 1;
   margin-top: 30px;
-  border-top: 4px solid black;
-  border-bottom: 4px solid black;  
+  border-top: 4px solid #111111;
+  border-bottom: 4px solid #111111;  
 }
 
 .name-selected {
-  background-color: white;
+  background-color: #fdfdfd;
 }
 
 .name-unselected {
@@ -130,7 +125,7 @@ h1 {
 }
 
 .podium-lit-up {
-  background-color: white;
+  background-color: #fdfdfd;
 }
 
 .podium-dim {
@@ -143,9 +138,9 @@ h1 {
   position: absolute;
   bottom: 20px;
   left: 10px;
-  border: 3px solid black;
-  color: white;
-  text-shadow: 1px 1px black;  
+  border: 3px solid #111111;
+  color: #fdfdfd;
+  text-shadow: 1px 1px #111111;  
   padding:10px;
 }
 
@@ -154,7 +149,7 @@ h1 {
   margin-left:auto;
   margin-right:auto;
   position: relative;
-  outline: 5px solid black;
+  outline: 5px solid #111111;
 }
 
 .spacer {
@@ -180,12 +175,12 @@ h1 {
   z-index:0;
   text-align:center;
   font-size:200px;
-  color: white;
-  text-shadow: 2px 2px black;
+  color: #fdfdfd;
+  text-shadow: 2px 2px #111111;
   font-family: "ITC Korinna Std";
   font-weight: bold;
   background-color:#060CE9;
-  border:5px solid black;
+  border:5px solid #111111;
 }
 
 
@@ -203,13 +198,13 @@ h1 {
   margin:auto;
   width:100%;
   background-color:#060CE9;
-  color: white;
+  color: #fdfdfd;
 }
 
 .answer-option
 {
   display: block;
-  border: 2px solid black;
+  border: 2px solid #111111;
   margin: 7px;
   padding: 5px;
 }
@@ -229,11 +224,11 @@ h1 {
   margin-top:20px;
   width:660px;
   padding: 0px;
-  border: 10px solid black;
+  border: 10px solid #111111;
 }
 
 .board-grid-item {
-  border: 4px solid black;
+  border: 4px solid #111111;
   height:60px;
   width:102px;
   line-height: 60px;  
@@ -244,7 +239,7 @@ h1 {
 .board-grid-item-font {
   text-align:center;
   color: #e6b800;
-  text-shadow: 2px 2px black;
+  text-shadow: 2px 2px #111111;
   font-size:38px;
   background-color:#060CE9;
 }
@@ -256,12 +251,12 @@ h1 {
 .board-category-item {
   display:table;
   width:89px;
-  border: 4px solid black;
-  border-bottom: 8px solid black;
+  border: 4px solid #111111;
+  border-bottom: 8px solid #111111;
   padding: 7px;
   word-wrap:break-word;
   color: white;
-  text-shadow: 2px 2px black;
+  text-shadow: 2px 2px #111111;
   height:60px;
   z-index:1;
   background-color:#060CE9;
@@ -291,7 +286,7 @@ h1 {
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   position:absolute;
-  border: 1px solid black;
+  border: 1px solid #111111;
   top:-41px;
   left:50%;
   margin-left:-15px;
@@ -305,16 +300,16 @@ h1 {
   top: -24px;
   position:relative;
   display:grid;
-  background: -webkit-gradient(left, black 0 100%, black 100%);
-  background: -webkit-linear-gradient(left, black 0 100%, black 100%);
-  background: linear-gradient(left, black 0 100%, black 100%); 
+  background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
+  background: -webkit-linear-gradient(left, #111111 0 100%, #111111 100%);
+  background: linear-gradient(left, #111111 0 100%, #111111 100%); 
   grid-template-columns: auto auto auto auto auto auto auto auto auto;
-  border: 2px solid grey;
+  border: 2px solid #AAAAAA;
 }
 
 .light-up-cell
 {
-  border: 2px solid grey;
+  border: 2px solid #AAAAAA;
 }
 
 
@@ -332,29 +327,29 @@ h1 {
         background: linear-gradient(left, red 0 100%, red 100%);      
     }
     20% {
-        background: -webkit-gradient(left, black 0 11%, red 11% 89%, black 89%);
-        background: -webkit-linear-gradient(left, black 0 11%, red 11% 89%, black 89%);
-        background: linear-gradient(left, black 0 11%, red 11% 89%, black 89%);      
+        background: -webkit-gradient(left, #111111 0 11%, red 11% 89%, #111111 89%);
+        background: -webkit-linear-gradient(left, #111111 0 11%, red 11% 89%, #111111 89%);
+        background: linear-gradient(left, #111111 0 11%, red 11% 89%, #111111 89%);      
     }
       40% {
-        background: -webkit-gradient(left, black 0 22%, red 22% 78%, black 78%);
-        background: -webkit-linear-gradient(left, black 0 22%, red 22% 78%, black 78%);
-        background: linear-gradient(left, black 0 22%, red 22% 78%, black 78%);      
+        background: -webkit-gradient(left, #111111 0 22%, red 22% 78%, #111111 78%);
+        background: -webkit-linear-gradient(left, #111111 0 22%, red 22% 78%, #111111 78%);
+        background: linear-gradient(left, #111111 0 22%, red 22% 78%, #111111 78%);      
     }
       60% {
-        background: -webkit-gradient(left, black 0 33%, red 33% 67%, black 67%);
-        background: -webkit-linear-gradient(left, black 0 33%, red 33% 67%, black 67%);
-        background: linear-gradient(left, black 0 33%, red 33% 67%, black 67%);      
+        background: -webkit-gradient(left, #111111 0 33%, red 33% 67%, #111111 67%);
+        background: -webkit-linear-gradient(left, #111111 0 33%, red 33% 67%, #111111 67%);
+        background: linear-gradient(left, #111111 0 33%, red 33% 67%, #111111 67%);      
     }
       80% {
-        background: -webkit-gradient(left, black 0 44%, red 44% 56%, black 56%);
-        background: -webkit-linear-gradient(left, black 0 44%, red 44% 56%, black 56%);
-        background: linear-gradient(left, black 0 44%, red 44% 56%, black 56%);   
+        background: -webkit-gradient(left, #111111 0 44%, red 44% 56%, #111111 56%);
+        background: -webkit-linear-gradient(left, #111111 0 44%, red 44% 56%, #111111 56%);
+        background: linear-gradient(left, #111111 0 44%, red 44% 56%, #111111 56%);   
     }
       100% {
-        background: -webkit-gradient(left, black 0 100%, black 100%);
-        background: -webkit-linear-gradient(left, black 0 100%, black 100%);
-        background: linear-gradient(left, black 0 100%, black 100%); 
+        background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
+        background: -webkit-linear-gradient(left, #111111 0 100%, #111111 100%);
+        background: linear-gradient(left, #111111 0 100%, #111111 100%); 
   }  
 }  
 
@@ -384,14 +379,14 @@ h1 {
 #help-icon
 {
   cursor:default;
-  color:white;
+  color:#fdfdfd;
   background-color:#060CE9;
   height:24px;
   width:24px;  
   display:inline-block;
   border-radius:100%;
   text-align:center;
-  border: 2px solid white;
+  border: 2px solid #fdfdfd;
   text-decoration:none;
   -webkit-box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,0.25);
   -moz-box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,0.25);
