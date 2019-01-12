@@ -301,6 +301,12 @@ h1 {
   display:grid;
   grid-template-columns: 1 1 1 1 1 1 1 1 1;
   border: 2px solid grey;
+      animation:gra 5s;
+    animation-direction:reverse;
+    -webkit-animation:gra 5s infinite;
+    -webkit-animation-direction:normal;
+    animation-timing-function:linear;
+    -webkit-animation-timing-function:linear;
 }
 
 .light-up-cell
@@ -313,43 +319,38 @@ h1 {
     width:300px;
     height:300px;
     border:1px solid black;
-    animation:gra 5s;
-    animation-direction:reverse;
-    -webkit-animation:gra 5s infinite;
-    -webkit-animation-direction:normal;
-    animation-timing-function:linear;
-    -webkit-animation-timing-function:linear;
+
 }
 @keyframes gra {
     0% {
-        background: -webkit-gradient(linear, left, right, red, red, red, red, red, red, red, red, red);
-        background: -webkit-linear-gradient(red, red, red, red, red, red, red, red, red);
-        background: linear-gradient(red, red, red, red, red, red, red, red, red);
+        background: -webkit-gradient(left, red, red 100%);
+        background: -webkit-linear-gradient(left, red, red 100%);
+        background: linear-gradient(left, red, red 100%);
     }
     20% {
-        background: -webkit-gradient(linear, left, right, black, red, red, red, red, red, red, red, black);
-        background: -webkit-linear-gradient(black, red, red, red, red, red, red, red, black);
-        background: linear-gradient(black, red, red, red, red, red, red, red, black);      
+        background: -webkit-gradient(left, black, black 11%, red, red, black, black 11%);
+        background: -webkit-linear-gradient(left, black, black 11%, red, red, black, black 11%);
+        background: linear-gradient(left, black, black 11%, red, red, black, black 11%);      
     }
       40% {
         background: -webkit-gradient(linear, left, right, black, black, red, red, red, red, red, black, black);
-        background: -webkit-linear-gradient(black, black, red, red, red, red, red, black, black);
-        background: linear-gradient(black, black, red, red, red, red, red, black, black);      
+        background: -webkit-linear-gradient(to right,black, black, red, red, red, red, red, black, black);
+        background: linear-gradient(to right,black, black, red, red, red, red, red, black, black);      
     }
       60% {
         background: -webkit-gradient(linear, left, right, black, black, black, red, red, red, black, black, black);
-        background: -webkit-linear-gradient(black, black, black, red, red, red, black, black, black);
-        background: linear-gradient(black, black, black, red, red, red, black, black, black);      
+        background: -webkit-linear-gradient(to right,black, black, black, red, red, red, black, black, black);
+        background: linear-gradient(to right,black, black, black, red, red, red, black, black, black);      
     }
       80% {
         background: -webkit-gradient(linear, left, right, black, black, black, black, red, black, black, black, black);
-        background: -webkit-linear-gradient(black, black, black, black, red, black, black, black, black);
-        background: linear-gradient(black, black, black, black, red, black, black, black, black);   
+        background: -webkit-linear-gradient(to right,black, black, black, black, red, black, black, black, black);
+        background: linear-gradient(to right,black, black, black, black, red, black, black, black, black);   
     }
       100% {
         background: -webkit-gradient(linear, left, right, black, black, black, black, black, black, black, black, black);
-        background: -webkit-linear-gradient(black, black, black, black, black, black, black, black, black);
-        background: linear-gradient(black, black, black, black, black, black, black, black, black);   
+        background: -webkit-linear-gradient(to right,black, black, black, black, black, black, black, black, black);
+        background: linear-gradient(to right,black, black, black, black, black, black, black, black, black);   
     }  
 }  
 
