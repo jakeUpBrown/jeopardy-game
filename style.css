@@ -297,19 +297,15 @@ h1 {
 .light-up-timer
 {
   height:15px;
-  width:100%;
+  width:160px;
   top: -15px;
   position:relative;
   display:grid;
   background: -webkit-gradient(left, black 0 100%, black 100%);
   background: -webkit-linear-gradient(left, black 0 100%, black 100%);
   background: linear-gradient(left, black 0 100%, black 100%); 
-  grid-template-columns: 1 1 1 1 1 1 1 1 1;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto;
   border: 2px solid grey;
-  animation:gra 5s;
-  -webkit-animation:gra 5s;
-  animation-timing-function:linear;
-  -webkit-animation-timing-function:linear;
 }
 
 .light-up-cell
@@ -318,12 +314,13 @@ h1 {
 }
 
 
-.light-up-timer-animation {
-    width:300px;
-    height:300px;
-    border:1px solid black;
-
+.timer-animation {
+  animation:gra 5s;
+  -webkit-animation:gra 5s;
+  animation-timing-function:linear;
+  -webkit-animation-timing-function:linear;
 }
+
 @keyframes gra {
     0% {
         background: -webkit-gradient(left, red 0 100%, red 100%);
@@ -346,9 +343,9 @@ h1 {
         background: linear-gradient(left, black 0 33%, red 33% 67%, black 67%);      
     }
       80% {
-        background: -webkit-gradient(left, black 0 44%, red 44% 55%, black 55%);
-        background: -webkit-linear-gradient(left, black 0 44%, red 44% 55%, black 55%);
-        background: linear-gradient(left, black 0 44%, red 44% 55%, black 55%);   
+        background: -webkit-gradient(left, black 0 44%, red 44% 56%, black 56%);
+        background: -webkit-linear-gradient(left, black 0 44%, red 44% 56%, black 56%);
+        background: linear-gradient(left, black 0 44%, red 44% 56%, black 56%);   
     }
       100% {
         background: -webkit-gradient(left, black 0 100%, black 100%);
