@@ -288,7 +288,7 @@ h1 {
   border-top-right-radius: 30px;
   position:absolute;
   border: 1px solid black;
-  top:-22px;
+  top:-41px;
   left:50%;
   margin-left:-15px;
   z-index: -1;
@@ -314,7 +314,7 @@ h1 {
 }
 
 
-.timer-animation {
+.timer-start {
   animation:gra 5s;
   -webkit-animation:gra 5s;
   animation-timing-function:linear;

@@ -564,6 +564,8 @@ var view =
       var buzzer = document.createElement('div');
       buzzer.className = 'buzzer';
       
+      let timer = this.createTimerElement();
+      
       // figure out what the color should be based on the details
       if(currentQuestion.isAnswerer(player))
       {
@@ -595,11 +597,26 @@ var view =
       
       
       flexChildElement.appendChild(buzzer);
+      flexChildElement.appendChild(timer);
       flexChildElement.appendChild(moneyTotalBox);
       flexChildElement.appendChild(playerNameBox);
       
       playerBoxContainer.appendChild(flexChildElement);
     });
+  },
+  createTimerElement: function()
+  {
+    let element = document.createElement('div');
+
+    for(let i = 0; i < 9; i++)
+    {
+      let child = document.createElement('div');
+      child.className = 'light-up-cell';
+      element.appendChild(child);
+    }
+
+    element.className = 'light-up-timer';
+    return element;
   },
   displayBoardGrid: function()
   {
