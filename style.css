@@ -157,7 +157,7 @@ h1 {
 }
 
 #addPlayerButton {
-  background-color: white;
+  background-color: #fdfdfd;
   font-weight: 100;
   font-family: "Swiss 911";
 }
@@ -256,7 +256,7 @@ h1 {
   border-bottom: 8px solid #111111;
   padding: 7px;
   word-wrap:break-word;
-  color: white;
+  color: #fdfdfd;
   text-shadow: 2px 2px #111111;
   height:60px;
   z-index:1;
