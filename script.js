@@ -574,8 +574,9 @@ var view =
       if(currentQuestion.isAnswerer(player))
       {
         // buzzer should be green
-         buzzer.style.backgroundColor = window.view.green;
-         flexChildElement.style.backgroundColor = window.view.white;;
+        buzzer.style.backgroundColor = window.view.green;
+        flexChildElement.style.backgroundColor = window.view.white;
+        timer.className += ' timer-start';
       }
       else if(player.buzzerTimeout)
       {
@@ -620,7 +621,7 @@ var view =
       timerElement.appendChild(timerCell);
     }
 
-    timerElement.className = 'light-up-timer timer-start';
+    timerElement.className = 'light-up-timer';
     return timerElement;
   },
   displayBoardGrid: function()
@@ -656,11 +657,10 @@ var view =
   {
     // get light up timer
     var lightUpTimer = document.getElementsByClassName('light-up-timer')[playerIndex];
-    
-    debugger;
-    
+        
     // add timer-start to className.
     lightUpTimer.className = lightUpTimer.className.replace('timer-start', '');
+    lightUpTimer.offsetHeight; // no need to store this anywhere, the reference is enough
     lightUpTimer.className += ' timer-start';
   },
   hideCountdown: function()
