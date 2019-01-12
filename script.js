@@ -538,6 +538,10 @@ var triviaApiGetter =
 
 var view = 
 {
+  green: '#2ECC40',
+  white: '#fdfdfd',
+  red: '#FF4136',
+  blue: '#060ce9',
   displayPlayers: function()
   {
     // for each player, create an element for the DOM
@@ -569,22 +573,23 @@ var view =
       // figure out what the color should be based on the details
       if(currentQuestion.isAnswerer(player))
       {
-         buzzer.style.backgroundColor = 'green';
-         flexChildElement.style.backgroundColor = 'white';
+        // buzzer should be green
+         buzzer.style.backgroundColor = window.view.green;
+         flexChildElement.style.backgroundColor = window.view.white;;
       }
       else if(player.buzzerTimeout)
       {
-        buzzer.style.backgroundColor = "red";
+        buzzer.style.backgroundColor = window.view.red;
       }
       else
       {
-        buzzer.style.backgroundColor = 'white';
+        buzzer.style.backgroundColor = window.view.white;
       }
       
       flexChildElement.className += currentQuestion.isAnswerer(player) ? ' podium-lit-up' : ' podium-dim';
       
       playerNameBox.className += player.selected ? ' name-selected' : ' name-unselected';
-      playerNameBox.style.color = player.selected ? '#060CE9' : 'white';
+      playerNameBox.style.color = player.selected ? window.view.blue : window.view.white;
       
       moneyTotalBox.className += moneyTotalBox.textContent.includes('-') ? ' money-negative' : ' money-positive';
       
@@ -597,9 +602,9 @@ var view =
       
       
       flexChildElement.appendChild(buzzer);
-      flexChildElement.appendChild(timer);
       flexChildElement.appendChild(moneyTotalBox);
       flexChildElement.appendChild(playerNameBox);
+      flexChildElement.appendChild(timer);
       
       playerBoxContainer.appendChild(flexChildElement);
     });
@@ -616,7 +621,7 @@ var view =
       timerElement.appendChild(timerCell);
     }
 
-    timerElement.className = 'light-up-timer';
+    timerElement.className = 'light-up-timer timer-start';
     return timerElement;
   },
   displayBoardGrid: function()

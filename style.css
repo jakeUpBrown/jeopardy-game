@@ -88,7 +88,7 @@ h1 {
 }
 
 .money-negative {
-  color: red;
+  color: #FF4136;
 }
 
 .line-separator {
@@ -286,10 +286,10 @@ h1 {
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   position:absolute;
-  border: 1px solid #111111;
+  border: 2px solid #111111;
   top:-41px;
   left:50%;
-  margin-left:-15px;
+  margin-left:-17px;
   z-index: -1;
 }
 
@@ -298,13 +298,14 @@ h1 {
   height:15px;
   width:160px;
   top: -24px;
-  position:relative;
+  position:absolute;
   display:grid;
   background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
   background: -webkit-linear-gradient(left, #111111 0 100%, #111111 100%);
   background: linear-gradient(left, #111111 0 100%, #111111 100%); 
   grid-template-columns: auto auto auto auto auto auto auto auto auto;
   border: 2px solid #AAAAAA;
+  border-radius:3px;
 }
 
 .light-up-cell
@@ -322,29 +323,29 @@ h1 {
 
 @keyframes gra {
     0% {
-        background: -webkit-gradient(left, red 0 100%, red 100%);
-        background: -webkit-linear-gradient(left, red 0 100%, red 100%);
-        background: linear-gradient(left, red 0 100%, red 100%);      
+        background: -webkit-gradient(left, #FF4136 0 100%, #FF4136 100%);
+        background: -webkit-linear-gradient(left, #FF4136 0 100%, #FF4136 100%);
+        background: linear-gradient(left, #FF4136 0 100%, #FF4136 100%);      
     }
     20% {
-        background: -webkit-gradient(left, #111111 0 11%, red 11% 89%, #111111 89%);
-        background: -webkit-linear-gradient(left, #111111 0 11%, red 11% 89%, #111111 89%);
-        background: linear-gradient(left, #111111 0 11%, red 11% 89%, #111111 89%);      
+        background: -webkit-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
+        background: -webkit-linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
+        background: linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);      
     }
       40% {
-        background: -webkit-gradient(left, #111111 0 22%, red 22% 78%, #111111 78%);
-        background: -webkit-linear-gradient(left, #111111 0 22%, red 22% 78%, #111111 78%);
-        background: linear-gradient(left, #111111 0 22%, red 22% 78%, #111111 78%);      
+        background: -webkit-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
+        background: -webkit-linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
+        background: linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);      
     }
       60% {
-        background: -webkit-gradient(left, #111111 0 33%, red 33% 67%, #111111 67%);
-        background: -webkit-linear-gradient(left, #111111 0 33%, red 33% 67%, #111111 67%);
-        background: linear-gradient(left, #111111 0 33%, red 33% 67%, #111111 67%);      
+        background: -webkit-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
+        background: -webkit-linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
+        background: linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);      
     }
       80% {
-        background: -webkit-gradient(left, #111111 0 44%, red 44% 56%, #111111 56%);
-        background: -webkit-linear-gradient(left, #111111 0 44%, red 44% 56%, #111111 56%);
-        background: linear-gradient(left, #111111 0 44%, red 44% 56%, #111111 56%);   
+        background: -webkit-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
+        background: -webkit-linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
+        background: linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);   
     }
       100% {
         background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
