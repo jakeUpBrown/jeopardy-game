@@ -31,7 +31,6 @@ body {
 h1 {
   font-style: italic;
   color: #373fff;
-  background-color: var(--test);
 }
 
 .body-div {
@@ -107,10 +106,11 @@ h1 {
   color:#fdfdfd;
   font-family:'Merienda One', Helvetica, cursive;
   margin:0px;
+  padding:0px;
   width:100%;
   height:90px;
   line-height:90px;
-  z-index: 1;
+  z-index: 3;
   margin-top: 30px;
   border-top: 4px solid #111111;
   border-bottom: 4px solid #111111;  
@@ -124,7 +124,7 @@ h1 {
   background:linear-gradient(to top, #000099, #0033cc);
 }
 
-.podium-lit-up {
+.podium-light-up {
   background-color: #fdfdfd;
 }
 
@@ -305,6 +305,7 @@ h1 {
   background: linear-gradient(left, #111111 0 100%, #111111 100%); 
   grid-template-columns: auto auto auto auto auto auto auto auto auto;
   border: 2px solid #AAAAAA;
+  margin-left:-6px;
   border-radius:3px;
 }
 
