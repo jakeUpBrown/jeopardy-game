@@ -328,9 +328,9 @@ h1 {
         background: linear-gradient(left, red, red 100%);
     }
     20% {
-        background: -webkit-gradient(left, black, black 11%, red, red, black, black 11%);
-        background: -webkit-linear-gradient(left, black, black 11%, red, red, black, black 11%);
-        background: linear-gradient(left, black, black 11%, red, red, black, black 11%);      
+        background: -webkit-gradient(left, black, black 11%, red, red 78%, black, black 11%);
+        background: -webkit-linear-gradient(left, black, black 11%, red, red 78%, black, black 11%);
+        background: linear-gradient(left, black, black 11%, red, red 78%, black, black 11%);      
     }
       40% {
         background: -webkit-gradient(linear, left, right, black, black, red, red, red, red, red, black, black);
