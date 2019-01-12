@@ -611,7 +611,6 @@ var view =
   },
   createTimerElement: function()
   {
-    debugger;
     let timerElement = document.createElement('div');
 
     for(let i = 0; i < 9; i++)
@@ -652,6 +651,17 @@ var view =
     questionSpace.innerHTML = content;
     questionSpace.style.zIndex=10;
     
+  },
+  startLightUpTimer: function(playerIndex)
+  {
+    // get light up timer
+    var lightUpTimer = document.getElementsByClassName('light-up-timer')[playerIndex];
+    
+    debugger;
+    
+    // add timer-start to className.
+    lightUpTimer.className = lightUpTimer.className.replace('timer-start', '');
+    lightUpTimer.className += ' timer-start';
   },
   hideCountdown: function()
   {
@@ -890,9 +900,7 @@ var voiceAudio =
         validSplitText.push(rawString);
       }
     }
-    
-    debugger;
-    
+        
     return validSplitText;
   },
   toggleValid: function()
