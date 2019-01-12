@@ -221,6 +221,7 @@ var currentQuestion =
   started: false,
   answerWindowOpen: false,
   answererIndex: -1,
+  answerSelectedIndex: -1,
   tile: undefined,
   element: undefined,
   startFromTile: function(tile, element)
@@ -268,6 +269,7 @@ var currentQuestion =
   {
     voiceAudio.speak(this.tile.question);
     this.answerWindowOpen = true;
+    this.answerIndex = 0;
     setTimeout(this.endRound, 3000);
   },
   playerBuzzed: function(player)
@@ -297,10 +299,12 @@ var currentQuestion =
     playerList.unbuzzAllPlayers();
     view.displayPlayers();
     view.displayBoardGrid();
-  }
-  
-  // once the game is started, the first player to buzz in should be declared the winner
-  
+  },
+  rotateAnswerSelected: function()
+  {
+    this.answerSelectedIndex = (this.answerSelectedIndex + 1) % (this.tile.wrongOptions.length + 1)
+    view.updateAnswerSelected();
+  }  
   
 };
 
@@ -389,6 +393,12 @@ var handlers = {
     }
     
     // if here, no player was selected. will want to check if any key matched a player
+  },
+  anyKeyUp: function(event)
+  {
+    // check if the player is the current answerer
+    var 
+    
   },
   startRound: function()
   {
@@ -624,6 +634,10 @@ var view =
       this.expandFontSizeToFill(categoryHeader);
     }
     
+  },
+  updateAnswerSelected: function()
+  {
+    console.log("NEED TO UPDATE ANSWER SELECTED VIEW");
   },
   expandFontSizeToFill: function(element)
   {
