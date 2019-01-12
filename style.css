@@ -21,6 +21,11 @@
     url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.svg#Swiss 911") format("svg");
 }
 
+:root
+{
+  --test: blue;
+}
+
 body {
   font-family: "Swiss 911";
   width:750px;
@@ -31,6 +36,7 @@ body {
 h1 {
   font-style: italic;
   color: #373fff;
+  background-color: var(--test);
 }
 
 .body-div {
@@ -323,14 +329,15 @@ h1 {
 }
 @keyframes gra {
     0% {
+        --variable: 20;
         background: -webkit-gradient(left, red, red 100%);
         background: -webkit-linear-gradient(left, red, red 100%);
         background: linear-gradient(left, red, red 100%);
     }
     20% {
-        background: -webkit-gradient(left, black, black 11%, red, red 78%, black, black 11%);
-        background: -webkit-linear-gradient(left, black, black 11%, red, red 78%, black, black 11%);
-        background: linear-gradient(left, black, black 11%, red, red 78%, black, black 11%);      
+        background: -webkit-gradient(left, black 0 11%, red 11% 89%, black 89%);
+        background: -webkit-linear-gradient(left, black 0 11%, red 11% 89%, black 89%);
+        background: linear-gradient(left, black 0 11%, red 11% 89%, black 89%);      
     }
       40% {
         background: -webkit-gradient(linear, left, right, black, black, red, red, red, red, red, black, black);
