@@ -564,7 +564,7 @@ var view =
       var buzzer = document.createElement('div');
       buzzer.className = 'buzzer';
       
-      let timer = this.createTimerElement();
+      let timer = window.view.createTimerElement();
       
       // figure out what the color should be based on the details
       if(currentQuestion.isAnswerer(player))
@@ -606,17 +606,18 @@ var view =
   },
   createTimerElement: function()
   {
-    let element = document.createElement('div');
+    debugger;
+    let timerElement = document.createElement('div');
 
     for(let i = 0; i < 9; i++)
     {
-      let child = document.createElement('div');
-      child.className = 'light-up-cell';
-      element.appendChild(child);
+      let timerCell = document.createElement('div');
+      timerCell.className = 'light-up-cell';
+      timerElement.appendChild(timerCell);
     }
 
-    element.className = 'light-up-timer';
-    return element;
+    timerElement.className = 'light-up-timer';
+    return timerElement;
   },
   displayBoardGrid: function()
   {
