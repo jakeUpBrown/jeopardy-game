@@ -298,13 +298,16 @@ h1 {
 {
   height:15px;
   width:100%;
+  top: -15px;
   position:relative;
   display:grid;
+  background: -webkit-gradient(left, black 0 100%, black 100%);
+  background: -webkit-linear-gradient(left, black 0 100%, black 100%);
+  background: linear-gradient(left, black 0 100%, black 100%); 
   grid-template-columns: 1 1 1 1 1 1 1 1 1;
   border: 2px solid grey;
   animation:gra 5s;
   -webkit-animation:gra 5s;
-  -webkit-animation-direction:normal;
   animation-timing-function:linear;
   -webkit-animation-timing-function:linear;
 }
@@ -323,7 +326,9 @@ h1 {
 }
 @keyframes gra {
     0% {
-        background: linear-gradient(left, red 0 100%);      
+        background: -webkit-gradient(left, red 0 100%, red 100%);
+        background: -webkit-linear-gradient(left, red 0 100%, red 100%);
+        background: linear-gradient(left, red 0 100%, red 100%);      
     }
     20% {
         background: -webkit-gradient(left, black 0 11%, red 11% 89%, black 89%);
@@ -346,8 +351,10 @@ h1 {
         background: linear-gradient(left, black 0 44%, red 44% 55%, black 55%);   
     }
       100% {
-        background: linear-gradient(left, black 0 100%, );      
-    }  
+        background: -webkit-gradient(left, black 0 100%, black 100%);
+        background: -webkit-linear-gradient(left, black 0 100%, black 100%);
+        background: linear-gradient(left, black 0 100%, black 100%); 
+  }  
 }  
 
 
