@@ -302,9 +302,17 @@ var currentQuestion =
   },
   rotateAnswerSelected: function()
   {
+    console.log("rotateAnswerSelected");
     this.answerSelectedIndex = (this.answerSelectedIndex + 1) % (this.tile.wrongOptions.length + 1)
     view.updateAnswerSelected();
-  }  
+  },
+  getAnswerer: function()
+  {
+    if(this.answererIndex < 0)
+      return undefined;
+    
+    return playerList.players[this.answererIndex];
+  }
   
 };
 
@@ -399,10 +407,7 @@ var handlers = {
     // check if the player is the current answerer
     var answeringPlayer = window.currentQuestion.getAnswerer();
     
-    if(answeringPlayer === undefined)
-      return;
-    
-    if(event.keyCode === answeringPlayer.keyBound)
+    if(answeringPlayer !== undefined && (event.keyCode === answeringPlayer.keyBound))
     {
       currentQuestion.rotateAnswerSelected();
       return;
@@ -1081,6 +1086,8 @@ boardGrid.fillBoardTiles();
 rowColumnInfo.init(0);
 
 window.onkeydown = handlers.anyKeyDown;
+window.onkeyup = handlers.anyKeyUp;
+
 testers.fillPlayers();
 
 //voiceAudio.speak("This. is. Jeopardy!");
