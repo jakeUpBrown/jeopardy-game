@@ -120,9 +120,12 @@ class BoardTile
   
   scrambleAnswers()
   {
+    if(this.answer === '' || this.answer == undefined || this.wrongOptions == '' || this.wrongOptions === undefined)
+      return;
+    
     let answerOrder = [];
-    answerOrder.push(this.answer);
-    answerOrder.push(this.wrongOptions);
+    answerOrder.push(this.answer);    
+    answerOrder = answerOrder.concat(this.wrongOptions);
     
     var currentIndex = answerOrder.length, temporaryValue, randomIndex;
 
@@ -180,6 +183,8 @@ class BoardTile
     this.question = data.question;
     this.answer = data.correct_answer;
     this.wrongOptions = data.incorrect_answers;
+    
+    this.scrambleAnswers();
   }
 
   hasQuestionPopulated()
