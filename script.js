@@ -225,7 +225,7 @@ var currentQuestion =
   previousAnswerer: [],
   tile: undefined,
   element: undefined,
-  
+  phaseEndingTimeout: undefined,
   startFromTile: function(tile, element)
   {
     this.previousAnswerers = [];
@@ -249,14 +249,15 @@ var currentQuestion =
   displayCountdown: function()
   {
     playerList.unbuzzAllPlayers();
-    this.decrementCountdown(3);
+    this.decrementCountdown(0);
   },
   decrementCountdown: function(value)
   {    
     if(value <= 0)
     {
       view.displayCountdown('GO!');
-      this.openAnswerWindow();
+      this.sayQA();
+      this.openBuzzWindow(10000);
       return;
     }
     else
@@ -268,17 +269,23 @@ var currentQuestion =
       }, 1000);
     }
   },
-  openAnswerWindow: function()
+  sayQA: function()
   {
     voiceAudio.speak(this.tile.question);
-    this.answerWindowOpen = true;
-    this.answerIndex = 0;
-    setTimeout(this.endRound, 3000);
+  },
+  openBuzzWindow: function(timeoutLength)
+  {
+    if(this.phaseEndingTimeout !== undefined)
+      clearTimeout(this.phaseEndingTimeout);
+    
+    this.answererIndex = -1;
+    this.buzzWindowOpen = true;
+    this.phaseEndingTimeout = setTimeout(this.endRound, timeoutLength);
   },
   playerBuzzed: function(player)
   {
     // check that the answerWindow is open, nobody is currently answering and that the player hasn't buzzed before.
-    if(this.answerWindowOpen === true && this.answererIndex === -1 && !this.playerBuzzedBefore(player))
+    if(this.buzzWindowOpen === true && this.answererIndex === -1 && !this.playerBuzzedBefore(player))
     {
       // found the winner.
       this.promptPlayer(player);
@@ -292,6 +299,8 @@ var currentQuestion =
   {
     this.previousAnswerer.push(player.index);
     this.answererIndex = player.index;
+    
+    this.openAnswerWindow(5000);
   },
   playerWon: function(player)
   {
@@ -306,7 +315,7 @@ var currentQuestion =
   {    
     currentQuestion.answererIndex = -1;
     currentQuestion.started = false;
-    currentQuestion.answerWindowOpen = false;
+    currentQuestion.buzzWindowOpen = false;
     view.hideCountdown();
     playerList.unbuzzAllPlayers();
     view.displayPlayers();
