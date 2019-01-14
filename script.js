@@ -304,7 +304,6 @@ var currentQuestion =
     if(value <= 0)
     {
       view.displayCountdown('GO!');
-      this.displayQA();
       this.openBuzzWindow(5000);
       return;
     }
@@ -326,6 +325,10 @@ var currentQuestion =
   {
     if(this.phaseEndingTimeout !== undefined)
       clearTimeout(this.phaseEndingTimeout);
+    
+    playerList.unbuzzAllPlayers();
+    
+    this.displayQA();
     
     this.answererIndex = -1;
     this.buzzWindowOpen = true;
@@ -718,12 +721,13 @@ var view =
   },
   displayQA: function()
   {
-    let questionArea = document.getElelementById('question-holder');
-    questionArea.textContent = currentQuestion.question;
+    debugger;
+    let questionArea = document.getElementById('question-holder');
+    questionArea.textContent = currentQuestion.tile.question;
     
     let answerGrid = document.getElementById('answer-grid');
     
-    for(let i = 0; i < currentQuestion.answers; i++)
+    for(let i = 0; i < currentQuestion.tile.answerOrder.length; i++)
     {
       let answerElement = this.createAnswerElement(i);
       
@@ -738,7 +742,6 @@ var view =
     let answerElement = document.createElement('p');
     answerElement.textContent = currentQuestion.tile.getAnswerByIndex(answerIndex);
     return answerElement;
-    
   },
   displayBoardGrid: function()
   {
@@ -884,7 +887,7 @@ var view =
       {
         console.log(animatedElement);
         grid.removeChild(animatedElement);
-        window.currentQuestion.displayCountdown();
+        window.currentQuestion.openBuzzWindow(5000);
       }.bind(this), 1000);
      }.bind(this));
     

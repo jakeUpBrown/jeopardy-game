@@ -168,7 +168,7 @@ h1 {
   height:415px;
   width:650px;
   margin:0px;
-  z-index:10;
+  z-index:0;
   text-align:center;
   color: #fdfdfd;
   text-shadow: 2px 2px #111111;
