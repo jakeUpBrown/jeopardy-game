@@ -220,6 +220,18 @@ h1 {
   width:85%;
 }
 
+.correct-answer
+{
+  background-color: green;
+  color: black;
+}
+
+.correct-answer
+{
+  background-color: green;
+  color: black;
+}
+
 #startRoundButton {
   display: block;
   position: absolute;

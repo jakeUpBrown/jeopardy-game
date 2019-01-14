@@ -726,7 +726,7 @@ var view =
     timerElement.className = 'light-up-timer';
     return timerElement;
   },
-  displayQA: function()
+  displayQA: function(showCorrectAnswer)
   {
     let questionArea = document.getElementById('question-holder');
     questionArea.textContent = util.decodeHtmlString(currentQuestion.tile.question);
@@ -741,6 +741,15 @@ var view =
     for(let i = 0; i < currentQuestion.tile.answerOrder.length; i++)
     {
       let answerElement = this.createAnswerElement(i);
+      
+      if(showCorrectAnswer === true && currentQuestion.tile.correctAnswerIndex === i)
+      {
+        answerElement.className += ' correct-answer';
+      }
+      else if(i == currentQuestion.answerSelectedIndex)
+      {
+        answerElement.className += ' selected-answer';
+      }
       
       answerGrid.appendChild(answerElement);
     }
