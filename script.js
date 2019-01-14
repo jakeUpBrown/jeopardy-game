@@ -380,13 +380,7 @@ var currentQuestion =
     if(this.phaseEndingTimeout !== undefined)
       clearTimeout(this.phaseEndingTimeout)
     
-    this.phaseEndingTimeout = setTimeout(function()
-      {
-        if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
-          window.currentQuestion.openBuzzWindow(3000);
-        else
-          window.currentQuestion.endRound();
-      }, 5000);
+    this.phaseEndingTimeout = setTimeout(this.checkPlayerAnswer, 5000);
   },
   playerWon: function(player)
   {
@@ -396,6 +390,31 @@ var currentQuestion =
   isAnswerer: function(player)
   {
     return player.index == this.answererIndex;
+  },
+  checkPlayerAnswer: function()
+  {
+    console.log('checking player answer');
+    // check if the player got the answer right.
+    
+    if(this.answerIndex === this.tile.correctAnswerIndex)
+    {
+      this.playerWon(playerList.players[this.answererIndex]);
+      this.showCorrectAnswer();
+    }
+    else
+    {
+      if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
+        window.currentQuestion.openBuzzWindow(3000);
+      else
+        window.currentQuestion.endRound();
+    }
+  },
+  showCorrectAnswer: function()
+  {
+    // set the className of the correct answer to correct-answer
+    view.displayQA(true);
+    
+    setTimeout(this.endRound, 1500);
   },
   endRound: function()
   {    
@@ -520,9 +539,9 @@ var handlers = {
     
     if(answeringPlayer !== undefined && (event.keyCode === answeringPlayer.keyBound))
     {
-      if(this.buzzedPlayerKeyUp === false)
+      if(handlers.buzzedPlayerKeyUp === false)
       {
-        this.buzzedPlayerKeyUp = true;
+        handlers.buzzedPlayerKeyUp = true;
         return;
       }
       
