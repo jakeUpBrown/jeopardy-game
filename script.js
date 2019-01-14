@@ -370,6 +370,11 @@ var currentQuestion =
   {
     this.promptAnswerWindowOpen = true;
     
+    this.answererIndex = player.index;
+    this.answerSelectedIndex = 0;
+    
+    view.displayQA(false);
+    
     if(this.phaseEndingTimeout !== undefined)
       clearTimeout(this.phaseEndingTimeout)
     
@@ -406,7 +411,7 @@ var currentQuestion =
   {
     console.log("rotateAnswerSelected");
     this.answerSelectedIndex = (this.answerSelectedIndex + 1) % (this.tile.wrongOptions.length + 1)
-    view.updateAnswerSelected();
+    view.displayQA(false);
   },
   getAnswerer: function()
   {
@@ -419,6 +424,7 @@ var currentQuestion =
 };
 
 var handlers = {
+  buzzedPlayerKeyPressed: false,
   addNewPlayer: function()
   {
     var playerNameInput = document.getElementById('playerNameInput');
@@ -498,6 +504,9 @@ var handlers = {
     
     if(util.isKeyAlphaNumeric(event.keyCode))
     {
+      // get the answering player
+      let answeringPlayer = currentQuestion.getAnsweringPlayer();
+      
       // found alphanumeric key. will want to buzz the player in if it's assigned to anyone
       var playerBuzzed = window.playerList.keyBuzzed(event.keyCode);
     }
@@ -511,6 +520,11 @@ var handlers = {
     
     if(answeringPlayer !== undefined && (event.keyCode === answeringPlayer.keyBound))
     {
+      if(this.buzzedPlayerKeyPressed === true)
+      {
+        this.buzzedPlayerKeyPressed = false;
+        return;
+      }
       currentQuestion.rotateAnswerSelected();
       return;
     }
@@ -762,8 +776,8 @@ var view =
     let answerElement = document.createElement('p');
     answerElement.textContent = currentQuestion.tile.getAnswerByIndex(answerIndex);
     
-    if(answerIndex === currentQuestion.tile.correctAnswerIndex)
-      answerElement.style.backgroundColor = 'red';
+    //if(answerIndex === currentQuestion.tile.correctAnswerIndex)
+      //answerElement.style.backgroundColor = 'red';
     
     return answerElement;
   },

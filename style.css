@@ -226,9 +226,9 @@ h1 {
   color: black;
 }
 
-.correct-answer
+.selected-answer
 {
-  background-color: green;
+  background-color: white;
   color: black;
 }
 
