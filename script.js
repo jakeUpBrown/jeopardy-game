@@ -1032,14 +1032,14 @@ var voiceAudio =
   },
   speak: function(text)
   {
-    
     if(!this.valid)
-      return;
+      return false;
         
     this.stop();
         
     text = util.sanitizeTextForSpeech(text);
     
+    /*
     let textQueue = this.splitUpMessageUnder100(text);
     
     for(let i = 0; i < textQueue.length; i++)
@@ -1049,6 +1049,16 @@ var voiceAudio =
       
       window.speechSynthesis.speak(this.msg);    
     }
+    */
+    
+    let utterance = new SpeechSynthesisUtterance(text);
+    
+    utterance.onend = function(event)
+    {
+      window.currentQuestion.speechEnded();
+    };
+    
+    return true;
   },
   stop: function()
   {
