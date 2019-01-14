@@ -96,9 +96,19 @@ var playerList=
   },
   unbuzzAllPlayers: function()
   {
-    this.players.forEach(function(player, index) {
-      playerList.unbuzzPlayer(index);
-    });
+    let redisplayPlayers = false;
+    
+    for(let i = 0; i < playerList.players.length; i++)
+    {
+      if(playerList.players[i].buzzerTimeout === true)
+      {
+        playerList.players[i].buzzerTimeout = false;
+        redi
+      }
+    }
+    
+    if(redisplayPlayers === true)
+      view.displayPlayers();
   }
 };
 
@@ -321,10 +331,10 @@ var currentQuestion =
       }, 1000);
     }
   },
-  displayQA: function()
+  startQuestion: function()
   {
     view.displayQA();
-    voiceAudio.speak(this.tile.question);
+    return voiceAudio.speak(this.tile.question);
   },
   openBuzzWindow: function(timeoutLength)
   {
@@ -335,7 +345,12 @@ var currentQuestion =
     
     this.answerSelectedIndex = -1;
     
-    this.displayQA();
+    let voiceStarted = this.startQuestion();
+    
+    if(voiceStarted == false)
+    {
+      this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, timeoutLength);
+    }
     
     this.answererIndex = -1;
     this.buzzWindowOpen = true;
@@ -435,6 +450,9 @@ var currentQuestion =
   },
   showCorrectAnswer: function()
   {
+    currentQuestion.started = false;
+    currentQuestion.promptAnswerWindowOpen = false;
+    currentQuestion.buzzWindowOpen = false;
     // set the className of the correct answer to correct-answer
     window.view.showCorrectAnswer();
     
@@ -451,6 +469,11 @@ var currentQuestion =
     playerList.unbuzzAllPlayers();
     view.displayPlayers();
     view.displayBoardGrid();
+  },
+  speechEnded: function()
+  {
+    
+    
   },
   rotateAnswerSelected: function()
   {
@@ -709,6 +732,9 @@ var view =
   {
     // for each player, create an element for the DOM
    
+    debugger;
+    console.log(this);
+    
     var playerBoxContainer = document.getElementById('playerBoxContainer');
     
     // clear player box container
@@ -1051,12 +1077,15 @@ var voiceAudio =
     }
     */
     
-    let utterance = new SpeechSynthesisUtterance(text);
+    this.msg.text = text;
     
-    utterance.onend = function(event)
+    this.msg.onend = function(event)
     {
+      console.log('speech ended');
       window.currentQuestion.speechEnded();
     };
+    
+    window.speechSynthesis.speak(this.msg);
     
     return true;
   },
