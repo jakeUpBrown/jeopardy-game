@@ -370,6 +370,8 @@ var currentQuestion =
   {
     this.promptAnswerWindowOpen = true;
     
+    handlers.buzzedPlayerKeyUp = false;
+    
     this.answererIndex = player.index;
     this.answerSelectedIndex = 0;
     
@@ -424,7 +426,7 @@ var currentQuestion =
 };
 
 var handlers = {
-  buzzedPlayerKeyPressed: false,
+  buzzedPlayerKeyUp: false,
   addNewPlayer: function()
   {
     var playerNameInput = document.getElementById('playerNameInput');
@@ -503,10 +505,7 @@ var handlers = {
     }
     
     if(util.isKeyAlphaNumeric(event.keyCode))
-    {
-      // get the answering player
-      let answeringPlayer = currentQuestion.getAnsweringPlayer();
-      
+    {        
       // found alphanumeric key. will want to buzz the player in if it's assigned to anyone
       var playerBuzzed = window.playerList.keyBuzzed(event.keyCode);
     }
@@ -515,16 +514,18 @@ var handlers = {
   },
   anyKeyUp: function(event)
   {
+    debugger;
     // check if the player is the current answerer
     var answeringPlayer = window.currentQuestion.getAnswerer();
     
     if(answeringPlayer !== undefined && (event.keyCode === answeringPlayer.keyBound))
     {
-      if(this.buzzedPlayerKeyPressed === true)
+      if(this.buzzedPlayerKeyUp === false)
       {
-        this.buzzedPlayerKeyPressed = false;
+        this.buzzedPlayerKeyUp = true;
         return;
       }
+      
       currentQuestion.rotateAnswerSelected();
       return;
     }
