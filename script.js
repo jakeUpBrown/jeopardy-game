@@ -111,8 +111,45 @@ class BoardTile
     this.question = question;
     this.answer = answer;
     this.wrongOptions = wrongOptions;
+  
+    this.scrambleAnswers();
     
     this.available = true;
+  }
+  
+  
+  scrambleAnswers()
+  {
+    let answerOrder = [];
+    answerOrder.push(this.answer);
+    answerOrder.push(this.wrongOptions);
+    
+    var currentIndex = answerOrder.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = answerOrder[currentIndex];
+    answerOrder[currentIndex] = answerOrder[randomIndex];
+    answerOrder[randomIndex] = temporaryValue;
+    }
+
+    // after the shuffle, find the index of the correct answer
+    for(let i = 0; i < answerOrder.length; i++)
+    {
+      if(answerOrder[i] === this.answer)
+      {
+        this.correctAnswerIndex = i;
+        break;
+      }
+    }
+    
+  this.answerOrder = answerOrder;
   }
   
   isClicked(element)
@@ -148,6 +185,16 @@ class BoardTile
   hasQuestionPopulated()
   {
     return !(this.question === '' || this.question === undefined);
+  }
+  
+  getAnswerByIndex(index)
+  {
+    return this.answerOrder[index]; 
+  }
+  
+  getCorrectAnswerIndex()
+  {
+    return this.correctAnswerIndex;
   }
 };
 
@@ -257,7 +304,7 @@ var currentQuestion =
     if(value <= 0)
     {
       view.displayCountdown('GO!');
-      this.sayQA();
+      this.displayQA();
       this.openBuzzWindow(5000);
       return;
     }
@@ -270,8 +317,9 @@ var currentQuestion =
       }, 1000);
     }
   },
-  sayQA: function()
+  displayQA: function()
   {
+    view.displayQA();
     voiceAudio.speak(this.tile.question);
   },
   openBuzzWindow: function(timeoutLength)
@@ -667,6 +715,30 @@ var view =
 
     timerElement.className = 'light-up-timer';
     return timerElement;
+  },
+  displayQA: function()
+  {
+    let questionArea = document.getElelementById('question-holder');
+    questionArea.textContent = currentQuestion.question;
+    
+    let answerGrid = document.getElementById('answer-grid');
+    
+    for(let i = 0; i < currentQuestion.answers; i++)
+    {
+      let answerElement = this.createAnswerElement(i);
+      
+      answerGrid.appendChild(answerElement);
+    }
+    
+    let questionSpace = document.getElementById('question-space');
+    questionSpace.style.zIndex = 10;
+  },
+  createAnswerElement: function(answerIndex)
+  {
+    let answerElement = document.createElement('p');
+    answerElement.textContent = currentQuestion.tile.getAnswerByIndex(answerIndex);
+    return answerElement;
+    
   },
   displayBoardGrid: function()
   {
