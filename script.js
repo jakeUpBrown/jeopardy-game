@@ -340,7 +340,7 @@ var currentQuestion =
     this.answererIndex = -1;
     this.buzzWindowOpen = true;
     view.displayPlayers();
-    this.phaseEndingTimeout = setTimeout(this.endRound, timeoutLength);
+    this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, timeoutLength);
   },
   playerBuzzed: function(player)
   {
@@ -407,7 +407,7 @@ var currentQuestion =
     else
     {
       // if there aren't, end the round in 1 second.
-      window.currentQuestion.phaseEndingTimeout = setTimeout(window.currentWindow.endRound, 1000);
+      window.currentQuestion.showCorrectAnswer();
     }
   },
   isAnswerer: function(player)
@@ -436,9 +436,9 @@ var currentQuestion =
   showCorrectAnswer: function()
   {
     // set the className of the correct answer to correct-answer
-    view.displayQA(true);
+    window.view.showCorrectAnswer();
     
-    setTimeout(this.endRound, 1500);
+    setTimeout(window.currentQuestion.endRound, 2000);
   },
   endRound: function()
   {    
@@ -787,7 +787,7 @@ var view =
     timerElement.className = 'light-up-timer';
     return timerElement;
   },
-  displayQA: function(showCorrectAnswer)
+  displayQA: function()
   {
     let questionArea = document.getElementById('question-holder');
     questionArea.textContent = util.decodeHtmlString(currentQuestion.tile.question);
@@ -802,15 +802,9 @@ var view =
     for(let i = 0; i < currentQuestion.tile.answerOrder.length; i++)
     {
       let answerElement = this.createAnswerElement(i);
-      
-      if(showCorrectAnswer === true && currentQuestion.tile.correctAnswerIndex === i)
-      {
-        answerElement.className += ' correct-answer';
-      }
-      else if(i == currentQuestion.answerSelectedIndex)
-      {
-        answerElement.className += ' selected-answer';
-      }
+    
+      if(i === currentQuestion.answerSelectedIndex)
+        answerElement.className = 'selected-answer';
       
       answerGrid.appendChild(answerElement);
     }
@@ -836,6 +830,11 @@ var view =
     let answerOption = document.getElementById('answer-option' + window.currentQuestion.answerSelectedIndex);
     answerOption.className = 'incorrect-answer';
     answerOption.clientHeight;
+  },
+  showCorrectAnswer: function()
+  {
+    let answerOption = document.getElementById('answer-option' + window.currentQuestion.tile.correctAnswerIndex);
+    answerOption.className = 'correct-answer';
   },
   displayBoardGrid: function()
   {
