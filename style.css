@@ -165,14 +165,11 @@ h1 {
 .question-space-countdown {
   display: block;
   position: absolute;
-  height:420px;
+  height:415px;
+  width:650px;
   line-height:420px;
-  width:652px;
-  left:50%;
-  top:50%;
-  margin-left: -337px;
-  margin-top: -345px;
-  z-index:0;
+  margin:0px;
+  z-index:10;
   text-align:center;
   font-size:200px;
   color: #fdfdfd;
@@ -197,7 +194,8 @@ h1 {
   padding:0px;
   margin:auto;
   width:100%;
-  background-color:#060CE9;
+  /*background-color:#060CE9;*/
+  background-color: green;
   color: #fdfdfd;
 }
 
@@ -207,6 +205,7 @@ h1 {
   border: 2px solid #111111;
   margin: 7px;
   padding: 5px;
+  background-color: red;
 }
 
 #startRoundButton {
