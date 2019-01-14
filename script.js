@@ -222,10 +222,13 @@ var currentQuestion =
   answerWindowOpen: false,
   answererIndex: -1,
   answerSelectedIndex: -1,
+  previousAnswerer: [],
   tile: undefined,
   element: undefined,
+  
   startFromTile: function(tile, element)
   {
+    this.previousAnswerers = [];
     this.tile = tile;
     this.element = element;
     return this.startRound();
@@ -274,17 +277,26 @@ var currentQuestion =
   },
   playerBuzzed: function(player)
   {
-    if(this.answerWindowOpen === true && this.answererIndex === -1)
+    // check that the answerWindow is open, nobody is currently answering and that the player hasn't buzzed before.
+    if(this.answerWindowOpen === true && this.answererIndex === -1 && !this.playerBuzzedBefore(player))
     {
       // found the winner.
-      this.playerWon(player);
+      this.promptPlayer(player);
     }
+  },
+  playerBuzzedBefore: function(player)
+  {
+    return this.previousAnswerer.includes(player.index);
+  },
+  promptPlayer: function(player)
+  {
+    this.previousAnswerer.push(player.index);
+    this.answererIndex = player.index;
   },
   playerWon: function(player)
   {
-    this.answererIndex = player.index;
     player.money = player.money + rowColumnInfo.getRowMoneyValue(this.tile.row);
-    
+    this.endRound();
   },
   isAnswerer: function(player)
   {
