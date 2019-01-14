@@ -728,11 +728,15 @@ var view =
   },
   displayQA: function()
   {
-    debugger;
     let questionArea = document.getElementById('question-holder');
-    questionArea.textContent = currentQuestion.tile.question;
+    questionArea.textContent = util.decodeHtmlString(currentQuestion.tile.question);
     
     let answerGrid = document.getElementById('answer-grid');
+    
+    while(answerGrid.firstChild)
+    {
+      answerGrid.removeChild(answerGrid.firstChild);
+    }
     
     for(let i = 0; i < currentQuestion.tile.answerOrder.length; i++)
     {
@@ -748,6 +752,10 @@ var view =
   {
     let answerElement = document.createElement('p');
     answerElement.textContent = currentQuestion.tile.getAnswerByIndex(answerIndex);
+    
+    if(answerIndex === currentQuestion.tile.correctAnswerIndex)
+      answerElement.style.backgroundColor = 'red';
+    
     return answerElement;
   },
   displayBoardGrid: function()
@@ -792,8 +800,6 @@ var view =
   hideQuestionSpace: function()
   {
     var questionSpace = document.getElementById('question-space');
-    
-    questionSpace.innerHTML = '';
     questionSpace.style.zIndex=0;
   },
   displayCategoryHeaders: function()
@@ -1184,14 +1190,14 @@ var util =
   },
   sanitizeTextForSpeech: function(text)
   {
-    text = this.decodeHtml(text);
+    text = this.decodeHtmlString(text);
     
     // for the text-to-speech guy, replace any 3 or more underscores with "blank"
     text = text.replace("[_]{3,}", "blank");
     
     return text;
   },
-  decodeHtml: function(html)
+  decodeHtmlString: function(html)
   {
     var txt = document.createElement("textarea");
     txt.innerHTML = html;
