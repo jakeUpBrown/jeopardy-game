@@ -219,10 +219,11 @@ var boardGrid =
 var currentQuestion = 
 {  
   started: false,
-  answerWindowOpen: false,
+  buzzWindowOpen: false,
+  promptAnswerWindowOpen: false,
   answererIndex: -1,
   answerSelectedIndex: -1,
-  previousAnswerer: [],
+  previousAnswerers: [],
   tile: undefined,
   element: undefined,
   phaseEndingTimeout: undefined,
@@ -257,7 +258,7 @@ var currentQuestion =
     {
       view.displayCountdown('GO!');
       this.sayQA();
-      this.openBuzzWindow(10000);
+      this.openBuzzWindow(5000);
       return;
     }
     else
@@ -280,11 +281,12 @@ var currentQuestion =
     
     this.answererIndex = -1;
     this.buzzWindowOpen = true;
+    view.displayPlayers();
     this.phaseEndingTimeout = setTimeout(this.endRound, timeoutLength);
   },
   playerBuzzed: function(player)
   {
-    // check that the answerWindow is open, nobody is currently answering and that the player hasn't buzzed before.
+    // check that the buzz window is open, nobody is currently answering and that the player hasn't buzzed before.
     if(this.buzzWindowOpen === true && this.answererIndex === -1 && !this.playerBuzzedBefore(player))
     {
       // found the winner.
@@ -293,14 +295,35 @@ var currentQuestion =
   },
   playerBuzzedBefore: function(player)
   {
-    return this.previousAnswerer.includes(player.index);
+    if(this.previousAnswerers === undefined)
+    {
+      this.previousAnswerers = [];
+      return false;
+    }
+    
+    return this.previousAnswerers.includes(player.index);
   },
   promptPlayer: function(player)
   {
-    this.previousAnswerer.push(player.index);
+    this.previousAnswerers.push(player.index);
     this.answererIndex = player.index;
     
-    this.openAnswerWindow(5000);
+    this.openPromptAnswerWindow(player);
+  },
+  openPromptAnswerWindow: function(player)
+  {
+    this.promptAnswerWindowOpen = true;
+    
+    if(this.phaseEndingTimeout !== undefined)
+      clearTimeout(this.phaseEndingTimeout)
+    
+    this.phaseEndingTimeout = setTimeout(function()
+      {
+        if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
+          window.currentQuestion.openBuzzWindow(3000);
+        else
+          window.currentQuestion.endRound();
+      }, 5000);
   },
   playerWon: function(player)
   {
