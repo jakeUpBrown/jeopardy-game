@@ -333,6 +333,8 @@ var currentQuestion =
     
     playerList.unbuzzAllPlayers();
     
+    this.answerSelectedIndex = -1;
+    
     this.displayQA();
     
     this.answererIndex = -1;
@@ -385,7 +387,7 @@ var currentQuestion =
   playerWon: function(player)
   {
     player.money = player.money + rowColumnInfo.getRowMoneyValue(this.tile.row);
-    this.endRound();
+    this.showCorrectAnswer();
   },
   isAnswerer: function(player)
   {
@@ -393,16 +395,19 @@ var currentQuestion =
   },
   checkPlayerAnswer: function()
   {
+    console.log(this);
     console.log('checking player answer');
     // check if the player got the answer right.
     
-    if(this.answerIndex === this.tile.correctAnswerIndex)
+    debugger;
+    if(currentQuestion.answerSelectedIndex === currentQuestion.tile.correctAnswerIndex)
     {
-      this.playerWon(playerList.players[this.answererIndex]);
-      this.showCorrectAnswer();
+      console.log('correct');
+      currentQuestion.playerWon(playerList.players[currentQuestion.answererIndex]);
     }
     else
     {
+      console.log('incorrect');
       if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
         window.currentQuestion.openBuzzWindow(3000);
       else
@@ -533,7 +538,6 @@ var handlers = {
   },
   anyKeyUp: function(event)
   {
-    debugger;
     // check if the player is the current answerer
     var answeringPlayer = window.currentQuestion.getAnswerer();
     
