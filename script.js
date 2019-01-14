@@ -408,10 +408,23 @@ var currentQuestion =
     else
     {
       console.log('incorrect');
+      
+      view.markSelectedAnswerAsIncorrect();
+      
+      // check if there are any other players still to guess.
       if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
-        window.currentQuestion.openBuzzWindow(3000);
+      {
+        // if there are , open up the buzz window in 1 second
+        window.currentQuestion.phaseEndingTimeout = setTimeout(function ()
+                                                               {
+          window.currentQuestion.openBuzzWindow(3000);
+        }, 1000);
+      }
       else
-        window.currentQuestion.endRound();
+      {
+        // if there aren't, end the round in 1 second.
+        window.currentQuestion.phaseEndingTimeout = setTimeout(window.currentWindow.endRound, 1000);
+      }
     }
   },
   showCorrectAnswer: function()
@@ -803,7 +816,14 @@ var view =
     //if(answerIndex === currentQuestion.tile.correctAnswerIndex)
       //answerElement.style.backgroundColor = 'red';
     
+    answerElement.id = 'answer-option' + answerIndex;
+    
     return answerElement;
+  },
+  markSelectedAnswerAsIncorrect: function()
+  {
+    let answerOption = document.getElementById('answer-option' + currentQuestion.answerSelectedIndex);
+    answerOption.className += ' incorrect-answer';
   },
   displayBoardGrid: function()
   {

@@ -227,11 +227,16 @@ h1 {
   color: blue;
 }
 
+.incorrect-answer
+{
+  background-color: red;
+  color: white;
+}
+
 .selected-answer
 {
   background-color: white;
   color: blue;
-  
 }
 
 #startRoundButton {
