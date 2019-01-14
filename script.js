@@ -386,8 +386,29 @@ var currentQuestion =
   },
   playerWon: function(player)
   {
-    player.money = player.money + rowColumnInfo.getRowMoneyValue(this.tile.row);
+    player.money += this.getMoneyValue();
     this.showCorrectAnswer();
+  },
+  playerLost: function(player)
+  {
+    window.view.markSelectedAnswerAsIncorrect();
+
+    player.money -= this.getMoneyValue();
+    
+    // check if there are any other players still to guess.
+    if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
+    {
+      // if there are , open up the buzz window in 1 second
+      window.currentQuestion.phaseEndingTimeout = setTimeout(function ()
+                                                             {
+        window.currentQuestion.openBuzzWindow(3000);
+      }, 1000);
+    }
+    else
+    {
+      // if there aren't, end the round in 1 second.
+      window.currentQuestion.phaseEndingTimeout = setTimeout(window.currentWindow.endRound, 1000);
+    }
   },
   isAnswerer: function(player)
   {
@@ -409,22 +430,7 @@ var currentQuestion =
     {
       console.log('incorrect');
       
-      view.markSelectedAnswerAsIncorrect();
-      
-      // check if there are any other players still to guess.
-      if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
-      {
-        // if there are , open up the buzz window in 1 second
-        window.currentQuestion.phaseEndingTimeout = setTimeout(function ()
-                                                               {
-          window.currentQuestion.openBuzzWindow(3000);
-        }, 1000);
-      }
-      else
-      {
-        // if there aren't, end the round in 1 second.
-        window.currentQuestion.phaseEndingTimeout = setTimeout(window.currentWindow.endRound, 1000);
-      }
+      currentQuestion.playerLost(playerList.players[currentQuestion.answererIndex]);
     }
   },
   showCorrectAnswer: function()
@@ -458,6 +464,10 @@ var currentQuestion =
       return undefined;
     
     return playerList.players[this.answererIndex];
+  },
+  getMoneyValue: function()
+  {
+    return rowColumnInfo.getRowMoneyValue(this.tile.row);
   }
   
 };
@@ -822,8 +832,10 @@ var view =
   },
   markSelectedAnswerAsIncorrect: function()
   {
-    let answerOption = document.getElementById('answer-option' + currentQuestion.answerSelectedIndex);
-    answerOption.className += ' incorrect-answer';
+    debugger;
+    let answerOption = document.getElementById('answer-option' + window.currentQuestion.answerSelectedIndex);
+    answerOption.className = 'incorrect-answer';
+    answerOption.clientHeight;
   },
   displayBoardGrid: function()
   {
