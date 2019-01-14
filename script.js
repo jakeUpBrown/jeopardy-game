@@ -394,8 +394,10 @@ var currentQuestion =
   {    
     currentQuestion.answererIndex = -1;
     currentQuestion.started = false;
+    currentQuestion.promptAnswerWindowOpen = false;
+    currentQuestion.previousAnswerers = [];
     currentQuestion.buzzWindowOpen = false;
-    view.hideCountdown();
+    view.hideQuestionSpace();
     playerList.unbuzzAllPlayers();
     view.displayPlayers();
     view.displayBoardGrid();
@@ -787,7 +789,7 @@ var view =
     lightUpTimer.offsetHeight; // no need to store this anywhere, the reference is enough
     lightUpTimer.className += ' timer-start';
   },
-  hideCountdown: function()
+  hideQuestionSpace: function()
   {
     var questionSpace = document.getElementById('question-space');
     
