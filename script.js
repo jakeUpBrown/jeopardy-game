@@ -372,7 +372,6 @@ var currentQuestion =
   },
   playerBuzzedBefore: function(player)
   {    
-    debugger;
     return this.previousAnswerers.includes(player.index);
   },
   promptPlayer: function(player)
@@ -380,7 +379,6 @@ var currentQuestion =
     this.previousAnswerers.push(player.index);
     this.answererIndex = player.index;
     
-    debugger;
     this.openPromptAnswerWindow(player);
   },
   openPromptAnswerWindow: function(player)
@@ -470,8 +468,10 @@ var currentQuestion =
   },
   speechEnded: function()
   {
-    
-    
+    if(this.phaseEndingTimeout === undefined)
+    {
+      this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, 3000);    
+    }
   },
   rotateAnswerSelected: function()
   {
