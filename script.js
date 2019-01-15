@@ -855,7 +855,6 @@ var view =
     
     let questionSpace = document.getElementById('question-space');
     util.replaceClassName(questionSpace, 'see-through' , 'visible');
-    questionArea.style.zIndex = 10;
   },
   createAnswerElement: function(answerIndex)
   {
@@ -957,7 +956,7 @@ var view =
   hideQuestionSpace: function()
   {
     var questionSpace = document.getElementById('question-space');
-    questionSpace.style.zIndex=0;
+    util.replaceClassName(questionSpace, 'visible', 'see-through');
   },
   displayCategoryHeaders: function(displayInfo)
   {
@@ -1402,10 +1401,7 @@ var util =
     debugger;
     let classArray = element.className.split(" ");
     
-    classArray.filter(function(value)
-        {
-          return value === oldClassName;
-        });
+    classArray = classArray.filter(value => value != oldClassName);
         
     classArray.push(newClassName);
     
@@ -1490,7 +1486,7 @@ function randomlyUncoverEntireGrid()
   window.setIntervalXWithXParemeter(function (x)
   {
     randomlyUncoverGridElements(uncoverIncrement);
-  }, 300, Math.ceil((window.boardGrid.COLUMNS * window.boardGrid.ROWS) / uncoverIncrement), function(){});
+  }, 330, Math.ceil((window.boardGrid.COLUMNS * window.boardGrid.ROWS) / uncoverIncrement), function(){});
   
 }
 
