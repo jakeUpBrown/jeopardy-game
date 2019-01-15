@@ -174,14 +174,22 @@ class BoardTile
     if(questionStarted === true)
       this.available = false;
   }
-  createElement()
+  createElement(containsInfo)
   {
     var element = document.createElement('div');
-    element.className = 'board-grid-item board-grid-item-font';
     element.textContent = this.available ? ('$' + rowColumnInfo.getRowMoneyValue(this.row)) : '';
     element.row = this.row;
     element.col = this.column;
-    element.addEventListener('click', handlers.boardTileClicked);
+    if(containsInfo === true)
+    {
+      element.className = 'board-grid-item board-grid-item-font';
+      element.addEventListener('click', handlers.boardTileClicked);      
+    }
+    else
+    {
+      element.className = 'empty-board-grid-item empty-board-grid-item-font';
+    }
+  
     return element;
   }
   
@@ -464,7 +472,7 @@ var currentQuestion =
     view.hideQuestionSpace();
     playerList.unbuzzAllPlayers();
     view.displayPlayers();
-    view.displayBoardGrid();
+    view.displayBoardGrid(true);
   },
   speechEnded: function()
   {
@@ -872,7 +880,7 @@ var view =
     let answerOption = document.getElementById('answer-option' + window.currentQuestion.tile.correctAnswerIndex);
     answerOption.className = 'correct-answer';
   },
-  displayBoardGrid: function()
+  displayBoardGrid: function(displayInfo)
   {
     // get grid container
     // add board tile elements to grid container
@@ -888,11 +896,10 @@ var view =
     {
      for(var col = 0; col < boardGrid.boardTiles[row].length; col++)
      {
-       gridContainer.appendChild(boardGrid.boardTiles[row][col].createElement());
+       gridContainer.appendChild(boardGrid.boardTiles[row][col].createElement(displayInfo));
      }
     }
-  }
-  ,
+  },
   displayCountdown: function(content)
   {
     var questionSpace = document.getElementById('question-space');
@@ -1416,7 +1423,7 @@ testers.fillPlayers();
 
 //voiceAudio.speak("This. is. Jeopardy!");
 
-view.displayBoardGrid();
+view.displayBoardGrid(false);
 
 
 
