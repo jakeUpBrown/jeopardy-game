@@ -347,7 +347,7 @@ var currentQuestion =
     
     this.answerSelectedIndex = -1;
     
-    let voiceStarted = view.startQuestion(speakQuestion);
+    let voiceStarted = this.startQuestion(speakQuestion);
     
     this.answererIndex = -1;
     this.buzzWindowOpen = true;
