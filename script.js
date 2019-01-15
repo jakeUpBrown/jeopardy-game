@@ -433,6 +433,8 @@ var currentQuestion =
     this.promptAnswerWindowOpen = true;
     // check if the player got the answer right.
         
+    
+    
     if(currentQuestion.answerSelectedIndex === currentQuestion.tile.correctAnswerIndex)
     {
       currentQuestion.playerWon(playerList.players[currentQuestion.answererIndex]);
