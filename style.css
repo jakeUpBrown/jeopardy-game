@@ -346,12 +346,6 @@ h1 {
   text-align:center;
 }
 
-
-.background-fade {
-  transition: background 0.5s linear;
-  background: 
-}
-
 @keyframes pro {
     0% {
         background: -webkit-gradient(left, #FF4136 0 100%, #FF4136 100%);
