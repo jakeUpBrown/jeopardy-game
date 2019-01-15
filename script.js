@@ -901,6 +901,33 @@ var view =
     lightUpTimer.offsetHeight; // no need to store this anywhere, the reference is enough
     lightUpTimer.className += ' timer-start';
   },
+  updatePlayerSelected: function()
+  {
+    // find the index of the player selected.
+    let playerSelected = playerList.getSelectedPlayer();
+    
+    let playerSelectedIndex = playerSelected === undefined ? -1 : playerSelected.index;
+    
+    let playerNameElements = document.getElementsByClassName('player-name-box');
+    
+    for(let i = 0; i < playerNameElements.length; i++)
+    {
+      let classArray = playerNameElements[i].className.split(/\s+/);
+      
+      let needsUpdate = false;
+      
+      if(classArray.includes('name-selected') && i !== playerSelectedIndex)
+      {
+        classArray.remove('name-selected');
+        needsUpdate = true;
+      }
+      else if(classArray.includes('name-unselected') && i == playerSelectedIndex)
+      {
+        classArray.remove('name-unselected');
+        classArray.push('name-uns
+      }
+    }
+  },
   hideQuestionSpace: function()
   {
     var questionSpace = document.getElementById('question-space');
