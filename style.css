@@ -265,6 +265,7 @@ h1 {
   border: 10px solid #111111;
   border-radius:4px;
   background-image: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2Fjeopardy-background.jpg?1547519188336");
+  background-size: 105%;
 }
 
 .board-grid-item {

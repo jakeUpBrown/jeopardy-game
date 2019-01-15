@@ -900,6 +900,18 @@ var view =
      }
     }
   },
+  uncoverBoardGridElement(row, col)
+  {
+    debugger;
+    // get the element
+    let index = ((row + 1) * boardGrid.COLUMNS) + col;
+    
+    let element = document.getElementById('board-grid').children[index];
+    
+    // set the class to board-grid-item board-grid-item-font;
+    element.className = 'board-grid-item board-grid-item-font';
+    element.clientWidth;
+  },
   displayCountdown: function(content)
   {
     var questionSpace = document.getElementById('question-space');
