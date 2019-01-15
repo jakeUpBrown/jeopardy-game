@@ -1093,7 +1093,17 @@ var soundEffects =
 {
   playTimesUp: function()
   {
-    new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FTimes-up.mp3?1547510667439').play();
+    if(this.soundValid() === true)
+      new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FTimes-up.mp3?1547510667439').play();
+  },
+  playBoardFill: function()
+  {
+    if(this.soundValid() === true)
+      new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FBoard%20fill.mp3?1547525455466').play();
+  },
+  soundValid: function()
+  {
+    return voiceAudio.valid;
   }
 };
 
@@ -1407,22 +1417,28 @@ function setIntervalXWithXParemeter(callback, delay, repetitions, endCallBack) {
   
   if(repetitions !== 0)
   {
-  callback(0);
-  
-  var x = 1;
-    var intervalID = window.setInterval(function () {
+    callback(0);
 
-       callback(x);
+    if(repetitions < 1){
+      endCallBack();
+      return;
+    }
+    
+    var x = 1;
+      var intervalID = window.setInterval(function () {
 
-       if (++x >= repetitions) {
-           window.clearInterval(intervalID);
-         endCallBack();
-       }
-    }, delay);
+         callback(x);
+
+         if (++x >= repetitions) {
+             window.clearInterval(intervalID);
+           endCallBack();
+         }
+      }, delay);
   }
   else
   {
-    endCalBack();
+    endCallBack();
+  }
 }
 
 
@@ -1433,7 +1449,7 @@ function revealCategories()
     window.setIntervalXWithXParemeter(function (x)
     {
       window.view.uncoverCategoryHeader(x);
-    }, 2000, window.boardGrid.COLUMNS, function() {});
+    }, 2500, window.boardGrid.COLUMNS, function() {});
   });
   
   if(spoken !== true)
@@ -1445,11 +1461,14 @@ function revealCategories()
   }
 }
 
+function startUncoverGrid()
+{
+  soundEffects.playBoardFill(this.randomlyUncoverEntireGrid);
+}
+
 function randomlyUncoverEntireGrid()
 {
   let uncoverIncrement = 5;
-  
-  
   
   this.setIntervalXWithXParemeter(function (x)
   {
