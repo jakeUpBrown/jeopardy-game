@@ -434,6 +434,8 @@ var currentQuestion =
   },
   checkPlayerAnswer: function()
   {
+    // close the promptAnswerWindow. to prevent further changes of the answer
+    this.promptAnswerWindowOpen = true;
     // check if the player got the answer right.
         
     if(currentQuestion.answerSelectedIndex === currentQuestion.tile.correctAnswerIndex)
