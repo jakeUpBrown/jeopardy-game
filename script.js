@@ -103,7 +103,7 @@ var playerList=
       if(playerList.players[i].buzzerTimeout === true)
       {
         playerList.players[i].buzzerTimeout = false;
-        redi
+        redisplayPlayers = true;
       }
     }
     
@@ -409,6 +409,8 @@ var currentQuestion =
     window.view.markSelectedAnswerAsIncorrect();
 
     player.money -= this.getMoneyValue();
+
+    soundEffects.playTimesUp();
     
     // check if there are any other players still to guess.
     if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
@@ -732,7 +734,6 @@ var view =
   {
     // for each player, create an element for the DOM
    
-    debugger;
     console.log(this);
     
     var playerBoxContainer = document.getElementById('playerBoxContainer');
@@ -1036,6 +1037,13 @@ var view =
 };
 
 
+var soundEffects = 
+{
+  playTimesUp: function()
+  {
+    new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FTimes-up.mp3?1547510667439').play();
+  }
+};
 
 var voiceAudio = 
 {
