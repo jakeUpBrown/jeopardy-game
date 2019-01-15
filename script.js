@@ -1463,7 +1463,7 @@ function revealCategories()
   }
 }
 
-function startUncoverGrid()
+function startGame()
 {
   soundEffects.playBoardFill();
 }
