@@ -291,7 +291,6 @@ var currentQuestion =
   phaseEndingTimeout: undefined,
   startFromTile: function(tile, element)
   {
-    this.previousAnswerers = [];
     this.tile = tile;
     this.element = element;
     return this.startRound();
@@ -331,14 +330,15 @@ var currentQuestion =
       }, 1000);
     }
   },
-  startQuestion: function()
+  startQuestion: function(speak)
   {
-    this.previousAnswerers = [];
-    
     view.displayQA();
-    return voiceAudio.speak(this.tile.question);
+    if(speak === true)
+      return voiceAudio.speak(this.tile.question);
+    else
+      return false;
   },
-  openBuzzWindow: function(timeoutLength)
+  openBuzzWindow: function(timeoutLength, speakQuestion)
   {
     if(this.phaseEndingTimeout !== undefined)
       clearTimeout(this.phaseEndingTimeout);
@@ -347,7 +347,7 @@ var currentQuestion =
     
     this.answerSelectedIndex = -1;
     
-    let voiceStarted = this.startQuestion();
+    let voiceStarted = view.startQuestion(speakQuestion);
     
     this.answererIndex = -1;
     this.buzzWindowOpen = true;
@@ -373,6 +373,7 @@ var currentQuestion =
   },
   playerBuzzedBefore: function(player)
   {    
+    debugger;
     return this.previousAnswerers.includes(player.index);
   },
   promptPlayer: function(player)
@@ -380,6 +381,7 @@ var currentQuestion =
     this.previousAnswerers.push(player.index);
     this.answererIndex = player.index;
     
+    debugger;
     this.openPromptAnswerWindow(player);
   },
   openPromptAnswerWindow: function(player)
@@ -410,16 +412,14 @@ var currentQuestion =
     player.money -= this.getMoneyValue();
 
     soundEffects.playTimesUp();
-    
-    debugger;
-    
+        
     // check if there are any other players still to guess.
     if(window.currentQuestion.previousAnswerers.length != window.playerList.players.length)
     {
       // if there are , open up the buzz window in 1 second
       window.currentQuestion.phaseEndingTimeout = setTimeout(function ()
                                                              {
-        window.currentQuestion.openBuzzWindow(3000);
+        window.currentQuestion.openBuzzWindow(3000, false);
       }, 1000);
     }
     else
@@ -851,7 +851,6 @@ var view =
   },
   markSelectedAnswerAsIncorrect: function()
   {
-    debugger;
     let answerOption = document.getElementById('answer-option' + window.currentQuestion.answerSelectedIndex);
     answerOption.className = 'incorrect-answer';
     answerOption.clientHeight;
@@ -1003,7 +1002,7 @@ var view =
       {
         console.log(animatedElement);
         grid.removeChild(animatedElement);
-        window.currentQuestion.openBuzzWindow(5000);
+        window.currentQuestion.openBuzzWindow(5000, true);
       }.bind(this), 1000);
      }.bind(this));
     
