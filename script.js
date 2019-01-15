@@ -83,11 +83,15 @@ var playerList=
     
     currentQuestion.playerBuzzed(player);
     
-    player.buzzerTimeout = true;
+    if(player.index !== currentQuestion.answererIndex)
+    {
+      player.buzzerTimeout = true;
+      setTimeout(function() {
+        window.playerList.unbuzzPlayer(player.index)
+      }, 2000);
+    }
+    
     view.updatePlayerBuzzed(player.index);
-    setTimeout(function() {
-      window.playerList.unbuzzPlayer(player.index)
-    }, 2000);
   },
   unbuzzPlayer: function(index)
   {
@@ -99,13 +103,10 @@ var playerList=
   },
   unbuzzAllPlayers: function()
   {
-    let redisplayPlayers = false;
-    
     for(let i = 0; i < playerList.players.length; i++)
     {
       this.unbuzzPlayer(i);
     }
-    
   }
 };
 
@@ -801,10 +802,7 @@ var view =
     // figure out what the color should be based on the details
     if(currentQuestion.answererIndex === index)
     {
-      // buzzer should be green
-      buzzer.style.backgroundColor = window.view.green;
-      flexChildElement.style.backgroundColor = window.view.white;
-      timer.className += ' timer-start';
+      this.updatePlayerAnswering(index);
     }
     else if(playerList.players[index].buzzerTimeout)
     {
@@ -920,13 +918,20 @@ var view =
     questionSpace.style.zIndex=10;
     
   },
-  startLightUpTimer: function(playerIndex)
-  {
+  updatePlayerAnswering: function(playerIndex)
+  {    
+    
+    let buzzer = document.getElementsById('buzzer-' + playerIndex);
+    buzzer.style.backgroundColor = window.view.green;
+    
+    let flexChildElement = document.getElementsById('playerbox-');
+    flexChildElement.style.backgroundColor = window.view.white;
+    
     // get light up timer
     var lightUpTimer = document.getElementsByClassName('light-up-timer')[playerIndex];
         
     // add timer-start to className.
-    lightUpTimer.className = lightUpTimer.className.replace('timer-start', '');
+    util.replaceClassName(lightUpTimer,'timer-start', '');
     lightUpTimer.offsetHeight; // no need to store this anywhere, the reference is enough
     lightUpTimer.className += ' timer-start';
   },
