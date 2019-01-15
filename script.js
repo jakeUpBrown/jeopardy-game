@@ -802,15 +802,20 @@ var view =
     // figure out what the color should be based on the details
     if(currentQuestion.answererIndex === index)
     {
-      this.updatePlayerAnswering(index);
-    }
-    else if(playerList.players[index].buzzerTimeout)
-    {
-      buzzer.style.backgroundColor = window.view.red;
+      this.updatePlayerAnswering(index, true);
     }
     else
     {
-      buzzer.style.backgroundColor = window.view.white;
+      this.updatePlayerAnswering(index, false);
+      
+      if(playerList.players[index].buzzerTimeout)
+      {
+        buzzer.style.backgroundColor = window.view.red;
+      }
+      else
+      {
+        buzzer.style.backgroundColor = window.view.white;
+      }
     }
     
   },
@@ -918,22 +923,35 @@ var view =
     questionSpace.style.zIndex=10;
     
   },
-  updatePlayerAnswering: function(playerIndex)
-  {    
-    
-    let buzzer = document.getElementsById('buzzer-' + playerIndex);
-    buzzer.style.backgroundColor = window.view.green;
-    
-    let flexChildElement = document.getElementsById('playerbox-');
-    flexChildElement.style.backgroundColor = window.view.white;
-    
-    // get light up timer
-    var lightUpTimer = document.getElementsByClassName('light-up-timer')[playerIndex];
-        
-    // add timer-start to className.
-    util.replaceClassName(lightUpTimer,'timer-start', '');
-    lightUpTimer.offsetHeight; // no need to store this anywhere, the reference is enough
-    lightUpTimer.className += ' timer-start';
+  updatePlayerAnswering: function(playerIndex, isAnswering)
+  {   
+    if(isAnswering === true)
+    {
+      let buzzer = document.getElementById('buzzer-' + playerIndex);
+      buzzer.style.backgroundColor = window.view.green;
+
+      let flexChildElement = document.getElementById('playerbox-' + playerIndex);
+      util.replaceClassName(flexChildElement, 'podium-dim', 'podium-light-up')
+
+      // get light up timer
+      let lightUpTimer = document.getElementsByClassName('light-up-timer')[playerIndex];
+
+      // add timer-start to className.
+      util.replaceClassName(lightUpTimer,'timer-start', '');
+      lightUpTimer.offsetHeight; // no need to store this anywhere, the reference is enough
+      lightUpTimer.className += ' timer-start';
+    }
+    else
+    {
+      let flexChildElement = document.getElementById('playerbox-' + playerIndex);
+      util.replaceClassName(flexChildElement, 'podium-light-up', 'podium-dim');
+      
+      let lightUpTimer = document.getElementsByClassName('light-up-timer')[playerIndex];
+
+      // add timer-start to className.
+      util.replaceClassName(lightUpTimer,'timer-start', '');
+      lightUpTimer.offsetHeight; // no need to store this anywhere, the reference is enough
+    }
   },
   updatePlayerSelected: function()
   {
@@ -1406,7 +1424,7 @@ var util =
     debugger;
     let classArray = element.className.split(" ");
     
-    classArray = classArray.filter(value => value != oldClassName);
+    classArray = classArray.filter(value => (value != oldClassName && value != newClassName));
         
     classArray.push(newClassName);
     
@@ -1481,6 +1499,11 @@ var gameDetails = {
     
     this.started = true;
     soundEffects.playBoardFill();
+  },
+  startNewRound()
+  {
+    this.roundNum++;
+    
   }
 }
 
