@@ -329,6 +329,7 @@ var currentQuestion =
   },
   startQuestion: function(speak)
   {
+    this.phaseEndingTimeout = undefined;
     view.displayQA();
     if(speak === true)
       return voiceAudio.speak(this.tile.question);
@@ -465,7 +466,8 @@ var currentQuestion =
   },
   speechEnded: function()
   {
-    if(this.phaseEndingTimeout === undefined)
+    debugger;
+    if(this.phaseEndingTimeout == undefined)
     {
       this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, 3000);    
     }
