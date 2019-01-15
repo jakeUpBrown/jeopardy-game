@@ -333,6 +333,8 @@ var currentQuestion =
   },
   startQuestion: function()
   {
+    this.previousAnswerers = [];
+    
     view.displayQA();
     return voiceAudio.speak(this.tile.question);
   },
@@ -347,15 +349,18 @@ var currentQuestion =
     
     let voiceStarted = this.startQuestion();
     
+    this.answererIndex = -1;
+    this.buzzWindowOpen = true;
+    
+    // if the voice didn't start, need to set the timeout here.
     if(voiceStarted == false)
     {
       this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, timeoutLength);
+      return;
     }
-    
-    this.answererIndex = -1;
-    this.buzzWindowOpen = true;
+    // else, the voiceAudio already set the timeout for after the question is finished being read. 
+
     view.displayPlayers();
-    this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, timeoutLength);
   },
   playerBuzzed: function(player)
   {
@@ -367,13 +372,7 @@ var currentQuestion =
     }
   },
   playerBuzzedBefore: function(player)
-  {
-    if(this.previousAnswerers === undefined)
-    {
-      this.previousAnswerers = [];
-      return false;
-    }
-    
+  {    
     return this.previousAnswerers.includes(player.index);
   },
   promptPlayer: function(player)
@@ -412,8 +411,10 @@ var currentQuestion =
 
     soundEffects.playTimesUp();
     
+    debugger;
+    
     // check if there are any other players still to guess.
-    if(window.currentQuestion.previousAnswerers.length !== window.playerList.players.length)
+    if(window.currentQuestion.previousAnswerers.length != window.playerList.players.length)
     {
       // if there are , open up the buzz window in 1 second
       window.currentQuestion.phaseEndingTimeout = setTimeout(function ()
@@ -433,20 +434,14 @@ var currentQuestion =
   },
   checkPlayerAnswer: function()
   {
-    console.log(this);
-    console.log('checking player answer');
     // check if the player got the answer right.
-    
-    debugger;
+        
     if(currentQuestion.answerSelectedIndex === currentQuestion.tile.correctAnswerIndex)
     {
-      console.log('correct');
       currentQuestion.playerWon(playerList.players[currentQuestion.answererIndex]);
     }
     else
-    {
-      console.log('incorrect');
-      
+    {     
       currentQuestion.playerLost(playerList.players[currentQuestion.answererIndex]);
     }
   },
@@ -479,6 +474,9 @@ var currentQuestion =
   },
   rotateAnswerSelected: function()
   {
+    if(this.promptAnswerWindowOpen == false)
+      return;
+    
     console.log("rotateAnswerSelected");
     this.answerSelectedIndex = (this.answerSelectedIndex + 1) % (this.tile.wrongOptions.length + 1)
     view.displayQA(false);
