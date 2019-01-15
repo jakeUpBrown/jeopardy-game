@@ -1419,10 +1419,36 @@ function setIntervalXWithXParemeter(callback, delay, repetitions, endCallBack) {
 
 function revealCategories()
 {
-  this.setIntervalXWithXParemeter(function (i)
+  this.setIntervalXWithXParemeter(function (x)
   {
-    view.uncoverCategoryHeader(i);
+    view.uncoverCategoryHeader(x);
   }, 2000, boardGrid.COLUMNS, function() {});
+}
+
+function randomlyUncoverEntireGrid()
+{
+  let uncoverIncrement = 5;
+  
+  this.setIntervalXWithXParemeter(function (x)
+  {
+    randomlyUncoverGridElements(uncoverIncrement);
+  }, 300, Math.ceil((boardGrid.COLUMNS * boardGrid.ROWS) / uncoverIncrement), function(){});
+  
+}
+
+function randomlyUncoverGridElements(numToUncover)
+{
+  debugger;
+  let coveredElements = document.getElementsByClassName('empty-board-grid-item');
+  
+  numToUncover = Math.min(coveredElements.length, numToUncover);
+
+  for(let i = 0; i < numToUncover; i++)
+  {
+   let elementToUncover = coveredElements.splice(Math.floor(Math.random()*coveredElements.length), 1)[0];
+   view.uncoverBoardGridElement(elementToUncover.row, elementToUncover.col);
+  }
+    
 }
 
 
