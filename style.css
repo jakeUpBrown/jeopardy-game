@@ -332,6 +332,7 @@ h1 {
   height:60px;
   z-index:1;
   background-image: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2Fjeopardy%20logo2.jpg?1547539511554");
+  background-image: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FdoubleJeopardy.jpg?1547575730261"); 
   background-repeat: no-repeat;
   background-position: center; 
   background-size: cover;
@@ -345,6 +346,44 @@ h1 {
   text-align:center;
 }
 
+
+.background-fade {
+  transition: background 0.5s linear;
+  background: 
+}
+
+@keyframes pro {
+    0% {
+        background: -webkit-gradient(left, #FF4136 0 100%, #FF4136 100%);
+        background: -webkit-linear-gradient(left, #FF4136 0 100%, #FF4136 100%);
+        background: linear-gradient(left, #FF4136 0 100%, #FF4136 100%);      
+    }
+    20% {
+        background: -webkit-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
+        background: -webkit-linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
+        background: linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);      
+    }
+      40% {
+        background: -webkit-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
+        background: -webkit-linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
+        background: linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);      
+    }
+      60% {
+        background: -webkit-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
+        background: -webkit-linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
+        background: linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);      
+    }
+      80% {
+        background: -webkit-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
+        background: -webkit-linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
+        background: linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);   
+    }
+      100% {
+        background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
+        background: -webkit-linear-gradient(left, #111111 0 100%, #111111 100%);
+        background: linear-gradient(left, #111111 0 100%, #111111 100%); 
+  }  
+}  
 
 
 .fakeInvisible
