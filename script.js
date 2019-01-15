@@ -1119,8 +1119,8 @@ var voiceAudio =
   speak: function(text, onend)
   {
     if(!this.valid)
-      return false;
-        
+      return false;  
+    
     this.stop();
         
     text = util.sanitizeTextForSpeech(text);
@@ -1404,7 +1404,12 @@ var util =
 
 
 function setIntervalXWithXParemeter(callback, delay, repetitions, endCallBack) {
-    var x = 0;
+  
+  if(repetitions !== 0)
+  {
+  callback(0);
+  
+  var x = 1;
     var intervalID = window.setInterval(function () {
 
        callback(x);
@@ -1414,32 +1419,48 @@ function setIntervalXWithXParemeter(callback, delay, repetitions, endCallBack) {
          endCallBack();
        }
     }, delay);
+  }
+  else
+  {
+    endCalBack();
 }
 
 
 function revealCategories()
 {
-  this.setIntervalXWithXParemeter(function (x)
+  let spoken = voiceAudio.speak('Here are the categories.', function()
   {
-    view.uncoverCategoryHeader(x);
-  }, 2000, boardGrid.COLUMNS, function() {});
+    window.setIntervalXWithXParemeter(function (x)
+    {
+      window.view.uncoverCategoryHeader(x);
+    }, 2000, window.boardGrid.COLUMNS, function() {});
+  });
+  
+  if(spoken !== true)
+  {
+    window.setIntervalXWithXParemeter(function (x)
+    {
+      window.view.uncoverCategoryHeader(x);
+    }, 2000, window.boardGrid.COLUMNS, function() {});
+  }
 }
 
 function randomlyUncoverEntireGrid()
 {
   let uncoverIncrement = 5;
   
+  
+  
   this.setIntervalXWithXParemeter(function (x)
   {
     randomlyUncoverGridElements(uncoverIncrement);
-  }, 300, Math.ceil((boardGrid.COLUMNS * boardGrid.ROWS) / uncoverIncrement), function(){});
+  }, 300, Math.ceil((boardGrid.COLUMNS * boardGrid.ROWS) / uncoverIncrement), window.revealCategories);
   
 }
 
 function randomlyUncoverGridElements(numToUncover)
 {
-  debugger;
-  let coveredElements = document.getElementsByClassName('empty-board-grid-item');
+  let coveredElements = Array.from(document.getElementsByClassName('empty-board-grid-item'));
   
   numToUncover = Math.min(coveredElements.length, numToUncover);
 
