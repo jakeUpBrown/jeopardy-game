@@ -84,15 +84,18 @@ var playerList=
     currentQuestion.playerBuzzed(player);
     
     player.buzzerTimeout = true;
-    view.displayPlayers();
+    view.updatePlayerBuzzed(player.index);
     setTimeout(function() {
       window.playerList.unbuzzPlayer(player.index)
     }, 2000);
   },
   unbuzzPlayer: function(index)
   {
-    playerList.players[index].buzzerTimeout = false;
-    view.displayPlayers();
+    if(playerList.players[index].buzzerTimeout === true)
+    {
+      playerList.players[index].buzzerTimeout = false;
+      view.updatePlayerBuzzed(index);
+    }
   },
   unbuzzAllPlayers: function()
   {
@@ -100,15 +103,9 @@ var playerList=
     
     for(let i = 0; i < playerList.players.length; i++)
     {
-      if(playerList.players[i].buzzerTimeout === true)
-      {
-        playerList.players[i].buzzerTimeout = false;
-        redisplayPlayers = true;
-      }
+      this.unbuzzPlayer(i);
     }
     
-    if(redisplayPlayers === true)
-      view.displayPlayers();
   }
 };
 
@@ -751,48 +748,28 @@ var view =
       var moneyTotalBox = document.createElement('div');
       moneyTotalBox.className = 'money-total-box';
       moneyTotalBox.textContent = playerList.getPlayerMoneyTotalString(index);
-    
+      moneyTotalBox.className += moneyTotalBox.textContent.includes('-') ? ' money-negative' : ' money-positive';
       
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
       playerNameBox.textContent = playerList.getPlayerBoxString(index);
       
+      playerNameBox.className += player.selected ? ' name-selected' : ' name-unselected';
+      playerNameBox.style.color = player.selected ? window.view.blue : window.view.white;
+      playerNameBox.addEventListener('click', handlers.playerBoxSelected);
+
       var buzzer = document.createElement('div');
       buzzer.className = 'buzzer';
       
       let timer = window.view.createTimerElement();
       
-      // figure out what the color should be based on the details
-      if(currentQuestion.isAnswerer(player))
-      {
-        // buzzer should be green
-        buzzer.style.backgroundColor = window.view.green;
-        flexChildElement.style.backgroundColor = window.view.white;
-        timer.className += ' timer-start';
-      }
-      else if(player.buzzerTimeout)
-      {
-        buzzer.style.backgroundColor = window.view.red;
-      }
-      else
-      {
-        buzzer.style.backgroundColor = window.view.white;
-      }
-      
       flexChildElement.className += currentQuestion.isAnswerer(player) ? ' podium-lit-up' : ' podium-dim';
       
-      playerNameBox.className += player.selected ? ' name-selected' : ' name-unselected';
-      playerNameBox.style.color = player.selected ? window.view.blue : window.view.white;
-      
-      moneyTotalBox.className += moneyTotalBox.textContent.includes('-') ? ' money-negative' : ' money-positive';
-      
-      flexChildElement.id = "playerbox-" + index;
-      
-      playerNameBox.addEventListener('click', handlers.playerBoxSelected);
-    
+      flexChildElement.id = "playerbox-" + index;    
       moneyTotalBox.id = "moneytotalbox-" + index;
       playerNameBox.id = "playernamebox-" + index;
-      
+      buzzer.id = "buzzer-" + index;
+      timer.id = 'timer-' + index;
       
       flexChildElement.appendChild(buzzer);
       flexChildElement.appendChild(moneyTotalBox);
@@ -800,7 +777,35 @@ var view =
       flexChildElement.appendChild(timer);
       
       playerBoxContainer.appendChild(flexChildElement);
+      
+      update
     });
+  },
+  updatePlayerBuzzed: function(index)
+  {
+    let flexChildElement = document.getElementById('playerbox-' + index);
+    
+    let buzzer = flexChildElement.getElementById('buzzer-' + index);
+    
+    let timer = flexChildElement.getElementById('timer-' + index);
+      
+    // figure out what the color should be based on the details
+    if(currentQuestion.answererIndex === index)
+    {
+      // buzzer should be green
+      buzzer.style.backgroundColor = window.view.green;
+      flexChildElement.style.backgroundColor = window.view.white;
+      timer.className += ' timer-start';
+    }
+    else if(playerList.players[index].buzzerTimeout)
+    {
+      buzzer.style.backgroundColor = window.view.red;
+    }
+    else
+    {
+      buzzer.style.backgroundColor = window.view.white;
+    }
+    
   },
   createTimerElement: function()
   {
