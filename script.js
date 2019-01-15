@@ -1463,9 +1463,16 @@ function revealCategories()
   }
 }
 
-function startGame()
-{
-  soundEffects.playBoardFill();
+var gameDetails = {
+  started: false,
+  startGame()
+  {
+    if(this.started == true)
+      return;
+    
+    this.started = true;
+    soundEffects.playBoardFill();
+  }
 }
 
 function randomlyUncoverEntireGrid()
