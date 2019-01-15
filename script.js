@@ -778,16 +778,15 @@ var view =
       
       playerBoxContainer.appendChild(flexChildElement);
       
-      update
+      view.updatePlayerBuzzed(index);
     });
   },
   updatePlayerBuzzed: function(index)
   {
     let flexChildElement = document.getElementById('playerbox-' + index);
     
-    let buzzer = flexChildElement.getElementById('buzzer-' + index);
-    
-    let timer = flexChildElement.getElementById('timer-' + index);
+    let buzzer = document.getElementById('buzzer-' + index);
+    let timer = document.getElementById('timer-' + index);
       
     // figure out what the color should be based on the details
     if(currentQuestion.answererIndex === index)
