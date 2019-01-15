@@ -290,7 +290,7 @@ var boardGrid =
     {
       for(let j = 0; j < this.COLUMNS; j++)
       {
-        if(!this.boardTiles.hasQuestionPopulated())
+        if(!this.boardTiles[i][j].hasQuestionPopulated())
         {
           return false;
         }
@@ -404,6 +404,8 @@ var currentQuestion =
     this.previousAnswerers.push(player.index);
     this.answererIndex = player.index;
     
+    voiceAudio.stop();
+    
     this.openPromptAnswerWindow(player);
   },
   openPromptAnswerWindow: function(player)
@@ -442,7 +444,7 @@ var currentQuestion =
       window.currentQuestion.phaseEndingTimeout = setTimeout(function ()
                                                              {
         window.currentQuestion.openBuzzWindow(3000, false);
-      }, 1000);
+      }, 500);
     }
     else
     {
@@ -457,9 +459,8 @@ var currentQuestion =
   checkPlayerAnswer: function()
   {
     // close the promptAnswerWindow. to prevent further changes of the answer
-    this.promptAnswerWindowOpen = true;
+    this.promptAnswerWindowOpen = false;
     // check if the player got the answer right.
-    
     
     if(currentQuestion.answerSelectedIndex === currentQuestion.tile.correctAnswerIndex)
     {
@@ -494,9 +495,9 @@ var currentQuestion =
   },
   speechEnded: function()
   {
-    if(this.phaseEndingTimeout == undefined)
+    if(window.currentQuestion.phaseEndingTimeout == undefined)
     {
-      this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, 3000);    
+      window.currentQuestion.phaseEndingTimeout = setTimeout(window.currentQuestion.showCorrectAnswer, 3000);    
     }
   },
   rotateAnswerSelected: function()
@@ -853,7 +854,6 @@ var view =
   },
   displayQA: function()
   {
-    debugger;
     let questionArea = document.getElementById('question-holder');
     questionArea.textContent = util.decodeHtmlString(currentQuestion.tile.question);
     
@@ -1133,13 +1133,14 @@ var view =
   },
   showLoadingIcon: function()
   {
-    
+    let loadingIcon = document.getElementById('loading-icon');
+    util.replaceClassName(loadingIcon, 'see-through', 'loading');
     
   },
   hideLoadingIcon: function()
   {
-    
-    
+    let loadingIcon = document.getElementById('loading-icon');
+    util.replaceClassName(loadingIcon, 'loading', 'see-through');
   }
 };
 
@@ -1449,7 +1450,6 @@ var util =
   },
   replaceClassName: function(element, oldClassName, newClassName)
   {
-    debugger;
     let classArray = element.className.split(" ");
     
     classArray = classArray.filter(value => (value != oldClassName && value != newClassName));
@@ -1526,6 +1526,13 @@ var gameDetails = {
     if(this.started == true || this.loading == true)
       return;
     
+    let shouldStart = true;
+    
+    if(!this.arePlayersPopulated())
+    {
+      shouldStart = window.confirm('Are you sure?');
+    }
+    
     this.started = true;
     soundEffects.playBoardFill();
   },
@@ -1544,6 +1551,21 @@ var gameDetails = {
   {
     this.loading = false;
     view.hideLoadingIcon();
+  },
+  arePlayersPopulated()
+  {
+    let allSet = true;
+    
+    if(playerList.players.length < 3)
+      allSet = false;
+    
+    for(let i = 0; i < playerList.players.length; i++)
+    {
+      if(playerList.players[i].keyBound === undefined)
+        allSet = false;
+    }
+    
+    return allSet;
   }
 }
 
@@ -1601,7 +1623,7 @@ rowColumnInfo.init(0);
 window.onkeydown = handlers.anyKeyDown;
 window.onkeyup = handlers.anyKeyUp;
 
-testers.fillPlayers();
+//testers.fillPlayers();
 
 //voiceAudio.speak("This. is. Jeopardy!");
 
