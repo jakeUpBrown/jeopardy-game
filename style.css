@@ -333,13 +333,28 @@ h1 {
   background-size: cover;
 }
 
-.fakeElement, .board-category-item p {
+.fakeElement, .board-category-item p, .empty-board-category-item p {
   overflow:hidden;
   max-width:75px;
   display:table-cell;
   vertical-align:middle;
   text-align:center;
 }
+
+
+.bk-start {
+  animation:background-move .1s;
+}
+
+@keyframes background-move {
+    0% {
+         transform: none; 
+   }
+      100% {
+        transform: translateX(4rem);     
+  }  
+}  
+
 
 .fakeInvisible
 {

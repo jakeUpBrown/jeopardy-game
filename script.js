@@ -968,7 +968,7 @@ var view =
       if(displayInfo === false)
       {
         categoryHeader.textContent = '';
-        categoryHeader.parentNode.className = 'empty-board-category-item';
+        categoryHeader.parentNode.className = 'empty-board-category-item bk-start';
       }
       else
       {
@@ -1290,8 +1290,7 @@ var rowColumnInfo =
       }
     }
     
-    view.displayCategoryHeaders(true);
-    
+    view.displayCategoryHeaders(false);
     // load the questions and answers from the API
     boardGrid.loadQuestionsAndAnswers();
   },
