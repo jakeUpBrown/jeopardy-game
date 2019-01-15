@@ -854,8 +854,8 @@ var view =
     }
     
     let questionSpace = document.getElementById('question-space');
-    util.replaceClassName(questionSpace.parentNode, 'see-through' , 'visible');
-    questionSpace.style.zIndex = 10;
+    util.replaceClassName(questionSpace, 'see-through' , 'visible');
+    questionArea.style.zIndex = 10;
   },
   createAnswerElement: function(answerIndex)
   {
@@ -1399,9 +1399,10 @@ var util =
   },
   replaceClassName: function(element, oldClassName, newClassName)
   {
-    let classArray = element.className.split("/\s+/");
+    debugger;
+    let classArray = element.className.split(" ");
     
-    classArray.fiter(function(value)
+    classArray.filter(function(value)
         {
           return value === oldClassName;
         });
@@ -1413,6 +1414,7 @@ var util =
     for(let i = 0; i < classArray.length; i++)
     {
       combinedNewClassName += classArray[i];
+      combinedNewClassName += ' ';
     }
     
     element.className = combinedNewClassName;
