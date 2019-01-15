@@ -961,18 +961,20 @@ var view =
   {
     for(let i = 0; i < boardGrid.COLUMNS; i++)
     {
-      let categoryHeader = document.getElementById('category-header' + i);
+      let categoryHeader = document.getElementById('category-header' + i)
+      
+      debugger;
       
       if(displayInfo === false)
       {
         categoryHeader.textContent = '';
-        categoryHeader.className = 'empty-board-category-item';
+        categoryHeader.parentNode.className = 'empty-board-category-item';
       }
       else
       {
         categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
         this.expandFontSizeToFill(categoryHeader);
-        categoryHeader.className = 'board-category-item';
+        categoryHeader.parentNode.className = 'board-category-item';
       }
       // get category header element from DOM
             
@@ -1288,7 +1290,7 @@ var rowColumnInfo =
       }
     }
     
-    view.displayCategoryHeaders();
+    view.displayCategoryHeaders(true);
     
     // load the questions and answers from the API
     boardGrid.loadQuestionsAndAnswers();
