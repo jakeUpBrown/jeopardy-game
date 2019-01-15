@@ -1096,10 +1096,11 @@ var soundEffects =
     if(this.soundValid() === true)
       new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FTimes-up.mp3?1547510667439').play();
   },
-  playBoardFill: function()
+  playBoardFill: function(callback)
   {
-    if(this.soundValid() === true)
-      new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FBoard%20fill.mp3?1547525455466').play();
+      let audio = new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FBoard%20fill.mp3?1547525455466');
+      audio.addEventListener('play', callback, false);
+      audio.play();
   },
   soundValid: function()
   {
@@ -1463,7 +1464,7 @@ function revealCategories()
 
 function startUncoverGrid()
 {
-  soundEffects.playBoardFill(this.randomlyUncoverEntireGrid);
+  soundEffects.playBoardFill(window.randomlyUncoverEntireGrid);
 }
 
 function randomlyUncoverEntireGrid()
