@@ -340,7 +340,7 @@ var currentQuestion =
     this.phaseEndingTimeout = undefined;
     view.displayQA();
     if(speak === true)
-      return voiceAudio.speak(this.tile.question);
+      return voiceAudio.speak(this.tile.question, this.speechEnded);
     else
       return false;
   },
@@ -440,7 +440,6 @@ var currentQuestion =
     // close the promptAnswerWindow. to prevent further changes of the answer
     this.promptAnswerWindowOpen = true;
     // check if the player got the answer right.
-        
     
     
     if(currentQuestion.answerSelectedIndex === currentQuestion.tile.correctAnswerIndex)
@@ -476,7 +475,6 @@ var currentQuestion =
   },
   speechEnded: function()
   {
-    debugger;
     if(this.phaseEndingTimeout == undefined)
     {
       this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, 3000);    
@@ -962,9 +960,7 @@ var view =
     for(let i = 0; i < boardGrid.COLUMNS; i++)
     {
       let categoryHeader = document.getElementById('category-header' + i)
-      
-      debugger;
-      
+            
       if(displayInfo === false)
       {
         categoryHeader.textContent = '';
@@ -983,8 +979,13 @@ var view =
   },
   uncoverCategoryHeader: function(index)
   {
-    let categoryHeader = document.getElementById('category-header');
+    let categoryHeader = document.getElementById('category-header' + index);
     
+    categoryHeader.textContent = rowColumnInfo.getCategoryName(index);
+    this.expandFontSizeToFill(categoryHeader);
+    categoryHeader.parentNode.className = 'board-category-item';
+    
+    voiceAudio.speak(categoryHeader.textContent, function(){});
   },
   updateAnswerSelected: function()
   {
@@ -1000,7 +1001,7 @@ var view =
     // get the max height of the container.
     var maxHeight = parent.clientHeight;
     
-    var clearance = element.textContent.length < 6 ? 45 : 35;
+    var clearance = element.textContent.length < 6 ? 45 : 40;
     
     let fakeElement = document.createElement('label');
     fakeElement.className = 'fakeElement fakeInvisible';
@@ -1115,7 +1116,7 @@ var voiceAudio =
     this.msg.pitch = 1;
     this.msg.rate = 1.5;
   },
-  speak: function(text)
+  speak: function(text, onend)
   {
     if(!this.valid)
       return false;
@@ -1138,11 +1139,8 @@ var voiceAudio =
     
     this.msg.text = text;
     
-    this.msg.onend = function(event)
-    {
-      console.log('speech ended');
-      window.currentQuestion.speechEnded();
-    };
+    if(onend !== undefined)
+      this.msg.onend = onend;
     
     window.speechSynthesis.speak(this.msg);
     
@@ -1416,6 +1414,15 @@ function setIntervalXWithXParemeter(callback, delay, repetitions, endCallBack) {
          endCallBack();
        }
     }, delay);
+}
+
+
+function revealCategories()
+{
+  this.setIntervalXWithXParemeter(function (i)
+  {
+    view.uncoverCategoryHeader(i);
+  }, 2000, boardGrid.COLUMNS, function() {});
 }
 
 

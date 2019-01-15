@@ -327,9 +327,11 @@ h1 {
   padding: 7px;
   word-wrap:break-word;
   color: rgba(0,0,0,0);
-  height:50px;
+  height:60px;
   z-index:1;
   background-image: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2Fjeopardy-background.jpg?1547519188336");
+  background-repeat: no-repeat;
+  background-position: center; 
   background-size: cover;
 }
 
@@ -341,19 +343,6 @@ h1 {
   text-align:center;
 }
 
-
-.bk-start {
-  animation:background-move .1s;
-}
-
-@keyframes background-move {
-    0% {
-         transform: none; 
-   }
-      100% {
-        transform: translateX(4rem);     
-  }  
-}  
 
 
 .fakeInvisible
