@@ -94,7 +94,7 @@ h1 {
 .player-name-box {
   display:block;
   white-space: nowrap;
-  font-size:20px;
+  font-size:16px;
   text-align:center;
   font-weight:lighter;
   color:#fdfdfd;
@@ -214,6 +214,8 @@ h1 {
   grid-template-columns: auto auto;
   padding:0px;
   margin:auto;
+  margin-left: 5px;
+  margin-right: 5px;
   height:40%;
   width:100%;
   /*background-color:#060CE9;*/
@@ -223,7 +225,7 @@ h1 {
 #answer-grid p
 {
   border: 4px solid #111111;
-  margin: 7px;
+  margin: 9px;
   padding: 10px;
   text-align:center;
   width:265px;

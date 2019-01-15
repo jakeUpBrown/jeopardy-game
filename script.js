@@ -538,7 +538,7 @@ var handlers = {
     
     if(window.playerList.isMaxCapacity())
     {
-      window.alert('Too many dicks on the dancefloor.');
+      window.alert('Already reached maximum number of players.');
       return;
     }
     
@@ -588,6 +588,7 @@ var handlers = {
         {
           // it's escape. wil want to toggle all players to unselected
           window.playerList.togglePlayerSelected(undefined);
+          view.displayPlayers();
           return;
         }
 
@@ -1183,6 +1184,7 @@ var voiceAudio =
     this.voice = window.speechSynthesis.getVoices()[4];
     this.msg.pitch = 1;
     this.msg.rate = 1.5;
+    this.msg.volume = .7;
   },
   speak: function(text, onend)
   {
@@ -1530,11 +1532,14 @@ var gameDetails = {
     
     if(!this.arePlayersPopulated())
     {
-      shouldStart = window.confirm('Are you sure?');
+      shouldStart = window.confirm('Are you sure? It appears not all players are properly set.');
     }
     
-    this.started = true;
-    soundEffects.playBoardFill();
+    if(shouldStart === true)
+    {
+      this.started = true;
+      soundEffects.playBoardFill();
+    }
   },
   startNewRound()
   {
@@ -1623,13 +1628,13 @@ rowColumnInfo.init(0);
 window.onkeydown = handlers.anyKeyDown;
 window.onkeyup = handlers.anyKeyUp;
 
-//testers.fillPlayers();
+testers.fillPlayers();
 
 //voiceAudio.speak("This. is. Jeopardy!");
 
 view.displayBoardGrid(false);
 
 
-voiceAudio.valid = false;
+// voiceAudio.valid = false;
 
 
