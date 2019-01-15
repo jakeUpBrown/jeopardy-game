@@ -358,72 +358,23 @@ h1 {
   text-align:center;
 }
 
-@keyframes pro {
-    0% {
-        background: -webkit-gradient(left, #FF4136 0 100%, #FF4136 100%);
-        background: -webkit-linear-gradient(left, #FF4136 0 100%, #FF4136 100%);
-        background: linear-gradient(left, #FF4136 0 100%, #FF4136 100%);      
-    }
-    20% {
-        background: -webkit-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
-        background: -webkit-linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
-        background: linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);      
-    }
-      40% {
-        background: -webkit-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
-        background: -webkit-linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
-        background: linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);      
-    }
-      60% {
-        background: -webkit-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
-        background: -webkit-linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
-        background: linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);      
-    }
-      80% {
-        background: -webkit-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
-        background: -webkit-linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
-        background: linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);   
-    }
-      100% {
-        background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
-        background: -webkit-linear-gradient(left, #111111 0 100%, #111111 100%);
-        background: linear-gradient(left, #111111 0 100%, #111111 100%); 
-  }  
-}  
 
+.loading {
+  position: absolute;
+  right: -140px;
+  bottom:7px;
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
 
-@keyframes pro {
-    0% {
-        background: -webkit-gradient(left, #FF4136 0 100%, #FF4136 100%);
-        background: -webkit-linear-gradient(left, #FF4136 0 100%, #FF4136 100%);
-        background: linear-gradient(left, #FF4136 0 100%, #FF4136 100%);      
-    }
-    20% {
-        background: -webkit-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
-        background: -webkit-linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
-        background: linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);      
-    }
-      40% {
-        background: -webkit-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
-        background: -webkit-linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
-        background: linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);      
-    }
-      60% {
-        background: -webkit-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
-        background: -webkit-linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
-        background: linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);      
-    }
-      80% {
-        background: -webkit-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
-        background: -webkit-linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
-        background: linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);   
-    }
-      100% {
-        background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
-        background: -webkit-linear-gradient(left, #111111 0 100%, #111111 100%);
-        background: linear-gradient(left, #111111 0 100%, #111111 100%); 
-  }  
-}  
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .fakeInvisible
 {
@@ -520,45 +471,6 @@ h1 {
 }  
 
 
-.prompt-start {
-  animation:pro 5s;
-  -webkit-animation:pro .5s;
-  animation-timing-function:linear;
-  -webkit-animation-timing-function:linear;
-}
-
-@keyframes pro {
-    0% {
-        background: -webkit-gradient(left, #FF4136 0 100%, #FF4136 100%);
-        background: -webkit-linear-gradient(left, #FF4136 0 100%, #FF4136 100%);
-        background: linear-gradient(left, #FF4136 0 100%, #FF4136 100%);      
-    }
-    20% {
-        background: -webkit-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
-        background: -webkit-linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);
-        background: linear-gradient(left, #111111 0 11%, #FF4136 11% 89%, #111111 89%);      
-    }
-      40% {
-        background: -webkit-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
-        background: -webkit-linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);
-        background: linear-gradient(left, #111111 0 22%, #FF4136 22% 78%, #111111 78%);      
-    }
-      60% {
-        background: -webkit-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
-        background: -webkit-linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);
-        background: linear-gradient(left, #111111 0 33%, #FF4136 33% 67%, #111111 67%);      
-    }
-      80% {
-        background: -webkit-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
-        background: -webkit-linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);
-        background: linear-gradient(left, #111111 0 44%, #FF4136 44% 56%, #111111 56%);   
-    }
-      100% {
-        background: -webkit-gradient(left, #111111 0 100%, #111111 100%);
-        background: -webkit-linear-gradient(left, #111111 0 100%, #111111 100%);
-        background: linear-gradient(left, #111111 0 100%, #111111 100%); 
-  }  
-}  
 
 #speaker-icon
 {
@@ -607,7 +519,7 @@ h1 {
 {
   position: absolute;
   right: -100px;
-  bottom: 0px;
+  bottom: 1px;
   background-color: #fdfdfd;
   border: 2px solid #111111;
   font-family: 'Swiss 911';

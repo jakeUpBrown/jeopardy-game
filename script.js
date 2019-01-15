@@ -263,6 +263,9 @@ var boardGrid =
       this.boardTiles[rowNum][col].populateQAInfo(dataNodes.results[i]);
     }
     
+    if(this.isEntireGridPopulated() === true)
+      gameDetails.endLoading();
+    
   },
   getMoneyValue: function(row)
   {
@@ -1127,6 +1130,16 @@ var view =
 
      //Calculate difference btw the two dates
      console.log('execution: ' + (two.getMilliseconds()-one.getMilliseconds()));
+  },
+  showLoadingIcon: function()
+  {
+    
+    
+  },
+  hideLoadingIcon: function()
+  {
+    
+    
   }
 };
 
@@ -1507,9 +1520,10 @@ function revealCategories()
 var gameDetails = {
   started: false,
   roundNum: 0,
+  loading: false,
   startGame()
   {
-    if(this.started == true)
+    if(this.started == true || this.loading == true)
       return;
     
     this.started = true;
@@ -1519,7 +1533,18 @@ var gameDetails = {
   {
     this.roundNum++;
     
+    // do other things to start it
   },
+  startLoading()
+  {
+    this.loading = true;
+    view.showLoadingIcon();
+  },
+  endLoading()
+  {
+    this.loading = false;
+    view.hideLoadingIcon();
+  }
 }
 
 function randomlyUncoverEntireGrid()
@@ -1567,6 +1592,7 @@ var testers =
 voiceAudio.init();
 voiceAudio.init();
 
+gameDetails.startLoading();
 triviaApiGetter.generateToken();
 boardGrid.fillBoardTiles();
 
@@ -1580,8 +1606,6 @@ testers.fillPlayers();
 //voiceAudio.speak("This. is. Jeopardy!");
 
 view.displayBoardGrid(false);
-
-
 
 
 voiceAudio.valid = false;
