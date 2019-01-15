@@ -280,6 +280,21 @@ var boardGrid =
       if(rowColumnInfo.getRowDifficulty(row) === difficulty && this.boardTiles[row][col].hasQuestionPopulated() === false)
         return row;
     }
+  },
+  isEntireGridPopulated: function()
+  {
+    for(let i = 0; i < this.ROWS; i++)
+    {
+      for(let j = 0; j < this.COLUMNS; j++)
+      {
+        if(!this.boardTiles.hasQuestionPopulated())
+        {
+          return false;
+        }
+      }
+    }    
+    
+    return true;
   }
   
 };
@@ -1504,7 +1519,7 @@ var gameDetails = {
   {
     this.roundNum++;
     
-  }
+  },
 }
 
 function randomlyUncoverEntireGrid()
