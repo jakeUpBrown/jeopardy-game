@@ -356,7 +356,6 @@ var currentQuestion =
     if(voiceStarted == false)
     {
       this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, timeoutLength);
-      return;
     }
     // else, the voiceAudio already set the timeout for after the question is finished being read. 
 
@@ -493,8 +492,11 @@ var currentQuestion =
   getMoneyValue: function()
   {
     return rowColumnInfo.getRowMoneyValue(this.tile.row);
+  },
+  isInMiddleOfQuestion: function()
+  {
+    return this.started;
   }
-  
 };
 
 var handlers = {
@@ -913,18 +915,14 @@ var view =
     for(let i = 0; i < playerNameElements.length; i++)
     {
       let classArray = playerNameElements[i].className.split(/\s+/);
-      
-      let needsUpdate = false;
-      
+            
       if(classArray.includes('name-selected') && i !== playerSelectedIndex)
       {
-        classArray.remove('name-selected');
-        needsUpdate = true;
+        util.replaceClassName(playerNameElements, 'name-selected', 'name-unselected');
       }
       else if(classArray.includes('name-unselected') && i == playerSelectedIndex)
       {
-        classArray.remove('name-unselected');
-        classArray.push('name-uns
+        util.replaceClassName(playerNameElements[i], 'name-unselected', 'name-selected');
       }
     }
   },
@@ -952,22 +950,6 @@ var view =
   expandFontSizeToFill: function(element)
   {
     let parent = element.parentNode;
-    /*
-    var parentPadLeft = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('min-padding-left'));
-    var parentPadRight = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-right'));
-    var parentPadTop = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-top'));
-    var parentPadBottom = util.getNumberFromPixelString(window.getComputedStyle(parent, null).getPropertyValue('padding-bottom'));
-
-    var elementMarginLeft = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-left'));
-    var elementMarginRight = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-right'));
-    var elementMarginTop = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-top'));
-    var elementMarginBottom = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('margin-bottom'));
-
-    var elementPadLeft = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-left'));
-    var elementPadRight = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-right'));
-    var elementPadTop = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-top'));
-    var elementPadBottom = util.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue('padding-bottom'));
-    */
     
     // get the max width of the container.
     var maxWidth = parent.clientWidth;
@@ -1357,6 +1339,26 @@ var util =
   getElementPropertyValue: function(element, property)
   {
     return this.getNumberFromPixelString(window.getComputedStyle(element, null).getPropertyValue(property));
+  },
+  replaceClassName: function(element, oldClassName, newClassName)
+  {
+    let classArray = element.className.split("/\s+/");
+    
+    classArray.fiter(function(value)
+        {
+          return value === oldClassName;
+        });
+        
+    classArray.push(newClassName);
+    
+    let combinedNewClassName = '';
+    
+    for(let i = 0; i < classArray.length; i++)
+    {
+      combinedNewClassName += classArray[i];
+    }
+    
+    element.className = combinedNewClassName;
   }
 };
 
