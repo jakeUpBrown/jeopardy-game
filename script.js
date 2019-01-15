@@ -832,6 +832,7 @@ var view =
   },
   displayQA: function()
   {
+    debugger;
     let questionArea = document.getElementById('question-holder');
     questionArea.textContent = util.decodeHtmlString(currentQuestion.tile.question);
     
@@ -853,6 +854,7 @@ var view =
     }
     
     let questionSpace = document.getElementById('question-space');
+    util.replaceClassName(questionSpace.parentNode, 'see-through' , 'visible');
     questionSpace.style.zIndex = 10;
   },
   createAnswerElement: function(answerIndex)
@@ -907,6 +909,8 @@ var view =
     
     // set the class to board-grid-item board-grid-item-font;
     element.className = 'board-grid-item board-grid-item-font';
+    element.addEventListener('click', handlers.boardTileClicked);   
+    
     element.clientWidth;
   },
   displayCountdown: function(content)
@@ -964,7 +968,8 @@ var view =
       if(displayInfo === false)
       {
         categoryHeader.textContent = '';
-        categoryHeader.parentNode.className = 'empty-board-category-item bk-start';
+        categoryHeader.parentNode.className = 'empty-board-category-item ' + (gameDetails.roundNum == 0 ? 'single-jeopardy-empty-bg' : 'double-jeopardy-empty-bg');
+        
       }
       else
       {
@@ -1465,6 +1470,7 @@ function revealCategories()
 
 var gameDetails = {
   started: false,
+  roundNum: 0,
   startGame()
   {
     if(this.started == true)

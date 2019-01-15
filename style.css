@@ -161,9 +161,8 @@ h1 {
 }
 
 #question-space {
-  display: none;
   position: absolute;
-  height:415px;
+  height:400px;
   width:650px;
   margin:0px;
   z-index:0;
@@ -178,7 +177,14 @@ h1 {
 
 .see-through
 {
-  display: block;
+  display: none;
+  z-index: 0;
+}
+
+.visible
+{
+  display:block;
+  z-index: 10;
 }
 
 
@@ -328,11 +334,22 @@ h1 {
   color: rgba(0,0,0,0);
   height:60px;
   z-index:1;
+}
+
+.single-jeopardy-empty-bg
+{
   background-image: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2Fjeopardy%20logo2.jpg?1547539511554");
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: cover;  
+}
+
+.double-jeopardy-empty-bg
+{
   background-image: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FdoubleJeopardy.jpg?1547575730261"); 
   background-repeat: no-repeat;
   background-position: center; 
-  background-size: cover;
+  background-size: cover;  
 }
 
 .fakeElement, .board-category-item p, .empty-board-category-item p {
@@ -551,7 +568,7 @@ h1 {
   box-shadow: inset -1px -1px 1px 0px rgba(0,0,0,0.25);
   position:absolute;
   bottom: 20px;
-  right: 60px;
+  right: 55px;
   font-size: 20px;
 }
 
@@ -566,4 +583,10 @@ h1 {
   font-size: 15px;
   height: 42px;
   width: 80px;
+}
+
+#start-button:hover,
+#start-button:focus,
+#start-button:active{
+    border: 2px solid #111111;
 }
