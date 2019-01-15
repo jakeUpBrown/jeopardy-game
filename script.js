@@ -961,13 +961,27 @@ var view =
   {
     for(let i = 0; i < boardGrid.COLUMNS; i++)
     {
-      // get category header element from DOM
       let categoryHeader = document.getElementById('category-header' + i);
+      
+      if(displayInfo === false)
+      {
+        categoryHeader.textContent = '';
+        categoryHeader.className = 'empty-board-category-item';
+      }
+      else
+      {
+        categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
+        this.expandFontSizeToFill(categoryHeader);
+        categoryHeader.className = 'board-category-item';
+      }
+      // get category header element from DOM
             
-      categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
-      this.expandFontSizeToFill(categoryHeader);
-      //categoryHeader.className = 'empty-board-category-item';
     }
+    
+  },
+  uncoverCategoryHeader: function(index)
+  {
+    let categoryHeader = document.getElementById('category-header');
     
   },
   updateAnswerSelected: function()
