@@ -902,9 +902,8 @@ var view =
   },
   uncoverBoardGridElement(row, col)
   {
-    debugger;
     // get the element
-    let index = ((row + 1) * boardGrid.COLUMNS) + col;
+    let index = ((row + 1) * boardGrid.COLUMNS) + col + 1;
     
     let element = document.getElementById('board-grid').children[index];
     
@@ -958,7 +957,7 @@ var view =
     var questionSpace = document.getElementById('question-space');
     questionSpace.style.zIndex=0;
   },
-  displayCategoryHeaders: function()
+  displayCategoryHeaders: function(displayInfo)
   {
     for(let i = 0; i < boardGrid.COLUMNS; i++)
     {
@@ -967,6 +966,7 @@ var view =
             
       categoryHeader.textContent = rowColumnInfo.getCategoryName(i);
       this.expandFontSizeToFill(categoryHeader);
+      //categoryHeader.className = 'empty-board-category-item';
     }
     
   },
