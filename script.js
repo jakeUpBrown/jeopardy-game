@@ -1099,7 +1099,8 @@ var soundEffects =
   playBoardFill: function(callback)
   {
       let audio = new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FBoard%20fill.mp3?1547525455466');
-      audio.addEventListener('play', callback, false);
+      audio.addEventListener('play', window.randomlyUncoverEntireGrid);
+      audio.addEventListener('ended', window.revealCategories); 
       audio.play();
   },
   soundValid: function()
@@ -1464,17 +1465,17 @@ function revealCategories()
 
 function startUncoverGrid()
 {
-  soundEffects.playBoardFill(window.randomlyUncoverEntireGrid);
+  soundEffects.playBoardFill();
 }
 
 function randomlyUncoverEntireGrid()
 {
   let uncoverIncrement = 5;
   
-  this.setIntervalXWithXParemeter(function (x)
+  window.setIntervalXWithXParemeter(function (x)
   {
     randomlyUncoverGridElements(uncoverIncrement);
-  }, 300, Math.ceil((boardGrid.COLUMNS * boardGrid.ROWS) / uncoverIncrement), window.revealCategories);
+  }, 300, Math.ceil((window.boardGrid.COLUMNS * window.boardGrid.ROWS) / uncoverIncrement), function(){});
   
 }
 
