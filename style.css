@@ -144,7 +144,12 @@ h1 {
   margin-right:auto;
   position: relative;
   height:50px;
+  width: 150px;
   outline: 5px solid #111111;
+  background: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2Fjeopardy.jpg?1547602345677");
+  background-repeat: no-repeat;
+  background-position: center;   
+  background-size: cover;
 }
 
 .spacer {
