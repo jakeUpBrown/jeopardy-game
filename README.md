@@ -1,4 +1,4 @@
-Jeopardy Game that I made while I learned base JavaScript.
+Jeopardy! Game
 
 Hosted at https://dent-lasagna.glitch.me/
 
@@ -10,4 +10,4 @@ Text-to-speech
 Sound effects
 Animations in both CSS and JavaScript
 Authentic Jeopardy style and feel
-One-button input designed around multiple users on the same keyboard
+One-button input designed for multiple users on the same keyboard
