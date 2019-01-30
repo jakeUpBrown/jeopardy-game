@@ -1,37 +1,13 @@
-Welcome to Glitch
-=================
+Jeopardy Game that I made while I learned base JavaScript.
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+Hosted at https://dent-lasagna.glitch.me/
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+Features includes: 
 
-Find out more [about Glitch](https://glitch.com/about).
-
-
-Your Project
-------------
-
-### ← README.md
-
-That's this file, where you can tell people what your cool website does and how you built it.
-
-### ← index.html
-
-Where you'll write the content of your website. 
-
-### ← style.css
-
-CSS files add styling rules to your content.
-
-### ← script.js
-
-If you're feeling fancy you can add interactivity to your site with JavaScript.
-
-### ← assets
-
-Drag in `assets`, like images or music, to add them to your project
-
-Made by [Glitch](https://glitch.com/)
--------------------
-
-\ ゜o゜)ノ
+Random Trivia categories grabbed from the Open Trivia DB API
+Increasing difficulty of questions as the money values go up
+Text-to-speech
+Sound effects
+Animations in both CSS and JavaScript
+Authentic Jeopardy style and feel
+One-button input designed around multiple users on the same keyboard
