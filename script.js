@@ -1,12 +1,21 @@
 var playerList= 
 {
   players: [],
+  resetGameInfo: function()
+  {
+    for(let i = 0; i < this.players.length; i++)
+    {
+      this.players[i].money = 0;
+      this.players[i].buzzerTimeout = false;
+      this.players[i].selected = false;
+    }
+  },
   addNewPlayer: function(player)
   {
     player.index = this.players.length;
     this.players.push(player);
   },
-  getPlayerBoxString: function(index)
+  getPlayerBoxInnerHtml: function(index)
   {
     var player = this.players[index];
     var playerName = player.playerName;
@@ -17,7 +26,7 @@ var playerList=
     else
       keyBound = String.fromCharCode(player.keyBound);
       
-    return playerName + ' (' + keyBound + ')';
+    return '<p>' + playerName + '<br>' + '(' + keyBound + ')' + '</p>';
   },
   getPlayerMoneyTotalString: function(index)
   {
@@ -226,7 +235,13 @@ var boardGrid =
   COLUMNS: 6,
   boardTiles: undefined,
   roundNum: 0,
-  fillBoardTiles: function()
+  init: function()
+  {
+    gameDetails.startLoading();
+    this.fillEmptyBoardTiles();
+    this.loadQuestionsAndAnswerers();
+  },
+  fillEmptyBoardTiles: function()
   {
     this.boardTiles = [];
     for(let row = 0; row < this.ROWS; row++)
@@ -298,6 +313,10 @@ var boardGrid =
     }    
     
     return true;
+  },
+  endCurrentQuestion: function()
+  {
+    
   }
   
 };
@@ -380,7 +399,7 @@ var currentQuestion =
     // if the voice didn't start, need to set the timeout here.
     if(voiceStarted == false)
     {
-      this.phaseEndingTimeout = setTimeout(this.showCorrectAnswer, timeoutLength);
+      this.phaseEndingTimeout = setTimeout(this.closeBuzzWindow, timeoutLength);
     }
     // else, the voiceAudio already set the timeout for after the question is finished being read. 
 
@@ -471,6 +490,11 @@ var currentQuestion =
       currentQuestion.playerLost(playerList.players[currentQuestion.answererIndex]);
     }
   },
+  closeBuzzWindow: function()
+  {
+    soundEffects.playTimesUp();
+    window.currentQuestion.showCorrectAnswer();
+  },
   showCorrectAnswer: function()
   {
     currentQuestion.started = false;
@@ -488,6 +512,7 @@ var currentQuestion =
     currentQuestion.promptAnswerWindowOpen = false;
     currentQuestion.previousAnswerers = [];
     currentQuestion.buzzWindowOpen = false;
+    boardGrid.endCurrentQuestion();
     view.hideQuestionSpace();
     playerList.unbuzzAllPlayers();
     view.displayPlayers();
@@ -497,7 +522,7 @@ var currentQuestion =
   {
     if(window.currentQuestion.phaseEndingTimeout == undefined)
     {
-      window.currentQuestion.phaseEndingTimeout = setTimeout(window.currentQuestion.showCorrectAnswer, 3000);    
+      window.currentQuestion.phaseEndingTimeout = setTimeout(window.currentQuestion.closeBuzzWindow, 3000);    
     }
   },
   rotateAnswerSelected: function()
@@ -528,8 +553,11 @@ var currentQuestion =
 
 var handlers = {
   buzzedPlayerKeyUp: false,
-  addNewPlayer: function()
+  addPlayerButtonClicked: function()
   {
+    if(gameDetails.started === true)
+      return;
+    
     var playerNameInput = document.getElementById('playerNameInput');
     
     if(playerNameInput === undefined || playerNameInput.value === undefined || playerNameInput.value === '')
@@ -554,14 +582,31 @@ var handlers = {
   {
     if(currentQuestion.started)
       return;
+    console.log('test');
     
+    var id = event.target.id;
+    
+    // get the player index to toggle
+    var playerIndex = parseInt(id.substring(id.lastIndexOf('-') + 1));
+    
+    // check if the player index was set. if not, it's probably in the parent element
+    if(isNaN(playerIndex))
+    {      
+      id = event.target.parentNode.id;
+      playerIndex = parseInt(id.substring(id.lastIndexOf('-') + 1));
+    }
+    
+    window.playerList.togglePlayerSelected(playerIndex);
+    view.displayPlayers();
+  },
+  playerDeleteClicked: function(event)
+  {    
     var id = event.target.id;
     
     var playerIndex = parseInt(id.substring(id.lastIndexOf('-') + 1));
     
-    // find player index to toggle.
-    
-    window.playerList.togglePlayerSelected(playerIndex);
+    // find player index to remove.
+    window.playerList.players.splice(playerIndex,1);
     view.displayPlayers();
   },
   playerNameKeyDown: function(event)
@@ -638,6 +683,9 @@ var handlers = {
   },
   boardTileClicked: function(event)
   {
+    if(gameDetails.selectQuestionWindowOpen === false)
+      return;
+    
     var targetDiv = event.target;
     
     boardGrid.boardTiles[targetDiv.row][targetDiv.col].isClicked(event.target);
@@ -649,6 +697,43 @@ var handlers = {
     
     let speakerElement = document.getElementById('speaker-icon');
     speakerElement.textContent = newChar;
+  },
+  startButtonClicked: function()
+  {
+    if(gameDetails.started === true)
+    {
+      if(window.confirm('Are you sure you would like to end the game?'))
+        gameDetails.endGame();
+    }
+    else
+    {
+      gameDetails.startGame();
+    }
+    
+    view.updateStartButton();
+  },
+  helpClicked: function()
+  {
+    let speechBubbleTip = document.getElementById('speech-bubble-container');
+    
+    if(speechBubbleTip !== null)
+    {
+      speechBubbleTip.parentNode.removeChild(speechBubbleTip);
+    }
+    
+    let container = document.getElementById('fullscreen-container');  
+    container.addEventListener('click', window.handlers.outsideHelpWindowClicked);
+    window.util.replaceClassName(container, 'see-through', 'help-window-open');
+  },
+  outsideHelpWindowClicked: function()
+  {
+    let container = document.getElementById('fullscreen-container');
+    container.removeEventListener('click', window.handlers.outsideHelpWindowClicked);
+    window.util.replaceClassName(container, 'help-window-open', 'see-through');
+  },
+  helpWindowClicked: function(e)
+  {
+    e.stopPropagation();
   }
 };
 
@@ -783,7 +868,7 @@ var view =
       
       var playerNameBox = document.createElement('label');
       playerNameBox.className = 'player-name-box';
-      playerNameBox.textContent = playerList.getPlayerBoxString(index);
+      playerNameBox.insertAdjacentHTML('beforeend', playerList.getPlayerBoxInnerHtml(index));
       
       playerNameBox.className += player.selected ? ' name-selected' : ' name-unselected';
       playerNameBox.style.color = player.selected ? window.view.blue : window.view.white;
@@ -794,18 +879,30 @@ var view =
       
       let timer = window.view.createTimerElement();
       
+      let deleteButton = document.createElement('div');
+      deleteButton.className = 'player-delete-button';
+      deleteButton.innerHTML = '&times;';
+      deleteButton.addEventListener('click', handlers.playerDeleteClicked);
+      
       flexChildElement.className += currentQuestion.isAnswerer(player) ? ' podium-lit-up' : ' podium-dim';
+      
+      if(gameDetails.started === false)
+      {
+        flexChildElement.className += ' player-delete-button-parent';
+      }
       
       flexChildElement.id = "playerbox-" + index;    
       moneyTotalBox.id = "moneytotalbox-" + index;
       playerNameBox.id = "playernamebox-" + index;
       buzzer.id = "buzzer-" + index;
       timer.id = 'timer-' + index;
+      deleteButton.id = 'playerdeletebutton-' + index;
       
       flexChildElement.appendChild(buzzer);
       flexChildElement.appendChild(moneyTotalBox);
       flexChildElement.appendChild(playerNameBox);
       flexChildElement.appendChild(timer);
+      flexChildElement.appendChild(deleteButton);
       
       playerBoxContainer.appendChild(flexChildElement);
       
@@ -881,10 +978,7 @@ var view =
   createAnswerElement: function(answerIndex)
   {
     let answerElement = document.createElement('p');
-    answerElement.textContent = currentQuestion.tile.getAnswerByIndex(answerIndex);
-    
-    //if(answerIndex === currentQuestion.tile.correctAnswerIndex)
-      //answerElement.style.backgroundColor = 'red';
+    answerElement.textContent = util.decodeHtmlString(currentQuestion.tile.getAnswerByIndex(answerIndex));
     
     answerElement.id = 'answer-option' + answerIndex;
     
@@ -911,6 +1005,12 @@ var view =
 
     while (elements[0]) {
         elements[0].parentNode.removeChild(elements[0]);
+    }
+    
+    elements = gridContainer.getElementsByClassName("empty-board-grid-item");
+    
+    while (elements[0]) {
+      elements[0].parentNode.removeChild(elements[0]);
     }
         
     for(var row = 0; row < boardGrid.boardTiles.length; row++)
@@ -1142,29 +1242,78 @@ var view =
   {
     let loadingIcon = document.getElementById('loading-icon');
     util.replaceClassName(loadingIcon, 'loading', 'see-through');
+  },
+  updateStartButton: function()
+  {
+    let startButton = document.getElementById('start-button');
+    
+    if(gameDetails.started === true)
+    {
+      startButton.textContent = 'End Game';
+    }
+    else
+    {
+      startButton.textContent = 'Start Game';
+    }
   }
 };
 
 
 var soundEffects = 
 {
+  audio: undefined,
   playTimesUp: function()
   {
-    if(this.soundValid() === true)
-      new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FTimes-up.mp3?1547510667439').play();
+    if(this.soundValid() === false)
+      return;
+    
+    this.audio = new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FTimes-up.mp3?1547510667439');
+    this.audio.volume = .3;
+    this.audio.play();
   },
-  playBoardFill: function(callback)
+  playBoardFill: function(onPlayCallback, onEndCallback)
   {
-      let audio = new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FBoard%20fill.mp3?1547525455466');
-      audio.addEventListener('play', window.randomlyUncoverEntireGrid);
-      audio.addEventListener('ended', window.revealCategories); 
-      audio.play();
+    if(this.soundValid() === false)
+      return false;
+    
+    this.audio = new Audio('https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FBoard%20fill.mp3?1547525455466');
+    this.audio.addEventListener('play', onPlayCallback); 
+    this.audio.addEventListener('ended', onEndCallback); 
+    this.audio.volume = .5;
+    this.audio.play();
+    
+    return true;
+  },
+  stopAudio: function()
+  {
+    this.audio.pause();
+    this.audio.currentTime = 0;
   },
   soundValid: function()
   {
     return voiceAudio.valid;
   }
 };
+
+
+var intervals = 
+{
+  intervals: [],
+  clearInterval(intervalID)
+  {
+    window.clearInterval(intervalID);
+    this.intervals = this.intervals.filter(function(value, index, arr){
+        return value !== intervalID;
+    }.bind(this));
+  },
+  clearAllIntervals()
+  {
+    while(!this.intervals.length == 0)
+    {
+      this.clearInterval(this.intervals[0]);
+    }
+  }
+}
 
 var voiceAudio = 
 {
@@ -1306,8 +1455,10 @@ var rowColumnInfo =
   rowMoneyValues: [],
   colCategoryValues: [],
   rowDifficulties: [],
-  init: function(roundNum)
+  init: function()
   {
+    let roundNum = gameDetails.roundNum;
+    
     for(let i = 0; i < 5; i++)
     {
       this.rowMoneyValues[i] = 200 * (i + 1) * (roundNum + 1);
@@ -1344,6 +1495,14 @@ var rowColumnInfo =
   {
     for(let i = 0; i < boardGrid.COLUMNS; i++)
     {
+      if(options.length < (boardGrid.COLUMNS - i))
+      {
+        // we've run out of categories. will want to recall getCategoryOptions after wiping past categories
+        gameDetails.pastCategories = [];
+        this.getCategoryOptions();
+        return;
+      }
+      
       let randIndex = Math.floor(Math.random() * (options.length));
       
       // extract element at that index from the options array
@@ -1354,7 +1513,17 @@ var rowColumnInfo =
       if(name.includes(':'))
       {
         this.colCategoryValues[i].name = name.substring(name.lastIndexOf(':') + 1).trim();
-        console.log('changed name to ' + this.colCategoryValues[i].name);
+      }
+      
+      if(gameDetails.pastCategories.includes(this.colCategoryValues[i].name))
+      {
+        // will need to decrement i so that it redoes this column.
+        i--;
+      }
+      else
+      {
+        // the category hasn't been done yet, add to past categories
+        gameDetails.pastCategories.push(this.colCategoryValues[i].name);
       }
     }
     
@@ -1483,15 +1652,16 @@ function setIntervalXWithXParemeter(callback, delay, repetitions, endCallBack) {
     }
     
     var x = 1;
-      var intervalID = window.setInterval(function () {
+    var intervalID = window.setInterval(function () {
+       callback(x);
 
-         callback(x);
-
-         if (++x >= repetitions) {
-             window.clearInterval(intervalID);
-           endCallBack();
-         }
-      }, delay);
+       if (++x >= repetitions) {
+         window.intervals.clearInterval(intervalID);
+         endCallBack();
+       }
+    }, delay);
+    
+    window.intervals.intervals.push(intervalID);
   }
   else
   {
@@ -1507,7 +1677,7 @@ function revealCategories()
     window.setIntervalXWithXParemeter(function (x)
     {
       window.view.uncoverCategoryHeader(x);
-    }, 2500, window.boardGrid.COLUMNS, function() {});
+    }, 2500, window.boardGrid.COLUMNS, function(){window.gameDetails.selectQuestionWindowOpen = true;});
   });
   
   if(spoken !== true)
@@ -1515,14 +1685,27 @@ function revealCategories()
     window.setIntervalXWithXParemeter(function (x)
     {
       window.view.uncoverCategoryHeader(x);
-    }, 2000, window.boardGrid.COLUMNS, function() {});
+    }, 2000, window.boardGrid.COLUMNS, function(){window.gameDetails.selectQuestionWindowOpen = true;});
   }
 }
 
 var gameDetails = {
   started: false,
   roundNum: 0,
-  loading: false,
+  loading: true,
+  pastCategories: [],
+  selectQuestionWindowOpen: false,
+  initGameInfo()
+  {
+    // fill board grid with empty tiles then init the rowColumnInfo to load the categories and questions
+    boardGrid.fillEmptyBoardTiles();
+    rowColumnInfo.init();
+
+    // set view to display board grid as hidden
+    let displayTiles = this.roundNum !== 0;
+    
+    view.displayBoardGrid(displayTiles);
+  },
   startGame()
   {
     if(this.started == true || this.loading == true)
@@ -1532,20 +1715,49 @@ var gameDetails = {
     
     if(!this.arePlayersPopulated())
     {
-      shouldStart = window.confirm('Are you sure? It appears not all players are properly set.');
+      shouldStart = window.confirm('Are you sure you\'d like to start? \n\nIt appears not all 3 players are properly set.\n\nNOTE: Press the "?" icon for help.');
     }
     
     if(shouldStart === true)
     {
       this.started = true;
-      soundEffects.playBoardFill();
+      if(!soundEffects.playBoardFill(window.randomlyUncoverEntireGrid, window.revealCategories))
+      {
+        // something went wrong in playBoardFill.
+        // will need to trigger our callback functions outside of sound effects
+        window.randomlyUncoverEntireGrid();
+        setTimeout(window.revealCategories, 1500);
+      }
     }
+    
+    view.displayPlayers();
+  },
+  endGame()
+  {
+    voiceAudio.stop();
+    soundEffects.stopAudio();
+    intervals.clearAllIntervals();
+    
+    this.started = false;
+    this.loading = false;
+    this.roundNum = 0;
+    this.pastCategories = [];
+    
+    // needs to reset all game info for the players
+    playerList.resetGameInfo();
+    
+    debugger;
+    
+    // reset the board info
+    this.initGameInfo();
+    view.displayPlayers();
   },
   startNewRound()
   {
     this.roundNum++;
     
     // do other things to start it
+    this.initGameInfo();
   },
   startLoading()
   {
@@ -1571,6 +1783,10 @@ var gameDetails = {
     }
     
     return allSet;
+  },
+  openSelectQuestionWindow()
+  {
+    this.selectQuestionWindowOpen = true;
   }
 }
 
@@ -1616,25 +1832,27 @@ var testers =
 
 };
 
-voiceAudio.init();
-voiceAudio.init();
 
-gameDetails.startLoading();
-triviaApiGetter.generateToken();
-boardGrid.fillBoardTiles();
+function initialSetup()
+{
+  // need to run voiceAudio twice to get the speech synthesis to function
+  voiceAudio.init();
+  voiceAudio.init();
 
-rowColumnInfo.init(0);
+  // generate the API token for this session
+  triviaApiGetter.generateToken();
 
-window.onkeydown = handlers.anyKeyDown;
-window.onkeyup = handlers.anyKeyUp;
+  // set the general handlers for keys up and down
+  window.onkeydown = handlers.anyKeyDown;
+  window.onkeyup = handlers.anyKeyUp;
 
-testers.fillPlayers();
-
-//voiceAudio.speak("This. is. Jeopardy!");
-
-view.displayBoardGrid(false);
+  // init the game details
+  gameDetails.initGameInfo();
+}
 
 
-// voiceAudio.valid = false;
+// run the initial setup
+initialSetup();
+
 
 

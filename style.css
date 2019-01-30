@@ -1,24 +1,12 @@
 /* CSS files add styling rules to your content */
 
-@import url("https://db.onlinewebfonts.com/c/7eabf1a72c107aff532500b38879c5da?family=ITC+Korinna+Std");
-@import url("https://db.onlinewebfonts.com/c/402ed36d3e0154087e62c28f7f18c15b?family=Swiss+911");
 
 @font-face {font-family: "ITC Korinna Std";
-    src: url("https://db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.eot");
-    src: url("https://db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.eot?#iefix") format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.woff2") format("woff2"),
-    url("https://db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.woff") format("woff"),
-    url("https://db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.ttf") format("truetype"),
-    url("https://db.onlinewebfonts.com/t/7eabf1a72c107aff532500b38879c5da.svg#ITC Korinna Std") format("svg");
+    src: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2Fitc-korinna-std-bold.otf?1548375687997");
 }
 
 @font-face {font-family: "Swiss 911";
-    src: url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.eot");
-    src: url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.eot?#iefix") format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.woff2") format("woff2"),
-    url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.woff") format("woff"),
-    url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.ttf") format("truetype"),
-    url("https://db.onlinewebfonts.com/t/402ed36d3e0154087e62c28f7f18c15b.svg#Swiss 911") format("svg");
+    src: url("https://cdn.glitch.com/1bdfd8b4-5c96-433d-9016-2c5c714cf5c0%2FSwiss911ExtraCompressedBT.ttf?1548375915414") format("truetype");
 }
 
 body {
@@ -65,6 +53,25 @@ h1 {
   min-height:190px;
 }
 
+.player-delete-button-parent:hover .player-delete-button{
+  display:block;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  height: 15px;
+  width: 15px;
+  z-index: 10;
+  text-align:center;
+  line-height:10px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fdfdfd;
+}
+
+.player-delete-button{
+  display:none;
+}
+
 .money-total-box {
   margin: 0px;
   text-align:center;
@@ -103,7 +110,6 @@ h1 {
   padding:0px;
   width:100%;
   height:75px;
-  line-height:75px;
   z-index: 3;
   margin-top: 30px;
   border-top: 4px solid #111111;
@@ -132,6 +138,8 @@ h1 {
   position: absolute;
   bottom: 10px;
   left: 10px;
+  font-family: "ITC Korinna Std";
+  font-size: 10px;
   border: 3px solid #111111;
   color: #fdfdfd;
   text-shadow: 1px 1px #111111;  
@@ -161,8 +169,9 @@ h1 {
   border: 2px solid #111111;
   height: 25px;
   width:75px;
-  font-weight: 100;
-  font-family: "Swiss 911";
+  font-weight: 400;
+  font-size: 11px;
+  font-family: "ITC Korinna Std";
 }
 
 #question-space {
@@ -368,7 +377,7 @@ h1 {
 
 .loading {
   position: absolute;
-  right: -140px;
+  right: -160px;
   bottom:7px;
   border: 4px solid #f3f3f3; /* Light grey */
   border-top: 4px solid #3498db; /* Blue */
@@ -525,18 +534,111 @@ h1 {
 #start-button
 {
   position: absolute;
-  right: -100px;
+  right: -120px;
   bottom: 1px;
   background-color: #fdfdfd;
   border: 2px solid #111111;
-  font-family: 'Swiss 911';
-  font-size: 15px;
+  font-weight: 100;
+  font-family: 'ITC Korinna Std';
+  font-size: 13px;
+  letter-spacing:1px;
   height: 42px;
-  width: 80px;
+  width: 100px;
 }
 
 #start-button:hover,
 #start-button:focus,
 #start-button:active{
     border: 2px solid #111111;
+}
+
+
+#fullscreen-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(90, 90, 90, 0.5);
+}
+
+.help-window-open 
+{
+  display: block;
+  z-index: 9999;
+}
+
+#popdiv {
+  display:block;
+  width: 540px;
+  background-color: #FDFDFD;
+  position: absolute;
+  top: 100px;
+  left: 70px;
+  padding: 30px;
+  letter-spacing:.08em;
+  color: #111111;
+  border: 2px solid #111111;
+  font-family: 'ITC Korinna Std';
+}
+
+#popdiv dt {
+  text-decoration: underline;
+  font-size: 22px;
+}
+
+#popdiv ul {
+  margin: 5px;
+  font-size: 16px;
+}
+
+.speech-bubble {
+	position: relative;
+	background: #fdfdfd;
+	border-radius: .4em;
+  padding: 1px;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+	border-top-color: #fdfdfd;
+	border-bottom: 0;
+	margin-left: -10px;
+	margin-bottom: -10px;
+}
+
+.speech-bubble h1 {
+  color: #111111;
+  font-style: normal;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'ITC Korinna Std';
+}
+
+.speech-bubble h1:after {
+  content: 'Click me for help';
+}
+
+#speech-bubble-container 
+{
+  position: absolute;
+  bottom: 73px;
+  right: 20px;
+  width: 100px;
+  height: 50px;
+  z-index: 9999;
+  animation: fade-out-an 1s ease-in 10s forwards;
+  -moz-animation: fade-out-an 1s ease-in 10s forwards;
+  -webkit-animation: fade-out-an 1s ease-in 10s forwards;
+}
+
+@keyframes fade-out-an {
+  from {opacity: 1; }
+  to {opacity: 0; z-index:-1;}
 }

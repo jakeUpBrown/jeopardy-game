@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Hello!</title>
+    <title>Jeopardy!</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,15 +9,13 @@
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet" type="text/css">
-    <link href="https://db.onlinewebfonts.com/c/7eabf1a72c107aff532500b38879c5da?family=ITC+Korinna+Std" rel="stylesheet" type="text/css"/>
-    <link href="https://db.onlinewebfonts.com/c/402ed36d3e0154087e62c28f7f18c15b?family=Swiss+911" rel="stylesheet" type="text/css"/>
 
     <!-- import the webpage's javascript file -->
     <script src="/script.js" defer></script>
 
   </head>  
   <body>
-    <div class="body-div noselect">
+    <div id="main-body" class="body-div noselect">
       
       <div class="spacer">
         
@@ -61,7 +59,14 @@
       <div id="speaker-icon" onclick="handlers.speakerClicked()">
         &#128266
       </div>
-            
+        
+      <div id="speech-bubble-container" onclick="handlers.helpClicked()">
+        <hgroup class="speech-bubble">
+          <h1>
+          </h1>
+        </hgroup>
+      </div>
+    
       <div id="help-icon" onclick="handlers.helpClicked()">
         ?
       </div>
@@ -69,16 +74,40 @@
       <div class="player-insert-box">
         Player Name:
         <input type="text" id="playerNameInput" onkeydown="handlers.playerNameKeyDown(event)" maxlength="10">
-        <button onclick="handlers.addNewPlayer()" id="addPlayerButton">
-        Add Player
+        <button onclick="handlers.addPlayerButtonClicked()" id="addPlayerButton">
+          Add Player
         </button>
         
-      <button id="start-button" onclick="gameDetails.startGame()">
+      <button id="start-button" onclick="handlers.startButtonClicked()">
         Start Game
       </button>
         
         <div class="loading" id="loading-icon">
           
+        </div>
+      </div>
+      <div id="fullscreen-container" class="see-through">
+        <div id="popdiv">
+            <dt>Before You Start:</dt>
+            <ul> 
+              <li>Add all desired players.</li>
+              <li>Bind an alphanumeric key to each player by clicking the player's nameplate followed by the desired key. You should see the key in parentheses.</li>
+            </ul>
+            <br>
+            <dt>Controls:</dt>
+            <ul>
+              <li>[player's bound button] - Buzz in to answer question. </li>
+              <li>[player's bound button] - Rotate selected answer after buzzing in successfully. </li>
+              <li>[mouse] - Selects the question. </li>
+            </ul>
+            <br>
+            <dt>Rules:</dt>
+            <ul>
+              <li>Players can buzz in anytime after the question has been displayed.</li>
+              <li>Players have 5 seconds to answer question. The answer highlighted at the end of that 5 seconds will be submitted.</li>
+              <li>If your buzzer is red, that means you are locked out from buzzing for 1 second.</li>
+              <li>The previously-correct player gets to select the next question.</li>
+            </ul>
         </div>
       </div>
     </div>
